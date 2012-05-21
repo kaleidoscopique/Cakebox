@@ -8,6 +8,9 @@ Cakebox permet de lire tous vos fichiers torrent en streaming depuis une autre i
 2. Vous téléchargez tous les torrents que vous voulez sur votre seedbox, ça va très vite !
 3. Vous les regardez tranquillement en streaming, comme si vous possédiez un Megaupload privé.
 
+Deux screenshots de Cakebox : 
+* [La liste de vos fichiers torrents](http://cloud.github.com/downloads/MardamBeyK/Cakebox/screen1.png)
+* [La page de visionage d'un torrent](http://cloud.github.com/downloads/MardamBeyK/Cakebox/screen2.png)
 
 ## Comment faire pour installer tout ça ?
 
