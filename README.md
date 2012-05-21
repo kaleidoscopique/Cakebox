@@ -10,7 +10,7 @@ Cakebox permet de lire tous vos fichiers torrent en streaming depuis une autre i
 
 Deux screenshots de Cakebox : 
 * [La liste de vos fichiers torrents](http://cloud.github.com/downloads/MardamBeyK/Cakebox/screen1.png)
-* [La page de visionage d'un torrent](http://cloud.github.com/downloads/MardamBeyK/Cakebox/screen2.png)
+* [La page de visionage d'un torrent](http://cloud.github.com/downloads/MardamBeyK/Cakebox/screen_2.png)
 
 ## Comment faire pour installer tout ça ?
 
