@@ -1,0 +1,190 @@
+body
+{
+	background: url('http://fc01.deviantart.net/fs71/f/2010/171/e/5/e53eff606dac6f8a5a9d2dc9277a45b1.jpg') no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+
+a {
+    text-decoration: none;
+}
+img
+{
+    border: 0px;
+}
+
+header{
+    	
+	position:relative; 
+	z-index:2;
+	background:url(footer-tail.png);
+	height: 100px;
+}
+
+header #logo
+{
+    margin-left:40px;
+    font-family: 'Changa One', cursive;
+    color:#ffffff;
+    font-size:72px;
+}
+
+.first
+{
+    color:#76d6b7 !important;
+}
+.second
+{
+    color:#fff !important;
+}
+
+#content
+{
+    width: 60%;
+    margin:auto;
+    margin-top:40px;
+    background:url(white_bg_content.png);
+    padding:30px;
+    font-family: 'Droid Sans', sans-serif;
+}
+
+#local
+{
+    margin-top:20px;
+}
+
+hr
+{
+    color:#dddddd;
+}
+
+h2
+{
+    font-family: 'Droid Sans', sans-serif;
+    font-size:24px!important;
+    
+}
+
+.littleh2
+{
+        font-size:12px!important;
+        color:#8A8A8A;
+}
+
+.download_button
+{
+    text-align:center;
+    font-size: 12px;
+    color:#8A8A8A;
+}
+
+.update_info
+{
+    font-size: 12px;
+    color:#8A8A8A;
+}
+
+.file_info
+{
+    text-align:center;
+    margin: 20px 0 20px 0;
+}
+
+.delete:hover
+{
+    cursor: pointer;
+}
+
+.onefile
+{
+    padding: 1px;
+}
+.onefile:hover
+{
+    background:#FFDEE2;
+    transition: 1s;
+    -moz-transition:1s;
+    -webkit-transition:1s;
+}
+
+.delete
+{
+    float:right;
+    font-size: 12px;
+    color:#FA6475 !important;
+    text-decoration: none;
+}
+
+
+.editbox{
+    margin-top: 20px;
+}
+.help, .goeditmode
+{
+    font-size: 14px;
+    color:#8A8A8A;
+    text-decoration: underline;
+}
+
+.popcornlink
+{
+    margin-right:10px;
+    cursor: pointer; 
+}
+
+#popcorn .mark
+{
+    color: #E81554;
+    font-weight: bold;
+    cursor: pointer;
+}
+#popcorn .unmark
+{
+    color:#2AA60C;
+    font-weight: bold;
+}
+
+.dirInList
+{
+    margin-left:3px;
+    padding-left:13px;
+    margin-bottom:5px;
+    border-left:1px solid #76d6b7;
+}
+
+.pointerLink:hover
+{
+    cursor: pointer;
+}
+
+.imgfolder
+{
+    margin-right:3px;
+}
+
+.onedir
+{
+    padding:2px;
+}
+
+/* ---------------------------------------------------------- */
+/* LIGHTBOXES
+/* ---------------------------------------------------------- */
+
+#slickbox, .editbox {
+    line-height: 19px;
+    border:5px solid #76d6b7;
+    padding:10px;
+    margin-bottom: 10px;
+    background: #ffffff;
+}
+
+
+.terminal
+{
+    background: #000000;
+    color:#FFFFFF;
+}
+
