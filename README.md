@@ -28,7 +28,7 @@ Il installe un serveur web et divers bibliothèques. Il modifie la configuration
 
 * Merci à Jeremie pour son aide sur les problèmes d'encodage et ses suggestions
 * Merci à Skalp de Plugngeek.net d'avoir soutenu le projet
-* Merci à tous ceux qui ont donné un coup de pouce et qui continue à le faire
+* Merci à tous ceux qui ont donné un coup de pouce et qui continuent à le faire
 * Merci à HADOPI pour l'idée
 
 **Auteur :** Mardam Bey (iam.mardaybey@gmail.com)
