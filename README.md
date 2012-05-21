@@ -13,8 +13,8 @@ Cakebox permet de lire tous vos fichiers torrent en streaming depuis une autre i
 
 1. Disposez d'un VPS, OS Debian ou basé Debian uniquement (très bonnes offres chez santrex)
 2. Téléchargez le mardambey-script et executez-le :
-`$ wget https://github.com/downloads/MardamBeyK/Cakebox/mardambey_script.sh
-chmod +x mardambey_script.sh && ./mardambey_script --enable-htaccess`
+`$ wget https://github.com/downloads/MardamBeyK/Cakebox/mardambey_script.sh`
+`$ chmod +x mardambey_script.sh && ./mardambey_script --enable-htaccess`
 3. C'est terminé ! Téléchargez. Streamez.
 
 ## Que fait le MardamBey-Script sur mon serveur ?
