@@ -1,4 +1,4 @@
-## A quoi sert Cakebox et le Mardambey-script ?
+## A quoi servent Cakebox et le Mardambey-script ?
 
 Le MB-script vous permet d'installer une seedbox sur votre serveur ou sur votre VPS en quelques minutes sans demander le moindre effort. Une seedbox permet de télécharger des fichiers torrent depuis une interface web très agréable et de les stocker sur un serveur distant, sans passer par votre connexion internet.
 
