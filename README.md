@@ -21,4 +21,4 @@ Cakebox permet de lire tous vos fichiers torrent en streaming depuis une autre i
 
 Il installe un serveur web et divers bibliothèques. Il modifie la configuration d'Apache pour activer les .htaccess si le paramètre "--enable-htaccess" est spécifié. Il crée 2 dossiers à la racine du serveur web (par défaut /var/www/ mais peut être changé avec --www-dir=/path/) pour Cakebox et Rutorrent. Il ajoute un cron qui agit toutes les 5 minutes sur le dossier "downloads" de Cakebox pour appliquer un chmod 777. Enfin, il lance rutorrent en tâche de fond avec screen.
 
-**Author :** Mardam Bey (iam.mardaybey@gmail.com)
+**Auteur :** Mardam Bey (iam.mardaybey@gmail.com)
