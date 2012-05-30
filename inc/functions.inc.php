@@ -114,7 +114,7 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
       {
         echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
         if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';         
-        echo '<a href="watch.php?file='.htmlspecialchars($file).'">';
+        echo '<a href="watch.php?file='.htmlspecialchars(urlencode($file)).'">';
         echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /></a> '.basename(htmlspecialchars($file)).'
           <a href="#" class="update_info">
           (?)
