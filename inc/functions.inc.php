@@ -113,13 +113,10 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
           ($filter == "seen" && file_exists("data/".basename($file)) && get_file_icon(basename($file),TRUE) == "avi"))
       {
         echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
-<<<<<<< HEAD
         if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
         echo '<a href="watch.php?file='.htmlspecialchars($file).'">';
-=======
         if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';         
         echo '<a href="watch.php?file='.htmlspecialchars(urlencode($file)).'">';
->>>>>>> 82ea47639f3a9d8cf27db0cc2dcafccad7fb63c5
         echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /></a> '.basename(htmlspecialchars($file)).'
           <a href="#" class="update_info">
           (?)
@@ -175,28 +172,35 @@ function ustr_replace($needle , $replace , $haystack)
 /*
  * Check the permissions of data and downloads
  */
+/*
+ * Check the permissions of data and downloads
+ */
 function check_dir()
 {
-
-  $isdir_downloads = is_dir("downloads");
-  if(!$isdir_downloads)
-  {
-    echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-    echo '<span style="font-weight:bold;">WARNING</span><br/>';
-    if(!$isdir_downloads) echo "You must create a folder named \"downloads\" in the folder of Cakebox<br/>";
-    echo '</p>';
-  }
-  else
-  {
-    $chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
-    if($chmod_data != 777 || $chmod_downloads != 777)
-    {
-      echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-      echo '<span style="font-weight:bold;">WARNING</span><br/>';
-      if($chmod_downloads != 777) echo "You must change the permissions of \"/downloads\" to 777 (chmod).<br/>";
-      echo '</p>';
-    }
-  }
+ 
+	$isdir_data = is_dir("data");
+	$isdir_downloads = is_dir("downloads");
+	if(!$isdir_data || !$isdir_downloads)
+	{
+		echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
+		echo '<span style="font-weight:bold;">WARNING</span><br/>';
+		if(!$isdir_data) echo "You must create a folder named \"data\" in the folder of Cakebox<br/>";
+		if(!$isdir_downloads) echo "You must create a folder named \"downloads\" in the folder of Cakebox<br/>";
+		echo '</p>';
+	}
+	else
+	{
+		$chmod_data = substr(sprintf('%o', fileperms('data')),-3);
+		$chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
+		if($chmod_data != 777 || $chmod_downloads != 777)
+		{
+			echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
+			echo '<span style="font-weight:bold;">WARNING</span><br/>';
+			if($chmod_data != 777) echo "You must change the permissions of \"/data\" to 777 (chmod).<br/>";
+			if($chmod_downloads != 777) echo "You must change the permissions of \"/downloads\" to 777 (chmod).<br/>";
+			echo '</p>';
+		}
+	}
 }
 ?>
 
