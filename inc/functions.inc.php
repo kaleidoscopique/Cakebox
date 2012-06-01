@@ -113,8 +113,13 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
           ($filter == "seen" && file_exists("data/".basename($file)) && get_file_icon(basename($file),TRUE) == "avi"))
       {
         echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
+<<<<<<< HEAD
         if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
         echo '<a href="watch.php?file='.htmlspecialchars($file).'">';
+=======
+        if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';         
+        echo '<a href="watch.php?file='.htmlspecialchars(urlencode($file)).'">';
+>>>>>>> 82ea47639f3a9d8cf27db0cc2dcafccad7fb63c5
         echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /></a> '.basename(htmlspecialchars($file)).'
           <a href="#" class="update_info">
           (?)
