@@ -54,10 +54,6 @@ $ext = get_file_icon(basename($file),TRUE);
     <a href="https://github.com/MardamBeyK/Cakebox/wiki/Je-n%27arrive-pas-%C3%A0-lire-les-vid%C3%A9os-en-streaming-!" class="help">Help ! I can't watch the video !</a>
     </p>
 
-    <div id="slickbox">
-    
-    </div>
-    
     <center>
       <object id='mediaPlayer' width="600" height="400" classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95' codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701' standby='Loading Media Player components...' type='application/x-oleobject'>
         <param name='fileName' value="<?php echo $file; ?>">
