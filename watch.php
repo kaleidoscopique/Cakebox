@@ -51,7 +51,7 @@ $ext = get_file_icon(basename($file),TRUE);
           
       <?php if($ext == "avi"){ // if it's a video file  ?>
     <p style="text-align:center;margin-bottom:10px;">
-    <a href="https://github.com/MardamBeyK/Cakebox/wiki/Je-n%27arrive-pas-%C3%A0-lire-les-vid%C3%A9os-en-streaming-!" class="help">Help ! I can't watch the video !</a>
+    <a href="https://github.com/MardamBeyK/Cakebox/wiki/Je-n%27arrive-pas-%C3%A0-lire-les-vid%C3%A9os-en-streaming-!" target="_blank" class="help">Help ! I can't watch the video !</a>
     </p>
 
     <center>
