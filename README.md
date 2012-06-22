@@ -14,7 +14,7 @@ Deux screenshots de Cakebox :
 
 ## Comment faire pour installer tout ça ?
 
-1. Disposez d'un VPS, OS Debian ou basé Debian uniquement (très bonnes offres chez santrex)
+1. Disposez d'un VPS, OS Debian ou basé Debian uniquement ([Le plan BladeVPS chez transip est une merveille à 9€](https://www.transip.eu/vps/pricing-and-purchase/))
 2. Téléchargez le mardambey-script et executez-le :
 `$ wget https://github.com/downloads/MardamBeyK/Cakebox/mardambey_script.sh`
 `$ chmod +x mardambey_script.sh && ./mardambey_script.sh --enable-htaccess`
