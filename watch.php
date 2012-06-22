@@ -17,16 +17,6 @@ $ext = get_file_icon(basename($file),TRUE);
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/tooltips.css" type="text/css" media="screen" />
     <script src="ressources/oXHR.js"></script>
-    
-    <script type="text/javascript">
-  $(document).ready(function() {
-    $('#slickbox').hide();
-    $('#slick-slidetoggle').click(function() {
-      $('#slickbox').slideToggle(400);
-      return false;
-    });
-});
-    </script>
 </head>
 <body>
         <!-- ==============================header================================= -->
@@ -61,40 +51,24 @@ $ext = get_file_icon(basename($file),TRUE);
           
       <?php if($ext == "avi"){ // if it's a video file  ?>
     <p style="text-align:center;margin-bottom:10px;">
-    <a id="slick-slidetoggle" href="#" class="help">Help ! I can't watch the video !</a>
+    <a href="https://github.com/MardamBeyK/Cakebox/wiki/Je-n%27arrive-pas-%C3%A0-lire-les-vid%C3%A9os-en-streaming-!" class="help">Help ! I can't watch the video !</a>
     </p>
 
     <div id="slickbox">
-                <h3 style="font-weight: bold;">I'm missing a codec | The player does not appear</h3>   
-                    <p style="margin:20px;">
-                    <img src="ressources/rsz_debian.png" /> You are using Ubuntu/Debian : <span class="terminal">apt-get install ffmpeg libavcodec-unstripped-52 libavdevice-unstripped-52 libavformat-unstripped-52 libavutil-unstripped-50 libpostproc-unstripped-51 libswscale-unstripped-0</span>
-                    </p>
-                    
-                    <p style="margin:20px;">
-                    <img src="ressources/rsz_fedora.png" /> You are using Fedora : <span class="terminal">yum install gstreamer-ffmpeg gstreamer-plugins-bad gstreamer-plugins-ugly</span></p>
-                    
-                    <p style="margin:20px;">
-                    <img src="ressources/rsz_windows.png" /> You are using Windows or Mac : <a href="http://www.videolan.org/vlc/#download">download VLC 2.0</a> and install it with the Mozilla Plugin (you can choose during installation). 
-                    Thanks to this plugin, VLC will be recognize by all the browsers.
-                    </p>
-                    
-                    <h3 style="font-weight: bold;">The player does not play the video !</h3>
-                    <p style="margin:20px;">Click on "Download the file" below the video, this should force your player to play the video.</p>
+    
     </div>
     
     <center>
-    <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616"
-        width="600" height="400"
-        codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
-        <param name="src" value="<?php echo $file; ?>"/>
-         
-        <embed
-      type="video/divx"
-      src="<?php echo $file; ?>"
-      width="600" height="400"
-      pluginspage="http://go.divx.com/plugin/download/">
-        </embed>
-    </object>
+      <object id='mediaPlayer' width="600" height="400" classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95' codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701' standby='Loading Media Player components...' type='application/x-oleobject'>
+        <param name='fileName' value="<?php echo $file; ?>">
+        <param name='animationatStart' value='true'>
+        <param name='transparentatStart' value='true'>
+        <param name='autoStart' value="false">
+        <param name='showControls' value="true">
+        <param name="ShowStatusBar" value="true">
+        <param name='loop' value="0">
+        <embed type='application/x-mplayer2' pluginspage='http://microsoft.com/windows/mediaplayer/en/download/' src="<?php echo $file; ?>" width="600" height="400" autostart="0" displaysize='4' autosize='0' bgcolor='black' showcontrols="0" showtracker='0' ShowStatusBar='1' showdisplay='0' videoborder3d='0' designtimesp='5311' loop="0"></embed>    
+        </object>
     </center>
       <?php } ?>
       
