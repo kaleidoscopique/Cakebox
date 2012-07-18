@@ -87,7 +87,7 @@ function recursive_directory_tree($directory = null)
 
 /**
  * Show the tree structure file
- * $filter = all / video / notseen / seen
+ * $filter = all / video
  */
 function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
 {
@@ -106,30 +106,39 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
     }
     else
     {
-      // If show all or show video files only
+      // Afficher tous les fichiers ou seulement les vidéos
       if($filter == "all" ||
-         ($filter == "videos" && get_file_icon(basename($file),TRUE) == "avi") ||
-         ($filter == "notseen" && !file_exists("data/".basename($file)) && get_file_icon(basename($file),TRUE) == "avi") ||
-          ($filter == "seen" && file_exists("data/".basename($file)) && get_file_icon(basename($file),TRUE) == "avi"))
+         ($filter == "videos" && get_file_icon(basename($file),TRUE) == "avi"))
       {
         echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
-        if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
-        echo '<a href="watch.php?file='.htmlspecialchars($file).'">';
-        if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';         
-        echo '<a href="watch.php?file='.htmlspecialchars(urlencode($file)).'">';
-        echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /></a> '.basename(htmlspecialchars($file)).'
-          <a href="#" class="update_info">
-          (?)
-          <span class="tooltip">
+
+          // La checkbox de l'editmode
+          if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';         
+
+          // Affichage de l'image à gauche du titre
+          $current = htmlspecialchars(urlencode($file));
+          echo '<a href="watch.php?file='.$current.'">';
+            echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
+          echo '</a>';
+
+          // Affichage du titre (soulignement si marqué comme vu)
+          if(file_exists("data/".basename($file))) echo '<span style="border-bottom:2px dotted #76D6B7;">';
+            echo basename(htmlspecialchars($file));
+          if(file_exists("data/".basename($file))) echo '</span>' ;
+
+          // Création de l'infobulle
+          echo '<a href="#" class="update_info">';
+          echo ' (?)
+                <span class="tooltip">
                   <span></span>
                   Size : '.convert_size(filesize($file)).'<br/>
                   Last update : '.date("d F Y, H:i",filemtime($file)).'<br/>
                   Last access : '.date("d F Y, H:i",fileatime($file)).'<br/>
-          </span>
-          </a>
-          <span id="'.htmlspecialchars($file).'" onclick="unlink(this);" class="delete">Delete</a><br>';
+              </span> ';
+          echo '</a>';
+
           echo '</div>';
-          }
+        }
     }
   }
 }
@@ -172,35 +181,61 @@ function ustr_replace($needle , $replace , $haystack)
 /*
  * Check the permissions of data and downloads
  */
-/*
- * Check the permissions of data and downloads
- */
 function check_dir()
 {
  
-	$isdir_data = is_dir("data");
-	$isdir_downloads = is_dir("downloads");
-	if(!$isdir_data || !$isdir_downloads)
-	{
-		echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-		echo '<span style="font-weight:bold;">WARNING</span><br/>';
-		if(!$isdir_data) echo "You must create a folder named \"data\" in the folder of Cakebox<br/>";
-		if(!$isdir_downloads) echo "You must create a folder named \"downloads\" in the folder of Cakebox<br/>";
-		echo '</p>';
-	}
-	else
-	{
-		$chmod_data = substr(sprintf('%o', fileperms('data')),-3);
-		$chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
-		if($chmod_data != 777 || $chmod_downloads != 777)
-		{
-			echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-			echo '<span style="font-weight:bold;">WARNING</span><br/>';
-			if($chmod_data != 777) echo "You must change the permissions of \"/data\" to 777 (chmod).<br/>";
-			if($chmod_downloads != 777) echo "You must change the permissions of \"/downloads\" to 777 (chmod).<br/>";
-			echo '</p>';
-		}
-	}
+  $isdir_data = is_dir("data");
+  $isdir_downloads = is_dir("downloads");
+  if(!$isdir_data || !$isdir_downloads)
+  {
+    echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
+    echo '<span style="font-weight:bold;">WARNING</span><br/>';
+    if(!$isdir_data) echo "You must create a folder named \"data\" in the folder of Cakebox<br/>";
+    if(!$isdir_downloads) echo "You must create a folder named \"downloads\" in the folder of Cakebox<br/>";
+    echo '</p>';
+  }
+  else
+  {
+    $chmod_data = substr(sprintf('%o', fileperms('data')),-3);
+    $chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
+    if($chmod_data != 777 || $chmod_downloads != 777)
+    {
+      echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
+      echo '<span style="font-weight:bold;">WARNING</span><br/>';
+      if($chmod_data != 777) echo "You must change the permissions of \"/data\" to 777 (chmod).<br/>";
+      if($chmod_downloads != 777) echo "You must change the permissions of \"/downloads\" to 777 (chmod).<br/>";
+      echo '</p>';
+    }
+  }
 }
+
+
+function get_nextnprev($file)
+{
+  $current_dir = recursive_directory_tree(dirname($file));
+  $current_file = array_keys($current_dir,$file);
+  $current_file = $current_file[0];
+
+  // Si le fichier courant n'est pas le dernier, on a notre $next
+  $next = NULL;
+  if($current_file != count($current_dir)-1) 
+  {
+      // Si le fichier suivant est bien une vidéo
+      if(get_file_icon(basename($current_dir[$current_file+1]),true) == "avi") 
+        $next = htmlspecialchars(urlencode($current_dir[$current_file+1]));
+  }
+
+  // Si le fichier courant n'est pas le premier, on a notre prev
+  $prev = NULL;
+  if($current_file != 0) 
+  {
+      // Si le fichier précédent est bien une vidéo
+      if(get_file_icon(basename($current_dir[$current_file-1]),true) == "avi") 
+        $prev = htmlspecialchars(urlencode($current_dir[$current_file-1]));
+  }
+  
+  return array("prev"=>$prev,"next"=>$next);
+}
+
 ?>
 

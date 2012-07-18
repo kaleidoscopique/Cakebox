@@ -14,7 +14,7 @@ Deux screenshots de Cakebox :
 
 ## Comment faire pour installer tout ça ?
 
-1. Disposez d'un VPS, OS Debian ou basé Debian uniquement ([Le plan BladeVPS chez transip est une merveille à 9€](https://www.transip.eu/vps/pricing-and-purchase/))
+1. Disposez d'un VPS, OS Debian ou basé Debian uniquement (très bonnes offres chez [Transip](https://www.transip.eu/vps/pricing-and-purchase/), [Leaseweb](http://www.leaseweb.com/en/cloud-hosting/express-cloud), [OVH](https://www.ovh.com) (mais prenez un serveur aux USA))
 2. Téléchargez le mardambey-script et executez-le :
 `$ wget https://github.com/downloads/MardamBeyK/Cakebox/mardambey_script.sh`
 `$ chmod +x mardambey_script.sh && ./mardambey_script.sh --enable-htaccess`
@@ -22,7 +22,7 @@ Deux screenshots de Cakebox :
 
 ## Que fait le MardamBey-Script sur mon serveur ?
 
-Il installe un serveur web et divers bibliothèques. Il modifie la configuration d'Apache pour activer les .htaccess si le paramètre "--enable-htaccess" est spécifié. Il crée 2 dossiers à la racine du serveur web (par défaut /var/www/ mais peut être changé avec --www-dir=/path/) pour Cakebox et Rutorrent. Il ajoute un cron qui agit toutes les 5 minutes sur le dossier "downloads" de Cakebox pour appliquer un chmod 777. Enfin, il lance rutorrent en tâche de fond avec screen.
+Il installe un serveur web et diverses bibliothèques. Il modifie la configuration d'Apache pour activer les .htaccess si le paramètre "--enable-htaccess" est spécifié. Il crée 2 dossiers à la racine du serveur web (par défaut /var/www/ mais peut être changé avec --www-dir=/path/) pour Cakebox et Rutorrent. Il ajoute un cron qui agit toutes les 5 minutes sur le dossier "downloads" de Cakebox pour appliquer un chmod 777. Enfin, il lance rutorrent en tâche de fond avec screen.
 
 ## Remerciements
 
@@ -31,5 +31,5 @@ Il installe un serveur web et divers bibliothèques. Il modifie la configuration
 * Merci à tous ceux qui ont donné un coup de pouce et qui continuent à le faire;
 * Merci à HADOPI pour l'idée;
 
-**Auteur :** Mardam Bey (iam.mardaybey@gmail.com)
+**Auteur :** MardamBey (iam.mardaybey@gmail.com)
 [Retrouvez-moi sur Twitter](http://www.twitter.com/kaleidoscopique "Follow me !")

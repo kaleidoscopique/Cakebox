@@ -1,6 +1,6 @@
 body
 {
-	background: url('http://fc01.deviantart.net/fs71/f/2010/171/e/5/e53eff606dac6f8a5a9d2dc9277a45b1.jpg') no-repeat center center fixed;
+	background: url('background.jpg') no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -169,22 +169,15 @@ h2
     padding:2px;
 }
 
-/* ---------------------------------------------------------- */
-/* LIGHTBOXES
-/* ---------------------------------------------------------- */
-
-#slickbox, .editbox {
-    line-height: 19px;
-    border:5px solid #76d6b7;
-    padding:10px;
-    margin-bottom: 10px;
-    background: #ffffff;
-}
-
-
-.terminal
+a.next_episode
 {
-    background: #000000;
-    color:#FFFFFF;
+    color:#E81554;
+    text-decoration: none;
+    font-size:24px;
+    font-weight: bold;
 }
 
+a.next_episode:hover
+{
+    text-decoration: underline;
+}

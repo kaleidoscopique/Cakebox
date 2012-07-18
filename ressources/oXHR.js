@@ -92,30 +92,6 @@ function unmarkfile(filename)
 	xhr.send(null);
 }
 
-/*
- * Delete a file when user click "delete"
- */
-function unlink(oSelect)
-{
-	var xhr   = getXMLHttpRequest();
-	
-	xhr.onreadystatechange = function()
-	{
-		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
-		{
-			var divSelect = document.getElementById("div-"+oSelect.id);
-			divSelect .innerHTML = "";
-			document.getElementById("div-"+oSelect.id).style.display = "none";
-			//document.getElementById("loader").style.display = "none";
-		} else if (xhr.readyState < 4)
-		{
-			//document.getElementById("loader").style.display = "inline";
-		}
-	};
-	
-	xhr.open("GET", "xhr_request.php?drop_file&file_name="+oSelect.id, true);
-	xhr.send(null);
-}
 
 /**
  * Check all the files of a dir in editmode when the user check a dir
