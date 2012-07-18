@@ -2,8 +2,14 @@
 require('inc/config.inc.php');
 require('inc/functions.inc.php');
 
+// Fichier à lire et son extention
 $file = htmlspecialchars($_GET['file']);
 $ext = get_file_icon(basename($file),TRUE);
+
+// On récupère la vidéo suivante dans l'arborescence, si on est sur un fichier vidéo
+if($ext == "avi") $nextnprev = get_nextnprev($file);
+$prev = $nextnprev['prev'];
+$next = $nextnprev['next'];
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +17,6 @@ $ext = get_file_icon(basename($file),TRUE);
 <head>
     <title>CakeBox - Download or watch your file</title>
     <meta charset="utf-8">
-    <script src="ressources/jquery.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
@@ -34,14 +39,13 @@ $ext = get_file_icon(basename($file),TRUE);
                 <div id="popcorn" class="littleh2">
                 <?php if(!file_exists("data/".basename($file))){ ?>
                     Have you finished watching this video ?
-                    <span class="mark" onclick="markfile('<?php echo basename($file); ?>');">Click here to remember it next time</span>
-                    <img src="ressources/popcorn.png" />
+                    <span class="mark" onclick="markfile('<?php echo basename($file); ?>');">Click here to remind you next time</span>
                     <a href="#" class="update_info" style="text-decoration: underline;"> 
-                    (WTF ?)
+                    (What's that ?)
                   <span class="tooltip">
                           <span></span>
                           Like everyone else, you never know what episode you stopped in your series.<br/>
-                          Click on the previous link to mark an episode and know quickly if you have already seen or not.
+                          Click on the previous link to mark an episode and know quickly if you have already seen or not (it will be underlined in the main list)
                   </span>
                   </a>
               <?php } else echo  'Hey, <span class="unmark">you\'ve already seen this video</span>, do you remember ? <span class="update_info" style="text-decoration: underline;cursor:pointer;" onclick="unmarkfile(\''.basename($file).'\')">No, cancel please !</span>'; ?>
@@ -65,20 +69,34 @@ $ext = get_file_icon(basename($file),TRUE);
         <param name='loop' value="0">
         <embed type='application/x-mplayer2' pluginspage='http://microsoft.com/windows/mediaplayer/en/download/' src="<?php echo $file; ?>" width="600" height="400" autostart="0" displaysize='4' autosize='0' bgcolor='black' showcontrols="0" showtracker='0' ShowStatusBar='1' showdisplay='0' videoborder3d='0' designtimesp='5311' loop="0"></embed>    
         </object>
+
+        <?php
+
+          if($prev != NULL)
+          {
+            echo '<div style="margin:40px 0px 10px 0px;">';
+            echo '<a href="watch.php?file='.$prev.'" class="next_episode">';
+            echo "← Watch the previous episode";
+            echo '</a></div>';
+          }
+
+
+          if($next != NULL)
+          {
+            echo '<div style="margin:10px 0px 40px 0px;padding-left:30px;">';
+            echo '<a href="watch.php?file='.$next.'" class="next_episode">';
+            echo "Watch the next episode →";
+            echo '</a></div>';
+          }
+        ?>
+
     </center>
       <?php } ?>
-      
-      <div class="file_info">
-    <?php
-        echo '
-        <strong>Size :</strong> '.convert_size(filesize($file)).'<br/>
-        Last update : '.date("d F Y, H:i",filemtime($file)).'<br/>
-        Last access : '.date("d F Y, H:i",fileatime($file)).'<br/>';
-    ?>
-      </div>      
+         
       <div class="download_button">
     <a href="<?php echo $file; ?>"><img src="ressources/downloadfile.png" /></a><br/>
-                Right click and "Save link as" to download it
+                Right click and "Save link as" to download it<br/>
+                <strong>Size :</strong> <?php echo convert_size(filesize($file)); ?>
       </div>
 
 <br />
