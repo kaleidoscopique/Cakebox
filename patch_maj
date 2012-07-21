@@ -15,6 +15,7 @@ find Cakebox/inc/ -type f -exec mv -v -f {} cakebox/inc/ \;
 
 # Supprime les fichiers temporaires
 rm -R Cakebox/
+rm patch_maj
 
 # All right, bitch !
 echo "============================="
