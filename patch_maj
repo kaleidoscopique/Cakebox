@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Télécharge la nouvelle version
+cd /var/www/
+git clone git://github.com/MardamBeyK/Cakebox.git
+
+# Met à jour les fichiers racines
+find Cakebox/ -maxdepth 1 -type f -exec mv -f {} cakebox/ \;
+
+# Met à jour les fichiers de ressources
+find Cakebox/ressources/ -maxdepth 1 -type f -exec mv -f {} cakebox/ressources/;
+
+# Met à jour les fichiers d'includes
+find Cakebox/inc/ -type f -exec mv -f {} cakebox/inc/ \;
+
+# Supprime les fichiers temporaires
+rm -R Cakebox/
+
+# All right, bitch !
+echo "Tout s'est bien passé, la mise à jour est terminée !"
