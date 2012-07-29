@@ -1,7 +1,7 @@
 <?php
 
 /*
-* Ne change jamais cette valeur, même si vous pensez que vous
+  Ne changez jamais cette valeur, même si vous pensez que vous
   savez ce que vous faîtes. JAMAIS. JJAAAMMMAAAIISSS.
 */
 define('LOCAL_DL_PATH','downloads');
