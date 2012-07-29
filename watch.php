@@ -1,5 +1,4 @@
 <?php
-require('inc/config.inc.php');
 require('inc/functions.inc.php');
 
 // Fichier à lire et son extention

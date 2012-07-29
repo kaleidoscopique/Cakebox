@@ -1,12 +1,11 @@
 <?php
 
-require('inc/config.inc.php');
 require('inc/functions.inc.php');
 
-// check the editmode
+// Récupère l'editmode
 $editmode = (isset($_GET['editmode'])) ? TRUE:FALSE;
 
-// delete files
+// Demande de suppression de fichiers
 if(isset($_POST['delete']))
 {
 	foreach($_POST['Files'] as $file)
@@ -16,7 +15,7 @@ if(isset($_POST['delete']))
 	}
 }
 
-// move files
+// Demande de déplacement de fichiers
 if(isset($_POST['move']))
 {
 	foreach($_POST['Files'] as $file)
@@ -26,7 +25,7 @@ if(isset($_POST['move']))
 	}
 }
 
-// mkdir
+// Demande de création d'un dossier
 if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
 {
 	mkdir($_POST['mkdirSelect']."/".$_POST['mkdir_name'],0777);

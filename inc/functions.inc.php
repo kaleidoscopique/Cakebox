@@ -1,8 +1,15 @@
 <?php
 
+/*
+* Ne change jamais cette valeur, même si vous pensez que vous
+  savez ce que vous faîtes. JAMAIS. JJAAAMMMAAAIISSS.
+*/
+define('LOCAL_DL_PATH','downloads');
+
 /**
- * Return the path of the icon file
- * @filename Name of the file to considerate
+ * Retourne l'extention CAKEBOX d'un fichier en fonction de son type
+ * ou le chemin vers l'icone associé
+ * @filename Le nom du fichier à considérer
  */
 function get_file_icon($filename,$short_return=FALSE)
 {
@@ -18,8 +25,8 @@ function get_file_icon($filename,$short_return=FALSE)
 }
 
 /**
- * Convert size with readable units
- * @param $fs The size
+ * Convertit la taille en Xo
+ * @param $fs La taille à convertir
  */
 function convert_size($fs)
 {
@@ -35,8 +42,9 @@ function convert_size($fs)
 }
 
 /**
- * List content of  $directory
- * Return the list of the files (array)
+ * Récupère récursivement le contenu d'un répertoire
+ * et le retourne sous forme d'array
+ * @param $directory Le répertoire à traiter
  **/
 function recursive_directory_tree($directory = null)
 {
@@ -86,8 +94,10 @@ function recursive_directory_tree($directory = null)
 }
 
 /**
- * Show the tree structure file
- * $filter = all / video
+ * Affiche la liste des fichiers sur index.php
+ * @param $treestructure L'array contenant la hiérarchie de fichiers
+ * @param $filter Le filtre à utiliser (all ou video)
+ * @param $editmode Prendre en compte l'editmode dans l'affichage
  */
 function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
 {
@@ -145,8 +155,8 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
 
 
 /**
- * rmdir function for not empty dir
- * @param $dir The dir to delete
+ * Supprime un dossier qui n'est pas vide
+ * @param $dir Le dossier à supprimer avec son contenu
  */
  function rrmdir($dir)
  {
@@ -162,10 +172,10 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
    }
  }
 
- /*
-*  Function ustr_replace for "unique str_replace"
-*  Replace a string only once in a string
- */
+/*
+*  Fonction str_replace() qui ne remplace qu'une occurence
+*  @param voir str_replace
+*/
 function ustr_replace($needle , $replace , $haystack)
 {
     // Looks for the first occurence of $needle in $haystack
@@ -179,7 +189,8 @@ function ustr_replace($needle , $replace , $haystack)
 }
 
 /*
- * Check the permissions of data and downloads
+ * Vérifie la permission des dossiers importants (downloads et data)
+ * et affiche une erreur en cas de besoin
  */
 function check_dir()
 {
@@ -209,7 +220,11 @@ function check_dir()
   }
 }
 
-
+/*
+ * Récupère l'épisode suivant et l'épisode précédent d'un dossier
+ * en fonction de $file (épisode courant).
+ * Retourne un array (prev=>X,next=>Y)
+ */
 function get_nextnprev($file)
 {
   $current_dir = recursive_directory_tree(dirname($file));
