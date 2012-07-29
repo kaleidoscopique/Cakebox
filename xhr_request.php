@@ -1,6 +1,5 @@
 <?php
 
-require('inc/config.inc.php');
 require('inc/functions.inc.php');
 
 if(isset($_GET['get_list']))
