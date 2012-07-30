@@ -16,8 +16,7 @@ Deux screenshots de Cakebox :
 
 1. Disposez d'un VPS, OS Debian ou basé Debian uniquement (très bonnes offres de serveurs offshore chez [Transip](https://www.transip.eu/vps/pricing-and-purchase/) et [Leaseweb](http://www.leaseweb.com/en/cloud-hosting/express-cloud))
 2. Téléchargez le mardambey-script et executez-le :
-`$ wget https://github.com/downloads/MardamBeyK/Cakebox/mardambey_script.sh`
-`$ chmod +x mardambey_script.sh && ./mardambey_script.sh --enable-htaccess`
+`$ wget https://github.com/downloads/MardamBeyK/Cakebox/mardambey_script.sh && chmod +x mardambey_script.sh && ./mardambey_script.sh --enable-htaccess`
 3. C'est terminé ! Téléchargez. Streamez.
 
 ## Que fait le MardamBey-Script sur mon serveur ?
