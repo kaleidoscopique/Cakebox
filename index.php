@@ -1,11 +1,12 @@
 <?php
 
-require('inc/functions.inc.php');
+require_once('inc/lang.inc.php');
+require_once('inc/functions.inc.php');
 
-// Récupère l'editmode
+// Get the editmode status
 $editmode = (isset($_GET['editmode'])) ? TRUE:FALSE;
 
-// Demande de suppression de fichiers
+// Request : DELETE FILES
 if(isset($_POST['delete']))
 {
 	foreach($_POST['Files'] as $file)
@@ -15,7 +16,7 @@ if(isset($_POST['delete']))
 	}
 }
 
-// Demande de déplacement de fichiers
+// Request : MOVE FILES
 if(isset($_POST['move']))
 {
 	foreach($_POST['Files'] as $file)
@@ -25,7 +26,7 @@ if(isset($_POST['move']))
 	}
 }
 
-// Demande de création d'un dossier
+// Request : CREATE DIR
 if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
 {
 	mkdir($_POST['mkdirSelect']."/".$_POST['mkdir_name'],0777);
@@ -35,7 +36,7 @@ if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CakeBox - Select a file to download or stream it</title>
+    <title>CakeBox - <?php echo $lang[LOCAL_LANG]['index_title']; ?></title>
     <meta charset="utf-8">
     <script type="text/javascript" src="ressources/oXHR.js"></script>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
@@ -45,93 +46,112 @@ if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
     <link rel="icon" type="image/ico" href="favicon.ico" />
 </head>
 <body>
-        <!-- ==============================header================================= -->
+        <!-- HEADER -->
         <header>
-	    <div id="logo">
-		<a href="index.php"><span class="first">Cake</span><span class="second">Box</span></a>
-	    </div>
+		    <div id="logo">
+				<a href="index.php">
+					<span class="first">Cake</span>
+					<span class="second">Box</span>
+				</a>
+		    </div>
         </header>
-        <!--==============================content================================-->
+        <!-- / HEADER -->
+
+
+        <!-- CONTENT -->
         <section id="content">
-	
-			<?php check_dir(); // Test les chmod des dossiers importants ?>
-			
-			<h2>Click the icon to download or stream your files</h2>	    
+
+			<?php 
+				// Test chmod of main directories
+				check_dir(); 
+			?>
+
+			<h2><?php echo $lang[LOCAL_LANG]['index_main_title']; ?></h2>	    
 			<hr class="clear" />
-			<!--<p id="loader" style="display: none;text-align: center;"><img src="ressources/ajax-loader.gif" alt="loading" /></p>-->
-			
-			<!-- ========== MANAGEMENT MENU =========== -->		
+
+			<!-- EDITMODE MENU -->
 			<p>
 				<?php
-					/* Check if user is in editmode or not (for javascript request) */		
-					$suffix = ($editmode) ? "-edit":"" ?>
+					// Check if user is in editmode or not (for javascript request)
+					$suffix = ($editmode) ? "-edit":""
+				?>
 					<select id="filterSelect" onchange="filesfilter(this);">
-						<option value="all<?php echo $suffix; ?>" default>Show all files</option>
-						<option value="videos<?php echo $suffix; ?>">Show video files only</option>
+						<option value="all<?php echo $suffix; ?>" default><?php echo $lang[LOCAL_LANG]['show_all_files']; ?></option>
+						<option value="videos<?php echo $suffix; ?>"><?php echo $lang[LOCAL_LANG]['show_video_files']; ?></option>
 					</select>
 					
 				<?php
 					// Display a short sentence about the editmode (on/off)
-					if(!$editmode) echo '<a class="goeditmode" href="?editmode">Go to edit mode (create, move and rename content)</a>';
-					else echo '<a class="goeditmode" href="index.php">Leave edit mode now</a>';
+					if(!$editmode) echo '<a class="goeditmode" href="?editmode">'.$lang[LOCAL_LANG]['enter_edit_mode'].'</a>';
+					else echo '<a class="goeditmode" href="index.php">'.$lang[LOCAL_LANG]['leave_edit_mode'].'</a>';
 				?>
 			</p>
 			
-			<?php
-			/* ======== CREATE FORM FOR EDITMODE ========== */		
-			if($editmode): ?> <form name="editform" action="index.php?editmode" method="post" > <?php endif; ?>
+			<?php 
+				// Open form for editmode 
+				if($editmode): 
+			?> 
+				<form name="editform" action="index.php?editmode" method="post"> 
+			<?php endif; ?>
 			
 			
-			<!-- ========== LOCAL FILES =========== -->
+			<!-- Local files -->
 			<div id="local">
 				<?php
-				$listof_dir = array(); // global var filled by recursive_directory_tree()
-				$tree_structure = recursive_directory_tree(LOCAL_DL_PATH);
-				print_tree_structure($tree_structure,"all",$editmode);
+					$listof_dir 	=	 array(); // Filled by recursive_directory_tree as a global var (for list of dir in editmode)
+					$tree_structure =	 recursive_directory_tree(LOCAL_DL_PATH);
+					print_tree_structure($tree_structure,"all",$editmode);
 				?>
 			</div>
+			<!-- / Local files -->
 			
-			<?php
-			/* ======== THE EDITBOX ======= */		
-			if($editmode): ?>
+			<?php 
+				// Show the editbox
+				if($editmode): 
+			?> 
 			<div class="editbox">
 			
-				<!-- ========== CREATE NEW DIR =========== -->
+				<!-- Create dir form-->
 				<p>
-				Create a new dir in...
-				<select name="mkdirSelect">
-					<option value="<?php echo LOCAL_DL_PATH; ?>">/</option>
-					<?php foreach($listof_dir as $dir) { echo '<option value="'.$dir.'">'.ustr_replace(LOCAL_DL_PATH,"",$dir).'</option>'; } ?>
-				</select>
-				<input type="text" value="name of the new dir" onblur="if(this.value=='') this.value='name of the new dir'" onclick="if(this.value=='name of the new dir') this.value='';" name="mkdir_name"/>
-				<input type="submit" value="Create !" name="mkdir"/>
+					<?php echo $lang[LOCAL_LANG]['create_new_dir']; ?>
+					<select name="mkdirSelect">
+						<option value="<?php echo LOCAL_DL_PATH; ?>">/</option>
+						<?php foreach($listof_dir as $dir) { echo '<option value="'.$dir.'">'.ustr_replace(LOCAL_DL_PATH,"",$dir).'</option>'; } ?>
+					</select>
+					<input type="text" value="<?php echo $lang[LOCAL_LANG]['name_new_dir'];?>" onblur="if(this.value=='') this.value='<?php echo $lang[LOCAL_LANG]['name_new_dir'];?>'" onclick="if(this.value=='<?php echo $lang[LOCAL_LANG]['name_new_dir'];?>') this.value='';" name="mkdir_name"/>
+					<input type="submit" value="<?php echo $lang[LOCAL_LANG]['create_new_dir_button']; ?>" name="mkdir"/>
 				</p>
+				<!-- / Create dir form-->
 				
-				<!-- ========== MOVE FILES =========== -->
+				<!-- Move dir&file form-->
 				<p>
-				Move selected file(s) to...
-				<select name="moveSelect">
-					<option value="<?php echo LOCAL_DL_PATH; ?>">/</option>
-					<?php foreach($listof_dir as $dir) { echo '<option value="'.$dir.'">'.ustr_replace(LOCAL_DL_PATH,"",$dir).'</option>'; } ?>
-				</select>
-				<input type="submit" value="Let's move !" name="move"/>
+					<?php echo $lang[LOCAL_LANG]['move_dir']; ?>
+					<select name="moveSelect">
+						<option value="<?php echo LOCAL_DL_PATH; ?>">/</option>
+						<?php foreach($listof_dir as $dir) { echo '<option value="'.$dir.'">'.ustr_replace(LOCAL_DL_PATH,"",$dir).'</option>'; } ?>
+					</select>
+					<input type="submit" value="<?php echo $lang[LOCAL_LANG]['move_dir_button']; ?>" name="move"/>
 				</p>
+				<!-- / Move dir&file form-->
 				
-				<!-- ========== DELETE FILES =========== -->
+				<!-- Delete dir&file form-->
 				<p>
-				Delete selected file(s) ?
-				<input type="submit" value="Yes, delete it/them !" name="delete"/>
+					<?php echo $lang[LOCAL_LANG]['delete_content']; ?>
+					<input type="submit" value="<?php echo $lang[LOCAL_LANG]['delete_content_button']; ?>" name="delete"/>
 				</p>
+				<!-- / Delete dir&file form-->
+
 			</div>
 			</form>
-			<?php endif; ?>
-			<!-- /endof -->
+			<?php endif;  ?>
         </section>
-	<!--==============================footer=================================-->
+        <!-- / CONTENT -->
+
+	<!-- FOOTER -->
     <footer>
     	<div class="padding">
-	
         </div>
     </footer>
+    <!-- / FOOTER -->
 </body>
 </html>

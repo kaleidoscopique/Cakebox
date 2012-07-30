@@ -101,6 +101,8 @@ function recursive_directory_tree($directory = null)
  */
 function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
 {
+  global $lang;
+
   foreach($treestructure as $key => $file)
   {
     if(is_array($file))
@@ -141,9 +143,9 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
           echo ' (?)
                 <span class="tooltip">
                   <span></span>
-                  Size : '.convert_size(filesize($file)).'<br/>
-                  Last update : '.date("d F Y, H:i",filemtime($file)).'<br/>
-                  Last access : '.date("d F Y, H:i",fileatime($file)).'<br/>
+                  '.$lang[LOCAL_LANG]['size'].' : '.convert_size(filesize($file)).'<br/>
+                  '.$lang[LOCAL_LANG]['last_update'].' : '.date("d F Y, H:i",filemtime($file)).'<br/>
+                  '.$lang[LOCAL_LANG]['last_access'].' : '.date("d F Y, H:i",fileatime($file)).'<br/>
               </span> ';
           echo '</a>';
 

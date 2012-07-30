@@ -56,11 +56,7 @@ function markfile(filename)
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
 		{
 			var divSelect = document.getElementById("popcorn");
-			divSelect .innerHTML = "All right, <span class=\"unmark\">you have marked this video</span> as \"seen\" !";
-			//document.getElementById("loader").style.display = "none";
-		} else if (xhr.readyState < 4)
-		{
-			//document.getElementById("loader").style.display = "inline";
+			divSelect .innerHTML = "Ok, <span class=\"unmark\">"+lang_ok_mark+"</span>.";
 		}
 	};
 	
@@ -80,11 +76,7 @@ function unmarkfile(filename)
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
 		{
 			var divSelect = document.getElementById("popcorn");
-			divSelect .innerHTML = "Ok, <span class=\"mark\">you have unmarked this video</span>.";
-			//document.getElementById("loader").style.display = "none";
-		} else if (xhr.readyState < 4)
-		{
-			//document.getElementById("loader").style.display = "inline";
+			divSelect .innerHTML = "Ok, <span class=\"mark\">"+lang_ok_unmark+"</span>.";
 		}
 	};
 	
