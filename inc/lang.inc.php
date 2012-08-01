@@ -44,7 +44,7 @@ $lang['fr']['right_click'] 			=	"Clic droit et \"Enregistrer sous\" pour téléc
 $lang['fr']['size'] 				=	"Taille :";
 
 /* * * * * * * *
- *	 ENGLISH   *
+ *   ENGLISH   *
  * * * * * * * */
 
 // index.php
