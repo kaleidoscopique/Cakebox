@@ -9,6 +9,9 @@
 Par MardamBey (iam.mardambey@gmail.com)
 http://www.twitter.com/kaleidoscopique
 
+Version 2.4
+- Nouvelle intégration de VLC à watch.php, beaucoup plus efficace que la précédente;
+
 Version 2.3
 - Ajout d'un système de traduction;
 - Cakebox est disponible en 2 langues (français et anglais) : changer la variable dans inc/lang.inc.php;

@@ -25,17 +25,40 @@ endif;
 <head>
     <title>CakeBox - <?php echo $lang[LOCAL_LANG]['watch_title']; ?></title>
     <meta charset="utf-8">
+
+    <!-- Style & ergo -->
     <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/tooltips.css" type="text/css" media="screen" />
+    <!-- / Style & ergo -->
+
+    <!-- VLC Controls -->
+    <script language="javascript" src="ressources/jquery.min.js"></script>
+    <script language="javascript" src="ressources/jquery-vlc.js"></script>
+    <link rel="stylesheet" type="text/css" href="ressources/vlc-styles.css" />
+    <script language="javascript">
+      
+        function play(instance, uri) {
+            VLCobject.getInstance(instance).play(uri);
+        }
+        
+         var player = null;
+        $(document).ready(function() {
+            player = VLCobject.embedPlayer('vlc1', 600, 400, true);
+        });
+
+    </script>
+    <!-- / VLC Controls -->
+
     <script lang="javascript">
       var lang_ok_unmark = '<?php echo $lang[LOCAL_LANG]['ok_unmark']; ?>';
       var lang_ok_mark = '<?php echo $lang[LOCAL_LANG]['ok_mark']; ?>';
     </script>
     <script src="ressources/oXHR.js"></script>
+
 </head>
-<body>
+<body onload="play('vlc1', '<?php echo $file; ?>')">
         <!-- HEADER -->
         <header>
           <div id="logo">
@@ -77,20 +100,14 @@ endif;
             <hr class="clear" />
 
             <p style="text-align:center;margin-bottom:10px;">
-            <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-lire-une-vid%C3%A9o-en-streaming" target="_blank" class="help"><?php echo $lang[LOCAL_LANG]['help_watching']; ?></a>
+              <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-lire-une-vid%C3%A9o-en-streaming" target="_blank" class="help"><?php echo $lang[LOCAL_LANG]['help_watching']; ?></a>
             </p>
 
             <center>
-              <object id='mediaPlayer' width="600" height="400" classid='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95' codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701' standby='Loading Media Player components...' type='application/x-oleobject'>
-                <param name='fileName' value="<?php echo $file; ?>">
-                <param name='animationatStart' value='true'>
-                <param name='transparentatStart' value='true'>
-                <param name='autoStart' value="false">
-                <param name='showControls' value="true">
-                <param name="ShowStatusBar" value="true">
-                <param name='loop' value="0">
-                <embed type='application/x-mplayer2' pluginspage='http://microsoft.com/windows/mediaplayer/en/download/' src="<?php echo $file; ?>" width="600" height="400" autostart="0" displaysize='4' autosize='0' bgcolor='black' showcontrols="0" showtracker='0' ShowStatusBar='1' showdisplay='0' videoborder3d='0' designtimesp='5311' loop="0"></embed>    
-                </object>
+ 
+                <!-- Embed VLC -->
+                <div id="vlc1" style="margin-bottom:50px;">player 1</div>
+                <!-- / VLC -->
 
                 <?php
                   // Show the "previous" and "next" link under the player
