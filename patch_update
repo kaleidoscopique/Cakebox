@@ -1,7 +1,21 @@
 #!/bin/bash
+# PATCH DE MISE A JOUR DE CAKEBOX
+# Par Mardambey (iam.mardambey@gmail.com)
+# heycakebox.com
+# ./patch_maj dossier_père_de_cakebox (/var/www par défaut)
+
+if [ $# -ne 1 ]
+then
+	dir="/var/www"
+else
+	dir=$1;
+fi
+
+cd $dir
+( (
+pwd
 
 # Télécharge la nouvelle version
-cd /var/www/
 git clone git://github.com/MardamBeyK/Cakebox.git
 
 # Met à jour les fichiers racines
@@ -15,10 +29,10 @@ find Cakebox/inc/ -type f -exec mv -v -f {} cakebox/inc/ \;
 
 # Supprime les fichiers temporaires
 rm -R Cakebox/
-rm patch_maj
+
+# Chmod du patch pour la prochaine MAJ
+chmod +x cakebox/patch_update
 
 # All right, bitch !
-echo "============================="
-echo "Tout s'est bien passé, la mise à jour est terminée !"
-echo "============================="
-echo ""
+echo "Update : OK"
+) 2>&1) | tee cakebox/last_update.log

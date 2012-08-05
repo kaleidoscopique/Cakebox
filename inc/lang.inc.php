@@ -12,6 +12,7 @@ define('LOCAL_LANG','fr');
  * * * * * * * */
 
 // index.php
+$lang['fr']['support_us'] 			=	"Supportez";
 $lang['fr']['index_title'] 			=	"Sélectionnez un fichier pour le télécharger ou le streamer";
 $lang['fr']['index_main_title'] 		=	"Cliquez sur un icône pour télécharger ou streamer le fichier";
 $lang['fr']['enter_edit_mode'] 			=	"Entrer dans le mode \"édition\" (créer, déplacer, supprimer)";
@@ -27,6 +28,10 @@ $lang['fr']['show_video_files']			=	"Lister seulement les fichiers vidéo";
 $lang['fr']['name_new_dir']			=	"nom du nouveau dossier";
 $lang['fr']['last_update']			=	"Dernière mise à jour";
 $lang['fr']['last_access']			=	"Dernier accès";
+$lang['fr']['create_data_dir']			=	"Vous devez créer un répertoire \"/data\" dans le dossier de Cakebox (chmod 777)";
+$lang['fr']['create_downloads_dir']			=	"Vous devez créer un répertoire \"/downloads\" dans le dossier de Cakebox (chmod 777)";
+$lang['fr']['chmod_data_dir']			=	"Vous devez appliquer le chmod 777 au dossier \"/data\"";
+$lang['fr']['chmod_downloads_dir']			=	"Vous devez appliquer le chmod 777 au dossier \"/downloads\"";
 // watch.php
 $lang['fr']['watch_title'] 			=	"Téléchargez ou regardez votre fichier";
 $lang['fr']['have_you_finished'] 		=	"Avez-vous terminé de regarder votre vidéo ?";
@@ -42,12 +47,22 @@ $lang['fr']['watch_next'] 			=	"Voir l'épisode suivant";
 $lang['fr']['watch_previous'] 			=	"Voir l'épisode précédent";
 $lang['fr']['right_click'] 			=	"Clic droit et \"Enregistrer sous\" pour télécharger";
 $lang['fr']['size'] 				=	"Taille :";
+// update
+$lang['fr']['new_version']			=	"Une nouvelle version de Cakebox est disponible";
+$lang['fr']['click_here_update']	=	"Cliquez ici pour lancer la mise à jour";
+$lang['fr']['cakebox_uptodate']		=	"Cakebox est à jour, félicitation";
+$lang['fr']['click_here']			=	"Cliquez ici";
+$lang['fr']['watch_log_update']		=	"pour accéder aux logs de la mise à jour";
+$lang['fr']['if_question']			=	"Si la mise à jour ne marche pas";
+$lang['fr']['ask_it']				=	"consultez cette page pour résoudre le problème";
+
 
 /* * * * * * * *
  *   ENGLISH   *
  * * * * * * * */
 
 // index.php
+$lang['en']['support_us'] 			=	"Support";
 $lang['en']['title'] 				=	"Select a file to download or stream it";
 $lang['en']['index_main_title'] 		=	"Click the icon to download or stream your files";
 $lang['en']['enter_edit_mode'] 			=	"Go to edit mode (create, move and rename content)";
@@ -63,6 +78,10 @@ $lang['en']['show_video_files']			=	"Show video files only";
 $lang['en']['name_new_dir']			=	"name of the new dir";
 $lang['en']['last_update']			=	"Last update";
 $lang['en']['last_access']			=	"Last access";
+$lang['en']['create_data_dir']			=	"You must create a folder named \"/data\" in the folder of Cakebox (chmod 777)";
+$lang['en']['create_downloads_dir']			=	"You must create a folder named \"/downloads\" in the folder of Cakebox (chmod 777)";
+$lang['en']['chmod_data_dir']			=	"You must set the chmod 777 to \"/data\"";
+$lang['en']['chmod_downloads_dir']			=	"You must set the chmod 777 to \"/downloads\"";
 // watch.php
 $lang['en']['watch_title'] 			=	"Download or watch your file";
 $lang['en']['have_you_finished'] 		=	"Have you finished watching this video ?";
@@ -78,5 +97,13 @@ $lang['en']['watch_next'] 			=	"Watch the next episode";
 $lang['en']['watch_previous'] 			=	"Watch the previous episode";
 $lang['en']['right_click'] 			=	"Right click and \"Save link as\" to download it";
 $lang['en']['size'] 				=	"Size :";
+// update
+$lang['en']['new_version']			=	"A new version is available";
+$lang['en']['click_here_update']	=	"Click here to update";
+$lang['en']['cakebox_uptodate']		=	"Cakebox is up to date, congrats !";
+$lang['en']['click_here']			=	"Click here";
+$lang['en']['watch_log_update']		=	"to see the update logs";
+$lang['en']['if_question']			=	"If update does not work";
+$lang['en']['ask_it']				=	"read this page to solve the problem";
 
 ?>

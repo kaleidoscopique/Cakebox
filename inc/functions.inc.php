@@ -1,8 +1,12 @@
 <?php
 
+// Nombre d'heures entre chaque vérif de mise à jour (défaut : 12)
+// Mettez 0 pour vérifier à chacune de vos visites
+define('TIME_CHECK_UPDATE', 12); 
+
 /*
-  Ne changez jamais cette valeur, même si vous pensez que vous
-  savez ce que vous faîtes. JAMAIS. JJAAAMMMAAAIISSS.
+  *** NE MODIFIEZ RIEN A PARTIR D'ICI ***
+  *** DO NOT MODIFY ANYTHING FROM HERE ***
 */
 define('LOCAL_DL_PATH','downloads');
 
@@ -196,15 +200,15 @@ function ustr_replace($needle , $replace , $haystack)
  */
 function check_dir()
 {
- 
+  global $lang;
   $isdir_data = is_dir("data");
   $isdir_downloads = is_dir("downloads");
   if(!$isdir_data || !$isdir_downloads)
   {
     echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-    echo '<span style="font-weight:bold;">WARNING</span><br/>';
-    if(!$isdir_data) echo "You must create a folder named \"data\" in the folder of Cakebox<br/>";
-    if(!$isdir_downloads) echo "You must create a folder named \"downloads\" in the folder of Cakebox<br/>";
+    echo '<span style="font-weight:bold;">IMPORTANT /!\</span><br/>';
+    if(!$isdir_data) echo $lang[LOCAL_LANG]['create_data_dir']."<br/>";
+    if(!$isdir_downloads) echo $lang[LOCAL_LANG]['create_downloads_dir']."<br/>";
     echo '</p>';
   }
   else
@@ -214,9 +218,9 @@ function check_dir()
     if($chmod_data != 777 || $chmod_downloads != 777)
     {
       echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-      echo '<span style="font-weight:bold;">WARNING</span><br/>';
-      if($chmod_data != 777) echo "You must change the permissions of \"/data\" to 777 (chmod).<br/>";
-      if($chmod_downloads != 777) echo "You must change the permissions of \"/downloads\" to 777 (chmod).<br/>";
+      echo '<span style="font-weight:bold;">IMPORTANT /!\</span><br/>';
+      if($chmod_data != 777) echo $lang[LOCAL_LANG]['chmod_data_dir']."<br/>";
+      if($chmod_downloads != 777) echo $lang[LOCAL_LANG]['chmod_downloads_dir']."<br/>";
       echo '</p>';
     }
   }
@@ -252,6 +256,93 @@ function get_nextnprev($file)
   }
   
   return array("prev"=>$prev,"next"=>$next);
+}
+
+
+/*
+ * Verifie si une mise à jour est disponible
+ * Retourne array("local_version"=>X,"current_version"=>Y,"changelog"=>Z) si une MàJ est disponible
+ * retourne array() sinon;
+ */
+function check_update()
+{
+  $last_check = fileatime('version.txt');
+  $time_since = time()-$last_check;
+
+  // Check for a new version each 12h
+  if($time_since > TIME_CHECK_UPDATE * 3600)
+  {
+    // Files to compare
+    $local_version_file     = fopen('version.txt','r');
+    $current_version_file   = fopen('https://github.com/MardamBeyK/Cakebox/raw/master/version.txt','r');
+
+    // Num of versions
+    $local_version    = fgets($local_version_file);
+    $current_version  = fgets($current_version_file);
+
+    // If not up to date
+    if(floatval($local_version) < floatval($current_version))
+    {
+      $description_update = "";
+      while(!feof($current_version_file))
+      {
+        $description_update[] = fgets($current_version_file);
+      }
+
+      return array("local_version"=>$local_version,"current_version"=>$current_version,"changelog"=>$description_update);
+    }
+
+  } else return array();
+}
+
+/*
+ * Affiche le div de mise à jour avec changelog si MàJ dispo
+ * N'affiche rien sinon
+ */
+function show_update($update_info)
+{
+    global $lang;
+    $current_version = $update_info['current_version'];
+    $description_update = $update_info['changelog'];
+
+    echo '<div id="update">';
+    echo "<h3>".$lang[LOCAL_LANG]['new_version']." : v$current_version !</h3>";
+    echo '<ul>';
+    foreach($description_update as $change) echo "<li>$change;</li>";
+    echo '</ul>';
+    echo '<a href="index.php?do_update" class="do_update">'.$lang[LOCAL_LANG]['click_here_update'].' !</a>';
+    echo '</div>';
+}
+
+/*
+ * Affiche un message après la fin d'une MàJ
+ */
+function show_update_done()
+{
+    global $lang;
+    echo '<div id="update">';
+    echo "<h3>".$lang[LOCAL_LANG]['cakebox_uptodate']." !</h3><br />";
+    echo '<a href="last_update.log" class="do_update">'.$lang[LOCAL_LANG]['click_here'].'</a> '.$lang[LOCAL_LANG]['watch_log_update'].'.<br />';
+    echo $lang[LOCAL_LANG]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[LOCAL_LANG]['ask_it'].' !</a>';
+    echo '</div>';
+}
+
+/**
+  * Fais la mise à jour vers la dernière version disponible
+  * @param $force Force la mise à jour si TRUE
+  */
+function do_update($force)
+{
+  // We must be sure there is an update available
+  if(check_update() || $force)
+  {
+
+    // Extract "/dir/of/web/server" from "/dir/of/web/server/cakebox"
+    $update_dir = escapeshellarg(substr(getcwd(),0,strpos(getcwd(),"/cakebox")));
+    exec("bash patch_maj $update_dir",$output);
+    header('index.php?update_done');
+
+  }
 }
 
 ?>

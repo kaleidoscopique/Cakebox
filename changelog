@@ -5,9 +5,12 @@
 ##       ######### ##  ##   ##       ##     ## ##     ##   ## ##   
 ##    ## ##     ## ##   ##  ##       ##     ## ##     ##  ##   ##  
 ######   ##     ## ##    ## ######## ########   #######  ##     ## 
-
 Par MardamBey (iam.mardambey@gmail.com)
 http://www.twitter.com/kaleidoscopique
+
+Version 2.5
+- Ajout d'un module de mise à jour automatique;
+- Ajout d'un bouton "supportez Cakebox";
 
 Version 2.4
 - Nouvelle intégration de VLC à watch.php, beaucoup plus efficace que la précédente;

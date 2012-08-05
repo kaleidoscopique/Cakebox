@@ -31,6 +31,17 @@ if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
 {
 	mkdir($_POST['mkdirSelect']."/".$_POST['mkdir_name'],0777);
 }
+
+// Request : UPDATE
+if(isset($_GET['do_update']))
+{
+	// Force the MAJ with ?do_update&force_update
+	if(isset($_GET['force_update'])) $force = true;
+	else $force = false;
+
+	// Execute update
+	do_update($force);
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,8 +65,21 @@ if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
 					<span class="second">Box</span>
 				</a>
 		    </div>
+		    <div id="flattr">
+		    	<a href="http://flattr.com/thing/811178/Cakebox-votre-nouvelle-tele" target="_blank">
+		    		<?php echo $lang[LOCAL_LANG]['support_us']; ?> <span class="cakebox">Cakebox</span> <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /> <span class="coeur">♥</span>
+				</a>
+		    </div>
         </header>
         <!-- / HEADER -->
+
+        <?php 
+	        // Verify if Cakebox is up to date
+	        if(($update_info = check_update())) show_update($update_info);
+
+	        // Show a message after an update
+	        if(isset($_GET['update_done'])) show_update_done();
+      	?>
 
 
         <!-- CONTENT -->

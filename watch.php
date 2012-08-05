@@ -61,9 +61,17 @@ endif;
 <body onload="play('vlc1', '<?php echo $file; ?>')">
         <!-- HEADER -->
         <header>
-          <div id="logo">
-            <a href="index.php"><span class="first">Cake</span><span class="second">Box</span></a>
-          </div>
+        <div id="logo">
+        <a href="index.php">
+          <span class="first">Cake</span>
+          <span class="second">Box</span>
+        </a>
+        </div>
+        <div id="flattr">
+          <a href="http://flattr.com/thing/811178/Cakebox-votre-nouvelle-tele" target="_blank">
+            <?php echo $lang[LOCAL_LANG]['support_us']; ?> <span class="cakebox">Cakebox</span> <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /> <span class="coeur">♥</span>
+        </a>
+        </div>
         </header>
         <!-- / HEADER -->
 

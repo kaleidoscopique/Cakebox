@@ -1,2 +1,3 @@
-2.4
-Nouvelle intégration de VLC à watch.php, beaucoup plus efficace que la précédente
+2.5
+Ajout d'un module de mise à jour automatique
+Ajout d'un bouton "supportez Cakebox"
