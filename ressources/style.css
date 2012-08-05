@@ -31,6 +31,24 @@ header #logo
     font-size:72px;
 }
 
+#flattr a
+{
+    color:#76d6b7;
+    text-decoration: none;
+    font-family: 'Droid Sans', sans-serif;
+    margin:10px 0 10px 44px;
+}
+
+#flattr a > .cakebox
+{
+    color:#ffffff !important;
+}
+
+#flattr a > .coeur
+{
+    color:#ff3e7a;
+}
+
 .first
 {
     color:#76d6b7 !important;
@@ -181,3 +199,37 @@ a.next_episode:hover
 {
     text-decoration: underline;
 }
+
+#update
+{
+    width: 60%;
+    margin:auto;
+    margin-top:40px;
+    background:#ffdee8;
+    padding:30px;
+    font-family: 'Droid Sans', sans-serif;
+}
+
+#update > h3
+{
+    font-family: 'Droid Sans', sans-serif;
+    font-size:24px!important;
+}
+
+#update > ul
+{
+    list-style-type: disc;
+    margin:15px 15px 15px 30px;
+}
+
+#update a.do_update
+{
+    color:#ff3174;
+    font-weight: bold;
+}
+
+#update a.do_update:hover
+{
+    text-decoration: underline;
+}
+
