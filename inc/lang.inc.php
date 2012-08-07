@@ -19,10 +19,10 @@ $lang['fr']['enter_edit_mode'] 			=	"Entrer dans le mode \"édition\" (créer, d
 $lang['fr']['leave_edit_mode'] 			=	"Quitter le mode d'édition";
 $lang['fr']['create_new_dir'] 			=	"Créer un nouveau dossier dans...";
 $lang['fr']['move_dir'] 			=	"Déplacer les fichiers séléctionnés dans...";
-$lang['fr']['delete_content'] 			=	"Supprimer les fichiers séléctionné ?";
+$lang['fr']['delete_content'] 			=	"Supprimer les fichiers séléctionnés ?";
 $lang['fr']['create_new_dir_button'] 		=	"Créer le dossier";
 $lang['fr']['move_dir_button'] 			=	"Déplacer la séléction";
-$lang['fr']['delete_content_button'] 		=	"Oui, supprimez tout ça !";
+$lang['fr']['delete_content_button'] 		=	"Oui, supprimer tout ça !";
 $lang['fr']['show_all_files']			=	"Lister tous les fichiers";
 $lang['fr']['show_video_files']			=	"Lister seulement les fichiers vidéo";
 $lang['fr']['name_new_dir']			=	"nom du nouveau dossier";
@@ -49,10 +49,10 @@ $lang['fr']['right_click'] 			=	"Clic droit et \"Enregistrer sous\" pour téléc
 $lang['fr']['size'] 				=	"Taille :";
 // update
 $lang['fr']['new_version']			=	"Une nouvelle version de Cakebox est disponible";
-$lang['fr']['click_here_update']	=	"Cliquez ici pour lancer la mise à jour";
-$lang['fr']['cakebox_uptodate']		=	"Cakebox est à jour, félicitation";
+$lang['fr']['click_here_update']		=	"Cliquez ici pour lancer la mise à jour";
+$lang['fr']['cakebox_uptodate']			=	"Cakebox est à jour, félicitation";
 $lang['fr']['click_here']			=	"Cliquez ici";
-$lang['fr']['watch_log_update']		=	"pour accéder aux logs de la mise à jour";
+$lang['fr']['watch_log_update']			=	"pour accéder aux logs de la mise à jour";
 $lang['fr']['if_question']			=	"Si la mise à jour ne marche pas";
 $lang['fr']['ask_it']				=	"consultez cette page pour résoudre le problème";
 
@@ -99,10 +99,10 @@ $lang['en']['right_click'] 			=	"Right click and \"Save link as\" to download it
 $lang['en']['size'] 				=	"Size :";
 // update
 $lang['en']['new_version']			=	"A new version is available";
-$lang['en']['click_here_update']	=	"Click here to update";
-$lang['en']['cakebox_uptodate']		=	"Cakebox is up to date, congrats !";
+$lang['en']['click_here_update']		=	"Click here to update";
+$lang['en']['cakebox_uptodate']			=	"Cakebox is up to date, congrats !";
 $lang['en']['click_here']			=	"Click here";
-$lang['en']['watch_log_update']		=	"to see the update logs";
+$lang['en']['watch_log_update']			=	"to see the update logs";
 $lang['en']['if_question']			=	"If update does not work";
 $lang['en']['ask_it']				=	"read this page to solve the problem";
 
