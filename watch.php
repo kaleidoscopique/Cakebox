@@ -23,6 +23,7 @@ endif;
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="robots" content="noindex" />
     <title>CakeBox - <?php echo $lang[LOCAL_LANG]['watch_title']; ?></title>
     <meta charset="utf-8">
 

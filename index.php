@@ -47,6 +47,7 @@ if(isset($_GET['do_update']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="robots" content="noindex"/>
     <title>CakeBox - <?php echo $lang[LOCAL_LANG]['index_title']; ?></title>
     <meta charset="utf-8">
     <script type="text/javascript" src="ressources/oXHR.js"></script>
