@@ -10,6 +10,9 @@ define('EDITMODE_ENABLE', FALSE);
 // Affiche les fichiers et dossiers cachés
 define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
 
+// Exclusion de certains fichiers ou dossiers à l'affichage
+$excludeFiles = array("");
+
 /*
   *** NE MODIFIEZ RIEN A PARTIR D'ICI ***
   *** DO NOT MODIFY ANYTHING FROM HERE ***
@@ -59,6 +62,7 @@ function convert_size($fs)
 function recursive_directory_tree($directory = null)
 {
     global $listof_dir;
+    global $excludeFiles;
 
     //If $directory is null, set $directory to the current working directory.
     if ($directory == null) {
@@ -79,6 +83,11 @@ function recursive_directory_tree($directory = null)
             if ($file == "." || $file == ".." || $file == ".htaccess" || ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS)) {
                 continue;
             }
+
+	    //Exclude some specified files
+	    if (in_array($file, $excludeFiles)) {
+                continue;
+	    }
 
             //Check if the current $file is a directory itself.
             //The appending of $directory is necessary here.
