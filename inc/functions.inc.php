@@ -7,6 +7,9 @@ define('TIME_CHECK_UPDATE', 12);
 // Permet le mode d'édition
 define('EDITMODE_ENABLE', FALSE);
 
+// Affiche les fichiers et dossiers cachés
+define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
+
 /*
   *** NE MODIFIEZ RIEN A PARTIR D'ICI ***
   *** DO NOT MODIFY ANYTHING FROM HERE ***
@@ -73,7 +76,7 @@ function recursive_directory_tree($directory = null)
         foreach(scandir($directory) as $file) {
 
             //. = current directory, .. = up one level. We want to ignore both.
-            if ($file == "." || $file == ".." || $file == ".htaccess") {
+            if ($file == "." || $file == ".." || $file == ".htaccess" || ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS)) {
                 continue;
             }
 
