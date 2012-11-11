@@ -74,7 +74,7 @@ if(isset($_GET['do_update']))
         </header>
         <!-- / HEADER -->
 
-        <?php 
+        <?php
 	        // Verify if Cakebox is up to date
 	        if(($update_info = check_update())) show_update($update_info);
 
@@ -86,12 +86,12 @@ if(isset($_GET['do_update']))
         <!-- CONTENT -->
         <section id="content">
 
-			<?php 
+			<?php
 				// Test chmod of main directories
-				check_dir(); 
+				check_dir();
 			?>
 
-			<h2><?php echo $lang[LOCAL_LANG]['index_main_title']; ?></h2>	    
+			<h2><?php echo $lang[LOCAL_LANG]['index_main_title']; ?></h2>	
 			<hr class="clear" />
 
 			<!-- EDITMODE MENU -->
@@ -114,11 +114,11 @@ if(isset($_GET['do_update']))
 				?>
 			</p>
 			
-			<?php 
-				// Open form for editmode 
-				if($editmode): 
-			?> 
-				<form name="editform" action="index.php?editmode" method="post"> 
+			<?php
+				// Open form for editmode
+				if($editmode):
+			?>
+				<form name="editform" action="index.php?editmode" method="post">
 			<?php endif; ?>
 			
 			
@@ -132,10 +132,10 @@ if(isset($_GET['do_update']))
 			</div>
 			<!-- / Local files -->
 			
-			<?php 
+			<?php
 				// Show the editbox
-				if($editmode): 
-			?> 
+				if($editmode):
+			?>
 			<div class="editbox">
 			
 				<!-- Create dir form-->
