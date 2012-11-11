@@ -84,10 +84,10 @@ function recursive_directory_tree($directory = null)
                 continue;
             }
 
-	    //Exclude some specified files
-	    if (in_array($file, $excludeFiles)) {
+            //Exclude some specified files
+            if (in_array($file, $excludeFiles)) {
                 continue;
-	    }
+            }
 
             //Check if the current $file is a directory itself.
             //The appending of $directory is necessary here.
