@@ -4,7 +4,7 @@ require_once('inc/lang.inc.php');
 require_once('inc/functions.inc.php');
 
 // Get the editmode status
-$editmode = (isset($_GET['editmode'])) ? TRUE:FALSE;
+$editmode = (EDITMODE_ENABLE && isset($_GET['editmode'])) ? TRUE:FALSE;
 
 // Request : DELETE FILES
 if(isset($_POST['delete']))
@@ -74,7 +74,7 @@ if(isset($_GET['do_update']))
         </header>
         <!-- / HEADER -->
 
-        <?php 
+        <?php
 	        // Verify if Cakebox is up to date
 	        if(($update_info = check_update())) show_update($update_info);
 
@@ -86,12 +86,12 @@ if(isset($_GET['do_update']))
         <!-- CONTENT -->
         <section id="content">
 
-			<?php 
+			<?php
 				// Test chmod of main directories
-				check_dir(); 
+				check_dir();
 			?>
 
-			<h2><?php echo $lang[LOCAL_LANG]['index_main_title']; ?></h2>	    
+			<h2><?php echo $lang[LOCAL_LANG]['index_main_title']; ?></h2>	
 			<hr class="clear" />
 
 			<!-- EDITMODE MENU -->
@@ -107,16 +107,18 @@ if(isset($_GET['do_update']))
 					
 				<?php
 					// Display a short sentence about the editmode (on/off)
-					if(!$editmode) echo '<a class="goeditmode" href="?editmode">'.$lang[LOCAL_LANG]['enter_edit_mode'].'</a>';
-					else echo '<a class="goeditmode" href="index.php">'.$lang[LOCAL_LANG]['leave_edit_mode'].'</a>';
+					if(EDITMODE_ENABLE && !$editmode)
+					  echo '<a class="goeditmode" href="?editmode">'.$lang[LOCAL_LANG]['enter_edit_mode'].'</a>';
+					else if ($editmode)
+					  echo '<a class="goeditmode" href="index.php">'.$lang[LOCAL_LANG]['leave_edit_mode'].'</a>';
 				?>
 			</p>
 			
-			<?php 
-				// Open form for editmode 
-				if($editmode): 
-			?> 
-				<form name="editform" action="index.php?editmode" method="post"> 
+			<?php
+				// Open form for editmode
+				if($editmode):
+			?>
+				<form name="editform" action="index.php?editmode" method="post">
 			<?php endif; ?>
 			
 			
@@ -130,10 +132,10 @@ if(isset($_GET['do_update']))
 			</div>
 			<!-- / Local files -->
 			
-			<?php 
+			<?php
 				// Show the editbox
-				if($editmode): 
-			?> 
+				if($editmode):
+			?>
 			<div class="editbox">
 			
 				<!-- Create dir form-->

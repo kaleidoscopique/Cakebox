@@ -3,7 +3,7 @@
 require('inc/lang.inc.php');
 require('inc/functions.inc.php');
 
-// File to watch/DL and it extention 
+// File to watch/DL and it extention
 $file = htmlspecialchars($_GET['file']);
 $ext = get_file_icon(basename($file),TRUE);
 
@@ -39,11 +39,11 @@ endif;
     <script language="javascript" src="ressources/jquery-vlc.js"></script>
     <link rel="stylesheet" type="text/css" href="ressources/vlc-styles.css" />
     <script language="javascript">
-      
+
         function play(instance, uri) {
             VLCobject.getInstance(instance).play(uri);
         }
-        
+
          var player = null;
         $(document).ready(function() {
             player = VLCobject.embedPlayer('vlc1', 600, 400, true);
@@ -79,13 +79,13 @@ endif;
         <!-- CONTENT -->
         <section id="content">
           <h2><?php echo ustr_replace(LOCAL_DL_PATH."/","",$file ); ?></h2>
-          
-          <?php 
+
+          <?php
             // If it's a video file
-            if($ext == "avi"): 
+            if($ext == "avi"):
           ?>
               <div id="popcorn" class="littleh2">
-                <?php 
+                <?php
                   // If file is not marked as "already seen"
                   if(!file_exists("data/".basename($file))):
                 ?>
@@ -97,7 +97,7 @@ endif;
                           <?php echo $lang[LOCAL_LANG]['popcorn_details']; ?>
                           </span>
                     </a>
-                <?php 
+                <?php
                   else:
                 ?>
                     Hey, <span class="unmark"><?php echo $lang[LOCAL_LANG]['do_you_remember']; ?></span>
@@ -113,14 +113,14 @@ endif;
             </p>
 
             <center>
- 
+
                 <!-- Embed VLC -->
                 <div id="vlc1" style="margin-bottom:50px;">player 1</div>
                 <!-- / VLC -->
 
                 <?php
                   // Show the "previous" and "next" link under the player
-                  if($prev != NULL):          
+                  if($prev != NULL):
                     echo '<div style="margin:40px 0px 10px 0px;">';
                     echo '<a href="watch.php?file='.$prev.'" class="next_episode">';
                     echo "← ".$lang[LOCAL_LANG]['watch_previous'];
@@ -135,7 +135,7 @@ endif;
                 ?>
             </center>
           <?php endif; ?>
-           
+
           <div class="download_button">
             <a href="<?php echo $file; ?>">
               <img src="ressources/downloadfile.png" />
@@ -147,7 +147,7 @@ endif;
 
           <br />
           <br />
-    
+
         </section>
         <!-- / CONTENT -->
 

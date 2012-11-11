@@ -1,8 +1,8 @@
 <?php
 
-/*  
+/*
 	Fichier de langues
-	Contient les textes de Cakebox traduits 
+	Contient les textes de Cakebox traduits
 */
 
 define('LOCAL_LANG','fr');

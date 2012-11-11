@@ -2,7 +2,16 @@
 
 // Nombre d'heures entre chaque vérif de mise à jour (défaut : 12)
 // Mettez 0 pour vérifier à chacune de vos visites
-define('TIME_CHECK_UPDATE', 12); 
+define('TIME_CHECK_UPDATE', 12);
+
+// Permet le mode d'édition
+define('EDITMODE_ENABLE', FALSE);
+
+// Affiche les fichiers et dossiers cachés
+define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
+
+// Exclusion de certains fichiers ou dossiers à l'affichage
+$excludeFiles = array("");
 
 /*
   *** NE MODIFIEZ RIEN A PARTIR D'ICI ***
@@ -53,6 +62,7 @@ function convert_size($fs)
 function recursive_directory_tree($directory = null)
 {
     global $listof_dir;
+    global $excludeFiles;
 
     //If $directory is null, set $directory to the current working directory.
     if ($directory == null) {
@@ -70,7 +80,12 @@ function recursive_directory_tree($directory = null)
         foreach(scandir($directory) as $file) {
 
             //. = current directory, .. = up one level. We want to ignore both.
-            if ($file == "." || $file == ".." || $file == ".htaccess") {
+            if ($file == "." || $file == ".." || $file == ".htaccess" || ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS)) {
+                continue;
+            }
+
+            //Exclude some specified files
+            if (in_array($file, $excludeFiles)) {
                 continue;
             }
 
@@ -129,7 +144,7 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
         echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
 
           // La checkbox de l'editmode
-          if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';         
+          if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
 
           // Affichage de l'image à gauche du titre
           $current = htmlspecialchars(urlencode($file));
@@ -239,22 +254,22 @@ function get_nextnprev($file)
 
   // Si le fichier courant n'est pas le dernier, on a notre $next
   $next = NULL;
-  if($current_file != count($current_dir)-1) 
+  if($current_file != count($current_dir)-1)
   {
       // Si le fichier suivant est bien une vidéo
-      if(get_file_icon(basename($current_dir[$current_file+1]),true) == "avi") 
+      if(get_file_icon(basename($current_dir[$current_file+1]),true) == "avi")
         $next = htmlspecialchars(urlencode($current_dir[$current_file+1]));
   }
 
   // Si le fichier courant n'est pas le premier, on a notre prev
   $prev = NULL;
-  if($current_file != 0) 
+  if($current_file != 0)
   {
       // Si le fichier précédent est bien une vidéo
-      if(get_file_icon(basename($current_dir[$current_file-1]),true) == "avi") 
+      if(get_file_icon(basename($current_dir[$current_file-1]),true) == "avi")
         $prev = htmlspecialchars(urlencode($current_dir[$current_file-1]));
   }
-  
+
   return array("prev"=>$prev,"next"=>$next);
 }
 

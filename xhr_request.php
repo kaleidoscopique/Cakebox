@@ -10,8 +10,8 @@ if(isset($_GET['get_list']))
     // Parse parameters EDITMODE
     $editmode = (isset($_GET['editmode'])) ? TRUE:FALSE;
     // Creation of the array
-    $listof_dir = array(); // global var filled by recursive_directory_tree()    
-    
+    $listof_dir = array(); // global var filled by recursive_directory_tree()
+
     // Create the tree_structure
     $tree_structure = recursive_directory_tree("downloads");
     print_tree_structure($tree_structure,$filter,$editmode);
