@@ -4,7 +4,7 @@ require_once('inc/lang.inc.php');
 require_once('inc/functions.inc.php');
 
 // Get the editmode status
-$editmode = (isset($_GET['editmode'])) ? TRUE:FALSE;
+$editmode = (EDITMODE_ENABLE && isset($_GET['editmode'])) ? TRUE:FALSE;
 
 // Request : DELETE FILES
 if(isset($_POST['delete']))
@@ -107,8 +107,10 @@ if(isset($_GET['do_update']))
 					
 				<?php
 					// Display a short sentence about the editmode (on/off)
-					if(!$editmode) echo '<a class="goeditmode" href="?editmode">'.$lang[LOCAL_LANG]['enter_edit_mode'].'</a>';
-					else echo '<a class="goeditmode" href="index.php">'.$lang[LOCAL_LANG]['leave_edit_mode'].'</a>';
+					if(EDITMODE_ENABLE && !$editmode)
+					  echo '<a class="goeditmode" href="?editmode">'.$lang[LOCAL_LANG]['enter_edit_mode'].'</a>';
+					else if ($editmode)
+					  echo '<a class="goeditmode" href="index.php">'.$lang[LOCAL_LANG]['leave_edit_mode'].'</a>';
 				?>
 			</p>
 			

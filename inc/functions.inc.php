@@ -4,6 +4,9 @@
 // Mettez 0 pour vérifier à chacune de vos visites
 define('TIME_CHECK_UPDATE', 12); 
 
+// Permet le mode d'édition
+define('EDITMODE_ENABLE', FALSE);
+
 /*
   *** NE MODIFIEZ RIEN A PARTIR D'ICI ***
   *** DO NOT MODIFY ANYTHING FROM HERE ***
