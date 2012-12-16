@@ -5,7 +5,7 @@
 define('TIME_CHECK_UPDATE', 12);
 
 // Permet le mode d'édition
-define('EDITMODE_ENABLE', FALSE);
+define('EDITMODE_ENABLE', TRUE);
 
 // Affiche les fichiers et dossiers cachés
 define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
