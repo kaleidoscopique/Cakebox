@@ -68,11 +68,6 @@ endif;
           <span class="second">Box</span>
         </a>
         </div>
-        <div id="flattr">
-          <a href="http://flattr.com/thing/811178/Cakebox-votre-nouvelle-tele" target="_blank">
-            <?php echo $lang[LOCAL_LANG]['support_us']; ?> <span class="cakebox">Cakebox</span> <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /> <span class="coeur">♥</span>
-        </a>
-        </div>
         </header>
         <!-- / HEADER -->
 
@@ -114,9 +109,20 @@ endif;
 
             <center>
 
-                <!-- Embed VLC -->
+              <?php if(detect_OS() == "OSX"): ?>
+                <!-- Embed DivX Player (for OS X) -->
+                <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="420" height="360" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
+                  <param name="custommode" value="none" />
+                  <param name="autoPlay" value="false" />
+                  <param name="src" value="<?php echo $file; ?>" />
+                  <embed type="video/divx" src="<?php echo $file; ?>" custommode="none" width="420" height="360" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
+                </object>
+                <!-- / DivX -->
+              <?php else: ?>
+                <!-- Embed VLC (for Windows & Linux) -->
                 <div id="vlc1" style="margin-bottom:50px;">player 1</div>
                 <!-- / VLC -->
+              <?php endif; ?>
 
                 <?php
                   // Show the "previous" and "next" link under the player

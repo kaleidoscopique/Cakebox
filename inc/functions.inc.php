@@ -146,8 +146,12 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
           // La checkbox de l'editmode
           if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
 
-          // Affichage de l'image à gauche du titre
+          // Affichage des images à gauche du titre (Direct Download + Watch)
           $current = htmlspecialchars(urlencode($file));
+          echo '<a href="'.$file.'">';
+            echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
+          echo '</a>';
+
           echo '<a href="watch.php?file='.$current.'">';
             echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
           echo '</a>';
@@ -359,6 +363,17 @@ function do_update($force)
     header('index.php?update_done');
 
   }
+}
+
+/**
+  * Retourne l'OS de l'utilisateur
+  * @return "Linux-Windows-others" | "OSX" 
+  */
+function detect_OS()
+{
+  $ua = $_SERVER["HTTP_USER_AGENT"];
+  if(strpos($ua, 'Macintosh')) return "OSX";
+  else return "Linux-Windows-others";
 }
 
 ?>
