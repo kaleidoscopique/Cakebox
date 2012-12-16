@@ -7,6 +7,9 @@ require('inc/functions.inc.php');
 $file = htmlspecialchars($_GET['file']);
 $ext = get_file_icon(basename($file),TRUE);
 
+// User OS
+$detect_OS = detect_OS();
+
 // Get the next and the previous video file if current file is a video too
 if($ext == "avi"):
   $listof_dir = array(); // Global used by get_nextnprev
@@ -34,23 +37,25 @@ endif;
     <link rel="stylesheet" href="ressources/tooltips.css" type="text/css" media="screen" />
     <!-- / Style & ergo -->
 
-    <!-- VLC Controls -->
-    <script language="javascript" src="ressources/jquery.min.js"></script>
-    <script language="javascript" src="ressources/jquery-vlc.js"></script>
-    <link rel="stylesheet" type="text/css" href="ressources/vlc-styles.css" />
-    <script language="javascript">
+    <?php if($detect_OS == "Linux-Windows-others"): ?>
+      <!-- VLC Controls -->
+      <script language="javascript" src="ressources/jquery.min.js"></script>
+      <script language="javascript" src="ressources/jquery-vlc.js"></script>
+      <link rel="stylesheet" type="text/css" href="ressources/vlc-styles.css" />
+      <script language="javascript">
 
-        function play(instance, uri) {
-            VLCobject.getInstance(instance).play(uri);
-        }
+          function play(instance, uri) {
+              VLCobject.getInstance(instance).play(uri);
+          }
 
-         var player = null;
-        $(document).ready(function() {
-            player = VLCobject.embedPlayer('vlc1', 600, 400, true);
-        });
+           var player = null;
+          $(document).ready(function() {
+              player = VLCobject.embedPlayer('vlc1', 600, 400, true);
+          });
 
-    </script>
-    <!-- / VLC Controls -->
+      </script>
+      <!-- / VLC Controls -->
+    <?php endif; ?>
 
     <script lang="javascript">
       var lang_ok_unmark = '<?php echo $lang[LOCAL_LANG]['ok_unmark']; ?>';
@@ -59,7 +64,7 @@ endif;
     <script src="ressources/oXHR.js"></script>
 
 </head>
-<body onload="play('vlc1', '<?php echo $file; ?>')">
+<body <?php if($detect_OS == "Linux-Windows-others"): ?> onload="play('vlc1', '<?php echo $file; ?>')" <?php endif; ?>>
         <!-- HEADER -->
         <header>
         <div id="logo">
@@ -109,7 +114,7 @@ endif;
 
             <center>
 
-              <?php if(detect_OS() == "OSX"): ?>
+              <?php if($detect_OS == "OSX"): ?>
                 <!-- Embed DivX Player (for OS X) -->
                 <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="420" height="360" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                   <param name="custommode" value="none" />
