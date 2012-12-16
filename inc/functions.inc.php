@@ -360,7 +360,7 @@ function do_update($force)
     $update_dir = escapeshellarg(substr(getcwd(),0,strpos(getcwd(),"/cakebox")));
     exec("bash patch_update $update_dir");
     sleep(1); // let time before redirection
-    header('index.php?update_done');
+    header('Location:index.php?update_done');
 
   }
 }
