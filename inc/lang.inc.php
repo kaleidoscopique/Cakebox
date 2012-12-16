@@ -46,7 +46,7 @@ $lang['fr']['help_watching'] 			=	"Aidez-moi, je n'arrive pas à voir mes vidéo
 $lang['fr']['watch_next'] 			=	"Voir l'épisode suivant";
 $lang['fr']['watch_previous'] 			=	"Voir l'épisode précédent";
 $lang['fr']['right_click'] 			=	"Clic droit et \"Enregistrer sous\" pour télécharger";
-$lang['fr']['size'] 				=	"Taille :";
+$lang['fr']['size'] 				=	"Taille";
 // update
 $lang['fr']['new_version']			=	"Une nouvelle version de Cakebox est disponible";
 $lang['fr']['click_here_update']		=	"Cliquez ici pour lancer la mise à jour";

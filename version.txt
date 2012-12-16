@@ -1,3 +1,6 @@
-2.5
-Ajout d'un module de mise à jour automatique
-Ajout d'un bouton "supportez Cakebox"
+2.6
+Cakebox est désormais compatible OS/X
+Suppression du bouton "Flattr" dans la bannière
+Téléchargement rapide depuis la page d'accueil
+Correction d'un bug de traduction FR
+Correction de bugs mineurs
