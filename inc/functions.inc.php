@@ -117,22 +117,24 @@ function recursive_directory_tree($directory = null)
  * @param $treestructure L'array contenant la hiérarchie de fichiers
  * @param $filter Le filtre à utiliser (all ou video)
  * @param $editmode Prendre en compte l'editmode dans l'affichage
+ * @param $father Un paramètre récursif qui permet de connaître le(s) parent(s) d'un dossier
  */
-function print_tree_structure($treestructure,$filter="all",$editmode=FALSE)
+function print_tree_structure($treestructure,$filter="all",$editmode=FALSE,$father="")
 {
   global $lang;
 
   foreach($treestructure as $key => $file)
   {
+    // Si on n'est sur un dossier
     if(is_array($file))
     {
       $key = addslashes(basename($key));
       echo '<div class="onedir">';
-      if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($key).'" onclick="CheckLikes(this);"/>';
+      if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.$father.htmlspecialchars($key).'" onclick="CheckLikes(this);"/>';
       echo '<img src="ressources/folder.png" onclick="showhidedir(\''.$key.'\');return false;" class="pointerLink imgfolder" />
       <span class="pointerLink" onclick="showhidedir(\''.$key.'\');return false;">'.$key.'</span></div>';
       echo '<div id="'.$key.'" class="dirInList" style="display:none;">';
-      print_tree_structure($file,$filter,$editmode);
+      print_tree_structure($file,$filter,$editmode,$father.htmlspecialchars($key)."/");
       echo '</div>';
     }
     else

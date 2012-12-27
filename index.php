@@ -11,7 +11,7 @@ if(isset($_POST['delete']))
 {
 	foreach($_POST['Files'] as $file)
 	{
-		if(is_dir($file)) @rrmdir($file);
+		if(is_dir(LOCAL_DL_PATH.'/'.$file)) @rrmdir(LOCAL_DL_PATH.'/'.$file);
 		else @unlink($file);
 	}
 }
@@ -21,8 +21,9 @@ if(isset($_POST['move']))
 {
 	foreach($_POST['Files'] as $file)
 	{
-		if(is_dir($file)) @rename($file,$_POST['moveSelect']."/".basename($file));
-		else if(file_exists($file)) @rename($file,$_POST['moveSelect']."/".basename($file));
+		// On rajoute "/downloads" devant le nom des dossiers
+		if(is_dir(LOCAL_DL_PATH.'/'.$file)) $file = LOCAL_DL_PATH.'/'.$file;
+		@rename($file,$_POST['moveSelect']."/".basename($file));
 	}
 }
 
