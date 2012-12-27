@@ -1,4 +1,6 @@
 <?php
+// Langue de Cakebox (en - fr)
+define('LOCAL_LANG','fr');
 
 // Nombre d'heures entre chaque vérif de mise à jour (défaut : 12)
 // Mettez 0 pour vérifier à chacune de vos visites

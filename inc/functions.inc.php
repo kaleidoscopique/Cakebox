@@ -3,6 +3,7 @@
 if (!file_exists("config.php"))
 {
 	// default values if conf file doesn't exists
+	define('LOCAL_LANG','fr');
 	define('TIME_CHECK_UPDATE', 12);
 	define('EDITMODE_ENABLE', TRUE);
 	define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
@@ -117,6 +118,14 @@ function recursive_directory_tree($directory = null)
 function print_tree_structure($treestructure,$filter="all",$editmode=FALSE,$father="")
 {
   global $lang;
+
+  if (empty($treestructure))
+  {
+	  echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
+	  echo $lang[LOCAL_LANG]['empty_dir'];
+	  echo '</div>';
+	  return;
+  }
 
   foreach($treestructure as $key => $file)
   {
