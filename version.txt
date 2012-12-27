@@ -1,6 +1,3 @@
-2.6
-Cakebox est désormais compatible OS/X
-Suppression du bouton "Flattr" dans la bannière
-Téléchargement rapide depuis la page d'accueil
-Correction d'un bug de traduction FR
-Correction de bugs mineurs
+2.7
+Correction de 2 énormes bugs qui empêchaient de supprimer des dossiers pleins et de les déplacer
+Création d'un super plugin pour rutorrent. La mise à jour doit se faire manuellement (ici : https://github.com/MardamBeyK/Cakebox/wiki/Installer-le-plugin-Cakebox-pour-Rutorrent)
