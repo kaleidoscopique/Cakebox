@@ -1,22 +1,18 @@
 <?php
 
-// Nombre d'heures entre chaque vérif de mise à jour (défaut : 12)
-// Mettez 0 pour vérifier à chacune de vos visites
-define('TIME_CHECK_UPDATE', 12);
+if (!file_exists("config.php"))
+{
+	// default values if conf file doesn't exists
+	define('LOCAL_LANG','fr');
+	define('TIME_CHECK_UPDATE', 12);
+	define('EDITMODE_ENABLE', TRUE);
+	define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
 
-// Permet le mode d'édition
-define('EDITMODE_ENABLE', TRUE);
+	$excludeFiles = array(".htaccess", "");
+}
+else
+	require_once("config.php");
 
-// Affiche les fichiers et dossiers cachés
-define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
-
-// Exclusion de certains fichiers ou dossiers à l'affichage
-$excludeFiles = array("");
-
-/*
-  *** NE MODIFIEZ RIEN A PARTIR D'ICI ***
-  *** DO NOT MODIFY ANYTHING FROM HERE ***
-*/
 define('LOCAL_DL_PATH','downloads');
 
 /**
@@ -80,7 +76,7 @@ function recursive_directory_tree($directory = null)
         foreach(scandir($directory) as $file) {
 
             //. = current directory, .. = up one level. We want to ignore both.
-            if ($file == "." || $file == ".." || $file == ".htaccess" || ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS)) {
+            if ($file == "." || $file == ".." || ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS)) {
                 continue;
             }
 
@@ -122,6 +118,14 @@ function recursive_directory_tree($directory = null)
 function print_tree_structure($treestructure,$filter="all",$editmode=FALSE,$father="")
 {
   global $lang;
+
+  if (empty($treestructure))
+  {
+	  echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
+	  echo $lang[LOCAL_LANG]['empty_dir'];
+	  echo '</div>';
+	  return;
+  }
 
   foreach($treestructure as $key => $file)
   {

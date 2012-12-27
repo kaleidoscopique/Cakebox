@@ -20,7 +20,7 @@ header{
 	position:relative; 
 	z-index:2;
 	background:url(footer-tail.png);
-	height: 100px;
+	height: 80px;
 }
 
 header #logo
