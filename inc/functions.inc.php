@@ -358,7 +358,7 @@ function do_update($force)
 
     // Extract "/dir/of/web/server" from "/dir/of/web/server/cakebox"
     $update_dir = escapeshellarg(substr(getcwd(),0,strpos(getcwd(),"/cakebox")));
-    exec("bash patch_update $update_dir");
+    exec("bash scripts/patch_update $update_dir");
     sleep(1); // let time before redirection
     header('Location:index.php?update_done');
 
