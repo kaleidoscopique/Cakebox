@@ -93,15 +93,6 @@ if(isset($_GET['do_update']))
 			<!-- EDITMODE MENU -->
 			<p>
 				<?php
-					// Check if user is in editmode or not (for javascript request)
-					$suffix = ($editmode) ? "-edit":""
-				?>
-					<select id="filterSelect" onchange="filesfilter(this);">
-						<option value="all<?php echo $suffix; ?>" default><?php echo $lang[LOCAL_LANG]['show_all_files']; ?></option>
-						<option value="videos<?php echo $suffix; ?>"><?php echo $lang[LOCAL_LANG]['show_video_files']; ?></option>
-					</select>
-					
-				<?php
 					// Display a short sentence about the editmode (on/off)
 					if(EDITMODE_ENABLE && !$editmode)
 					  echo '<a class="goeditmode" href="?editmode">'.$lang[LOCAL_LANG]['enter_edit_mode'].'</a>';
@@ -123,7 +114,7 @@ if(isset($_GET['do_update']))
 				<?php
 					$listof_dir 	=	 array(); // Filled by recursive_directory_tree as a global var (for list of dir in editmode)
 					$tree_structure =	 recursive_directory_tree(LOCAL_DL_PATH);
-					print_tree_structure($tree_structure,"all",$editmode);
+					print_tree_structure($tree_structure, $editmode);
 				?>
 			</div>
 			<!-- / Local files -->

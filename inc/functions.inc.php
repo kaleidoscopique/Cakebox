@@ -115,7 +115,7 @@ function recursive_directory_tree($directory = null)
  * @param $editmode Prendre en compte l'editmode dans l'affichage
  * @param $father Un paramètre récursif qui permet de connaître le(s) parent(s) d'un dossier
  */
-function print_tree_structure($treestructure,$filter="all",$editmode=FALSE,$father="")
+function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
 {
   global $lang;
 
@@ -138,48 +138,43 @@ function print_tree_structure($treestructure,$filter="all",$editmode=FALSE,$fath
       echo '<img src="ressources/folder.png" onclick="showhidedir(\''.$key.'\');return false;" class="pointerLink imgfolder" />
       <span class="pointerLink" onclick="showhidedir(\''.$key.'\');return false;">'.$key.'</span></div>';
       echo '<div id="'.$key.'" class="dirInList" style="display:none;">';
-      print_tree_structure($file,$filter,$editmode,$father.htmlspecialchars($key)."/");
+      print_tree_structure($file, $editmode, $father.htmlspecialchars($key)."/");
       echo '</div>';
     }
     else
     {
-      // Afficher tous les fichiers ou seulement les vidéos
-      if($filter == "all" ||
-         ($filter == "videos" && get_file_icon(basename($file),TRUE) == "avi"))
-      {
-        echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
+      echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
 
-          // La checkbox de l'editmode
-          if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
+      // La checkbox de l'editmode
+      if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
 
-          // Affichage des images à gauche du titre (Direct Download + Watch)
-          $current = htmlspecialchars(urlencode($file));
-          echo '<a href="'.$file.'">';
-            echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
-          echo '</a>';
+      // Affichage des images à gauche du titre (Direct Download + Watch)
+      $current = htmlspecialchars(urlencode($file));
+      echo '<a href="'.$file.'">';
+        echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
+      echo '</a>';
 
-          echo '<a href="watch.php?file='.$current.'">';
-            echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
-          echo '</a>';
+      echo '<a href="watch.php?file='.$current.'">';
+        echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
+      echo '</a>';
 
-          // Affichage du titre (soulignement si marqué comme vu)
-          if(file_exists("data/".basename($file))) echo '<span style="border-bottom:2px dotted #76D6B7;">';
-            echo basename(htmlspecialchars($file));
-          if(file_exists("data/".basename($file))) echo '</span>' ;
+      // Affichage du titre (soulignement si marqué comme vu)
+      if(file_exists("data/".basename($file))) echo '<span style="border-bottom:2px dotted #76D6B7;">';
+         echo basename(htmlspecialchars($file));
+      if(file_exists("data/".basename($file))) echo '</span>' ;
 
-          // Création de l'infobulle
-          echo '<a href="#" class="update_info">';
-          echo ' (?)
-                <span class="tooltip">
-                  <span></span>
-                  '.$lang[LOCAL_LANG]['size'].' : '.convert_size(filesize($file)).'<br/>
-                  '.$lang[LOCAL_LANG]['last_update'].' : '.date("d F Y, H:i",filemtime($file)).'<br/>
-                  '.$lang[LOCAL_LANG]['last_access'].' : '.date("d F Y, H:i",fileatime($file)).'<br/>
-              </span> ';
-          echo '</a>';
+      // Création de l'infobulle
+      echo '<a href="#" class="update_info">';
+      echo ' (?)
+            <span class="tooltip">
+              <span></span>
+              '.$lang[LOCAL_LANG]['size'].' : '.convert_size(filesize($file)).'<br/>
+              '.$lang[LOCAL_LANG]['last_update'].' : '.date("d F Y, H:i",filemtime($file)).'<br/>
+              '.$lang[LOCAL_LANG]['last_access'].' : '.date("d F Y, H:i",fileatime($file)).'<br/>
+          </span> ';
+      echo '</a>';
 
-          echo '</div>';
-        }
+      echo '</div>';
     }
   }
 }

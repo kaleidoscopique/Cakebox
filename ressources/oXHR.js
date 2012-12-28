@@ -23,28 +23,6 @@ function getXMLHttpRequest() {
 }
 
 /*
- * A filter for file on index.php (all/seen/notseen/videos)
- */
-function filesfilter(oSelect) {
-	var value = oSelect.options[oSelect.selectedIndex].value;
-	var xhr   = getXMLHttpRequest();
-	
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0))
-		{
-			document.getElementById("local").innerHTML = xhr.responseText;
-			//document.getElementById("loader").style.display = "none";
-		} else if (xhr.readyState < 4)
-		{
-			//document.getElementById("loader").style.display = "inline";
-		}
-	};
-	if(value.search("-edit") != -1) xhr.open("GET", "xhr_request.php?get_list&filter="+value+"&editmode", true);
-	else xhr.open("GET", "xhr_request.php?get_list&filter="+value, true);
-	xhr.send(null);
-}
-
-/*
  * Mark a file as seen on watch.php
  */
 function markfile(filename)
