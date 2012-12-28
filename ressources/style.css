@@ -7,9 +7,11 @@ body
         background-size: cover;
 }
 
-a {
+a 
+{
     text-decoration: none;
 }
+
 img
 {
     border: 0px;
@@ -29,24 +31,6 @@ header #logo
     font-family: 'Changa One', cursive;
     color:#ffffff;
     font-size:72px;
-}
-
-#flattr a
-{
-    color:#76d6b7;
-    text-decoration: none;
-    font-family: 'Droid Sans', sans-serif;
-    margin:10px 0 10px 44px;
-}
-
-#flattr a > .cakebox
-{
-    color:#ffffff !important;
-}
-
-#flattr a > .coeur
-{
-    color:#ff3e7a;
 }
 
 .first
@@ -233,3 +217,75 @@ a.next_episode:hover
     text-decoration: underline;
 }
 
+.tooltip
+{
+  position: relative;
+  cursor: help;
+  display: inline-block;
+  text-decoration: none;
+  color: #222;
+  outline: none;
+  font-size: 12px;
+  color:#8A8A8A;
+}
+
+.tooltip span
+{
+  visibility: hidden;
+  position: absolute; 
+  top: -25px;
+  z-index: 999;
+  width: 270px;
+  margin-left: 15px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  opacity: .9;
+  background-color: #ddd;                     
+  background-image: -webkit-linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0));
+  background-image: -moz-linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0));
+  background-image: -ms-linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0));
+  background-image: -o-linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0));
+  background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,0));  
+  -moz-border-radius: 4px;
+  border-radius: 4px;  
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;
+  box-shadow: 0 1px 2px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.5) inset;  
+  text-shadow: 0 1px 0 rgba(255,255,255,.4);
+  
+  border-color: #e1ca82;
+  background-color: #ffeaa6;  
+}
+
+.tooltip:hover
+{
+  border: 0; /* IE6 fix */
+}
+
+.tooltip:hover span
+{
+  visibility: visible;
+}
+
+.tooltip span:before,
+.tooltip span:after
+{
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  left: -7px;
+  top: 50%;
+  margin-top: -8px;  
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent; 
+  border-right: 8px solid #ddd; 
+  border-left: 0;
+	
+  border-right-color: #ffeaa6;
+}
+
+.tooltip span:before
+{
+  border-right-color: #e1ca82;
+  left: -8px;
+}

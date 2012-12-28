@@ -54,7 +54,6 @@ if(isset($_GET['do_update']))
     <script type="text/javascript" src="ressources/oXHR.js"></script>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="ressources/tooltips.css" type="text/css" media="screen" />
     <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/ico" href="favicon.ico" />
 </head>

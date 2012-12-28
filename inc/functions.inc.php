@@ -164,15 +164,13 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
       if(file_exists("data/".basename($file))) echo '</span>' ;
 
       // Création de l'infobulle
-      echo '<a href="#" class="update_info">';
-      echo ' (?)
-            <span class="tooltip">
-              <span></span>
+      echo '<a href="#" class="tooltip">&nbsp;(?)
+      		<span>
               '.$lang[LOCAL_LANG]['size'].' : '.convert_size(filesize($file)).'<br/>
               '.$lang[LOCAL_LANG]['last_update'].' : '.date("d F Y, H:i",filemtime($file)).'<br/>
               '.$lang[LOCAL_LANG]['last_access'].' : '.date("d F Y, H:i",fileatime($file)).'<br/>
-          </span> ';
-      echo '</a>';
+            </span>
+            </a>';
 
       echo '</div>';
     }
