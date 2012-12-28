@@ -34,7 +34,6 @@ endif;
     <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="ressources/tooltips.css" type="text/css" media="screen" />
     <!-- / Style & ergo -->
 
     <?php if($detect_OS == "Linux-Windows-others"): ?>
@@ -91,11 +90,9 @@ endif;
                 ?>
                     <?php echo $lang[LOCAL_LANG]['have_you_finished']; ?>
                     <span class="mark" onclick="markfile('<?php echo basename($file); ?>');"><?php echo $lang[LOCAL_LANG]['click_remind']; ?></span>
-                    <a href="#" class="update_info" style="text-decoration: underline;"><?php echo $lang[LOCAL_LANG]['what_zat']; ?>
-                      <span class="tooltip">
-                          <span></span>
-                          <?php echo $lang[LOCAL_LANG]['popcorn_details']; ?>
-                          </span>
+                    <a href="#" class="tooltip" style="text-decoration: underline;">
+                    	<?php echo $lang[LOCAL_LANG]['what_zat']; ?>
+                      <span><?php echo $lang[LOCAL_LANG]['popcorn_details']; ?></span>
                     </a>
                 <?php
                   else:
@@ -116,11 +113,11 @@ endif;
 
               <?php if($detect_OS == "OSX"): ?>
                 <!-- Embed DivX Player (for OS X) -->
-                <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="420" height="360" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
+                <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="600" height="400" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                   <param name="custommode" value="none" />
                   <param name="autoPlay" value="false" />
                   <param name="src" value="<?php echo $file; ?>" />
-                  <embed type="video/divx" src="<?php echo $file; ?>" custommode="none" width="420" height="360" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
+                  <embed type="video/divx" src="<?php echo $file; ?>" custommode="none" width="600" height="400" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
                 </object>
                 <!-- / DivX -->
               <?php else: ?>
