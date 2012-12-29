@@ -8,13 +8,14 @@ $localhost = $_SERVER['HTTP_HOST'];
 // Configuration par défaut
 if (!file_exists("config.php"))
 {
-	define('LOCAL_LANG','fr');
-	define('TIME_CHECK_UPDATE', 12);
-	define('EDITMODE_ENABLE', TRUE);
-	define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
-  define('LOCAL_DL_PATH','downloads');
-  define('DOWNLOAD_LINK',"http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");
-  $excludeFiles = array(".htaccess", ".", "..", "");
+	define('LOCAL_LANG','fr');                   // Modification de la langue (EN ou FR)
+	define('TIME_CHECK_UPDATE', 12);             // Temps entre chaque vérification de mise à jour (0 = force la MàJ; -1 = désactive)
+	define('EDITMODE_ENABLE', TRUE);             // Active ou désactive la fonction d'EDITMODE
+	define('DISPLAY_HIDDEN_FILESDIRS', FALSE);   // Affiche ou ignore les fichiers cachés
+  define('IGNORE_CHMOD',FALSE);                 // Active ou ignore la vérification des CHMOD sur /data et /downloads
+  define('LOCAL_DL_PATH','downloads');          // Modifie le dossier que surveille Cakebox
+  define('DOWNLOAD_LINK',"http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");  // Modifie l'URL de stream des fichiers
+  $excludeFiles = array(".htaccess", ".", "..", "");  // Liste des fichiers ignorés dans le listing de Cakebox
 }
 // Surcharge la configuration
 else
@@ -236,7 +237,8 @@ function check_dir()
     if(!$isdir_downloads) echo $lang[LOCAL_LANG]['create_downloads_dir']."<br/>";
     echo '</p>';
   }
-  else
+  // On ignore la vérification des chmod en fonction de IGNORE_CHMOD
+  else if(!IGNORE_CHMOD)
   {
     $chmod_data = substr(sprintf('%o', fileperms('data')),-3);
     $chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
