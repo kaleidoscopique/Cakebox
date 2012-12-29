@@ -12,8 +12,8 @@ if (!file_exists("config.php"))
 	define('TIME_CHECK_UPDATE', 12);             // Temps entre chaque vérification de mise à jour (0 = force la MàJ; -1 = désactive)
 	define('EDITMODE_ENABLE', TRUE);             // Active ou désactive la fonction d'EDITMODE
 	define('DISPLAY_HIDDEN_FILESDIRS', FALSE);   // Affiche ou ignore les fichiers cachés
-  define('IGNORE_CHMOD',FALSE);                 // Active ou ignore la vérification des CHMOD sur /data et /downloads
-  define('LOCAL_DL_PATH','downloads');          // Modifie le dossier que surveille Cakebox
+  define('IGNORE_CHMOD',FALSE);                // Active ou ignore la vérification des CHMOD sur /data et /downloads
+  define('LOCAL_DL_PATH','downloads');         // Modifie le dossier que surveille Cakebox
   define('DOWNLOAD_LINK',"http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");  // Modifie l'URL de stream des fichiers
   $excludeFiles = array(".htaccess", ".", "..", "");  // Liste des fichiers ignorés dans le listing de Cakebox
 }
