@@ -44,6 +44,7 @@ $lang['fr']['watch_next']               =   "Voir l'épisode suivant";
 $lang['fr']['watch_previous']           =   "Voir l'épisode précédent";
 $lang['fr']['right_click']              =   "Clic droit et \"Enregistrer sous\" pour télécharger";
 $lang['fr']['size']                     =   "Taille";
+$lang['fr']['file_img_download']        =   "telechargerfichier.png";
 // update
 $lang['fr']['new_version']              =   "Une nouvelle version de Cakebox est disponible";
 $lang['fr']['click_here_update']        =   "Cliquez ici pour lancer la mise à jour";
@@ -93,6 +94,7 @@ $lang['en']['watch_next']               =   "Watch the next episode";
 $lang['en']['watch_previous']           =   "Watch the previous episode";
 $lang['en']['right_click']              =   "Right click and \"Save link as\" to download it";
 $lang['en']['size']                     =   "Size :";
+$lang['en']['file_img_download']        =   "downloadfile.png";
 // update
 $lang['en']['new_version']              =   "A new version is available";
 $lang['en']['click_here_update']        =   "Click here to update";
