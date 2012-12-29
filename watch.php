@@ -4,7 +4,7 @@ require('inc/lang.inc.php');
 require('inc/functions.inc.php');
 
 // File to watch/DL and it extention
-$file = htmlspecialchars($_GET['file']);
+$file = replace_space(htmlspecialchars($_GET['file']));
 $ext = get_file_icon(basename($file),TRUE);
 
 // User OS

@@ -24,6 +24,15 @@ else
 }
 
 /**
+  * Remplace les " " par "%20"
+  * @param $str La chaîne à traiter
+  * @return string
+  */
+function replace_space($str){
+    return str_replace(" ", "%20", $str);
+}
+
+/**
  * Retourne l'extention CAKEBOX d'un fichier en fonction de son type
  * ou le chemin vers l'icone associé
  * @filename Le nom du fichier à considérer
