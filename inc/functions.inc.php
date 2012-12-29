@@ -1,19 +1,26 @@
 <?php
 
+// Récupération des informations de connexion
+$ht_user   = $_SERVER['REMOTE_USER'];
+$ht_pwd    = $_SERVER['PHP_AUTH_PW'];
+$localhost = $_SERVER['HTTP_HOST'];
+
+// Configuration par défaut
 if (!file_exists("config.php"))
 {
-	// default values if conf file doesn't exists
 	define('LOCAL_LANG','fr');
 	define('TIME_CHECK_UPDATE', 12);
 	define('EDITMODE_ENABLE', TRUE);
 	define('DISPLAY_HIDDEN_FILESDIRS', FALSE);
-
-	$excludeFiles = array(".htaccess", "");
+  define('LOCAL_DL_PATH','downloads');
+  define('DOWNLOAD_LINK',"http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");
+  $excludeFiles = array(".htaccess", ".", "..", "");
 }
+// Surcharge la configuration
 else
+{
 	require_once("config.php");
-
-define('LOCAL_DL_PATH','downloads');
+}
 
 /**
  * Retourne l'extention CAKEBOX d'un fichier en fonction de son type
@@ -76,7 +83,7 @@ function recursive_directory_tree($directory = null)
         foreach(scandir($directory) as $file) {
 
             //. = current directory, .. = up one level. We want to ignore both.
-            if ($file == "." || $file == ".." || ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS)) {
+            if ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS) {
                 continue;
             }
 

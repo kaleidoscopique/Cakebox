@@ -63,7 +63,7 @@ endif;
     <script src="ressources/oXHR.js"></script>
 
 </head>
-<body <?php if($detect_OS == "Linux-Windows-others"): ?> onload="play('vlc1', '<?php echo $file; ?>')" <?php endif; ?>>
+<body <?php if($detect_OS == "Linux-Windows-others"): ?> onload="play('vlc1', '<?php echo DOWNLOAD_LINK.$file; ?>')" <?php endif; ?>>
         <!-- HEADER -->
         <header>
         <div id="logo">
@@ -116,8 +116,8 @@ endif;
                 <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="600" height="400" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                   <param name="custommode" value="none" />
                   <param name="autoPlay" value="false" />
-                  <param name="src" value="<?php echo $file; ?>" />
-                  <embed type="video/divx" src="<?php echo $file; ?>" custommode="none" width="600" height="400" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
+                  <param name="src" value="<?php echo DOWNLOAD_LINK.$file; ?>" />
+                  <embed type="video/divx" src="<?php echo DOWNLOAD_LINK.$file; ?>" custommode="none" width="600" height="400" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
                 </object>
                 <!-- / DivX -->
               <?php else: ?>
@@ -145,8 +145,8 @@ endif;
           <?php endif; ?>
 
           <div class="download_button">
-            <a href="<?php echo $file; ?>">
-              <img src="ressources/downloadfile.png" />
+            <a href="<?php echo DOWNLOAD_LINK.$file; ?>">
+              <img src="ressources/<?php echo $lang[LOCAL_LANG]['file_img_download']; ?>" />
             </a><br/>
 
             <?php echo $lang[LOCAL_LANG]['right_click']; ?><br/>
