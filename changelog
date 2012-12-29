@@ -8,6 +8,19 @@
 Par MardamBey (iam.mardambey@gmail.com)
 http://www.twitter.com/kaleidoscopique
 
+Version 2.7
+- Intégration des logiciels (rutorrent, rtorrent, libtorrent) dans le dépot;
+- Création du plugin Rutorrent "Linkcakebox" par Magicalex et lechatleon;
+- Correction d'un gros bug avec la suppression et le déplacement;
+- Ajout des dépots non-free pour l'installation d'unrar dans le MB-script;
+
+Version 2.6
+- Passage en CC-BY-NC-SA
+- Ajout d'un bouton "supportez Cakebox";
+- Possibilité d'exclure certains fichiers (dont les fichiers cachés);
+- Possibilité d'interdire l'editmode;
+- Compatibilité OS/X avec le DivX Player;
+
 Version 2.5
 - Ajout d'un module de mise à jour automatique;
 - Ajout d'un bouton "supportez Cakebox";
