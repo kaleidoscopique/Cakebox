@@ -82,6 +82,7 @@ endif;
           <?php
             // If it's a video file
             if($ext == "avi"):
+                if (SEEN_MODE_ENABLE):
           ?>
               <div id="popcorn" class="littleh2">
                 <?php
@@ -103,6 +104,9 @@ endif;
                   endif;
                 ?>
               </div>
+              <?php
+              endif;
+              ?>
             <hr class="clear" />
 
             <p style="text-align:center;margin-bottom:10px;">

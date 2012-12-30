@@ -8,14 +8,15 @@ $localhost = $_SERVER['HTTP_HOST'];
 // Configuration par défaut
 if (!file_exists("config.php"))
 {
-  define('LOCAL_LANG','fr');                   // Modification de la langue (EN ou FR)
+  define('LOCAL_LANG', 'fr');                  // Modification de la langue (EN ou FR)
   define('TIME_CHECK_UPDATE', 12);             // Temps entre chaque vérification de mise à jour (0 = force la MàJ; -1 = désactive)
   define('EDITMODE_ENABLE', TRUE);             // Active ou désactive la fonction d'EDITMODE
+  define('SEEN_MODE_ENABLE', TRUE);            // Active ou désactive la fonction de marquage des episodes comme vu
   define('DISPLAY_HIDDEN_FILESDIRS', FALSE);   // Affiche ou ignore les fichiers cachés
-  define('IGNORE_CHMOD',FALSE);                // Active ou ignore la vérification des CHMOD sur /data et /downloads
-  define('LOCAL_DL_PATH','downloads');         // Modifie le dossier que surveille Cakebox
-  define('DOWNLOAD_LINK',"http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");  // Modifie l'URL de stream des fichiers
-  $excludeFiles = array(".htaccess", ".", "..", "");  // Liste des fichiers ignorés dans le listing de Cakebox
+  define('IGNORE_CHMOD', FALSE);               // Active ou ignore la vérification des CHMOD sur /data et /downloads
+  define('LOCAL_DL_PATH', 'downloads');        // Modifie le dossier que surveille Cakebox
+  define('DOWNLOAD_LINK', "http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");  // Modifie l'URL de stream des fichiers
+  $excludeFiles = array(".", "..", ".htaccess", "");  // Liste des fichiers ignorés dans le listing de Cakebox
 }
 // Surcharge la configuration
 else
@@ -176,10 +177,15 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
         echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
       echo '</a>';
 
-      // Affichage du titre (soulignement si marqué comme vu)
-      if(file_exists("data/".basename($file))) echo '<span style="border-bottom:2px dotted #76D6B7;">';
-         echo basename(htmlspecialchars($file));
-      if(file_exists("data/".basename($file))) echo '</span>' ;
+      if (SEEN_MODE_ENABLE && file_exists("data/".basename($file)))
+      {
+	      // Affichage du titre (soulignement si marqué comme vu)
+	      echo '<span style="border-bottom:2px dotted #76D6B7;">';
+	      echo basename(htmlspecialchars($file));
+	      echo '</span>';
+      }
+      else
+          echo basename(htmlspecialchars($file));
 
       // Création de l'infobulle
       echo '<a href="#" class="tooltip">&nbsp;(?)
