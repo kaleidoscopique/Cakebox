@@ -28,8 +28,9 @@ else
   * @param $str La chaîne à traiter
   * @return string
   */
-function replace_space($str){
-    return str_replace(" ", "%20", $str);
+function replace_space($str)
+{
+	return str_replace(" ", "%20", $str);
 }
 
 /**
