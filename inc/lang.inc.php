@@ -53,6 +53,7 @@ $lang['fr']['click_here']               =   "Cliquez ici";
 $lang['fr']['watch_log_update']         =   "pour accéder aux logs de la mise à jour";
 $lang['fr']['if_question']              =   "Si la mise à jour ne marche pas";
 $lang['fr']['ask_it']                   =   "consultez cette page pour résoudre le problème";
+$lang['fr']['ignore_update']            =   "Cliquez ici pour ignorer cette mise à jour";
 
 
 /* * * * * * * *
@@ -103,5 +104,6 @@ $lang['en']['click_here']               =   "Click here";
 $lang['en']['watch_log_update']         =   "to see the update logs";
 $lang['en']['if_question']              =   "If update does not work";
 $lang['en']['ask_it']                   =   "read this page to solve the problem";
+$lang['en']['ignore_update']            =   "Click here to ignore this update";
 
 ?>

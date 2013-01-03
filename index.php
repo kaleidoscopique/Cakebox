@@ -33,7 +33,7 @@ if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
 	mkdir($_POST['mkdirSelect']."/".$_POST['mkdir_name'],0777);
 }
 
-// Request : UPDATE
+// Request : DO UPDATE
 if(isset($_GET['do_update']))
 {
 	// Force the MAJ with ?do_update&force_update
@@ -42,6 +42,12 @@ if(isset($_GET['do_update']))
 
 	// Execute update
 	do_update($force);
+}
+
+// Request : IGNORE UPDATE
+if(isset($_GET['ignore_update']))
+{
+	ignore_update($_GET['number']);
 }
 ?>
 

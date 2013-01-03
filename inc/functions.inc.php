@@ -376,7 +376,8 @@ function show_update($update_info)
     echo '<ul>';
     foreach($description_update as $change) echo "<li>$change;</li>";
     echo '</ul>';
-    echo '<a href="index.php?do_update" class="do_update">'.$lang[LOCAL_LANG]['click_here_update'].' !</a>';
+    echo '<a href="index.php?do_update" class="do_update">'.$lang[LOCAL_LANG]['click_here_update'].' !</a> <br />';
+    echo '<a href="index.php?ignore_update&number='.$current_version.'" class="do_update">'.$lang[LOCAL_LANG]['ignore_update'].' !</a> <br />';
     echo '</div>';
 }
 
@@ -410,6 +411,18 @@ function do_update($force)
     header('Location:index.php?update_done');
 
   }
+}
+
+/**
+  * Ignore la mise à jour courante en falsifiant le numéro de version de Cakebox
+  * @param $current_version Numéro de la nouvelle version à ignorer
+  */
+function ignore_update($current_version)
+{
+  $file = fopen('version.txt', 'r+');
+  fputs($file, $current_version);
+  fclose($file);
+  header('Location:index.php');
 }
 
 /**
