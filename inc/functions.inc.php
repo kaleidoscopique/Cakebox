@@ -1,9 +1,30 @@
 <?php
 
-// Récupération des informations de connexion
-$ht_user   = $_SERVER['REMOTE_USER'];
-$ht_pwd    = $_SERVER['PHP_AUTH_PW'];
-$localhost = $_SERVER['HTTP_HOST'];
+// Lancement de la session PHP du client
+session_start();
+
+/********************************/
+/*      AUTHENTIFICATION        */
+/********************************/
+
+// Récupération des informations de connexion via le .htaccess s'il est utilisé
+if(isset($_SERVER['REMOTE_USER']) && isset($_SERVER['PHP_AUTH_PW']))
+{
+  $_SESSION['ht_user']   = $_SERVER['REMOTE_USER'];
+  $_SESSION['ht_pwd']    = $_SERVER['PHP_AUTH_PW'];
+}
+
+// Si l'utilisateur utilise bien un .htaccess pour s'authentifier, on update le link des fichiers
+// Un lien vers un fichier protégé ressemble à http://login:password@domaine/cakebox/downloads/fichier.ext
+// Un lien vers un fichier non-protégé ressemble à http://domaine/cakebox/downloads/fichier.ext
+if(isset($_SESSION['ht_user']) && isset($_SESSION['ht_pwd']))
+  $identity_inLink = $_SESSION['ht_user'].":".$_SESSION['ht_pwd']."@".$_SERVER['HTTP_HOST'];
+else 
+  $identity_inLink = $_SERVER['HTTP_HOST'];
+
+/********************************/
+/*        CONFIGURATION         */
+/********************************/
 
 // Configuration par défaut
 if (!file_exists("config.php"))
@@ -15,14 +36,16 @@ if (!file_exists("config.php"))
   define('DISPLAY_HIDDEN_FILESDIRS', FALSE);   // Affiche ou ignore les fichiers cachés
   define('IGNORE_CHMOD', FALSE);               // Active ou ignore la vérification des CHMOD sur /data et /downloads
   define('LOCAL_DL_PATH', 'downloads');        // Modifie le dossier que surveille Cakebox
-  define('DOWNLOAD_LINK', "http://".$ht_user.":".$ht_pwd."@".$localhost."/cakebox/");  // Modifie l'URL de stream des fichiers
+  define('DOWNLOAD_LINK', "http://".$identity_inLink."/cakebox/");  // Modifie l'URL de stream des fichiers
   $excludeFiles = array(".", "..", ".htaccess", "");  // Liste des fichiers ignorés dans le listing de Cakebox
 }
 // Surcharge la configuration
 else
-{
 	require_once("config.php");
-}
+
+/********************************/
+/*          FONCTIONS           */
+/********************************/
 
 /**
   * Remplace les " " par "%20"
@@ -169,7 +192,7 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
 
       // Affichage des images à gauche du titre (Direct Download + Watch)
       $current = htmlspecialchars(urlencode($file));
-      echo '<a href="'.$file.'">';
+      echo '<a href="'.DOWNLOAD_LINK.$file.'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
 
