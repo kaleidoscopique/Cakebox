@@ -27,11 +27,11 @@ find Cakebox/ressources/ -type f -exec mv -v -f {} cakebox/ressources/ \;
 # Met à jour les fichiers d'includes
 find Cakebox/inc/ -type f -exec mv -v -f {} cakebox/inc/ \;
 
+# Met à jour les fichiers de scripts
+find Cakebox/scripts/ -type f -exec mv -v -f {} cakebox/scripts/ \;
+
 # Supprime les fichiers temporaires
 rm -R Cakebox/
-
-# Supprime les softwares useless
-rm -R cakebox/softwares
 
 # Chmod du patch pour la prochaine MAJ
 chmod +x cakebox/scripts/patch_update
