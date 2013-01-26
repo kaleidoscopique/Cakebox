@@ -212,7 +212,7 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
       // Création de l'infobulle
       echo '<a href="#" class="tooltip">&nbsp;(?)
       		<span>
-              '.$lang[LOCAL_LANG]['size'].' : '.convert_size(filesize($file)).'<br/>
+              '.$lang[LOCAL_LANG]['size'].' : '.getFilesize($file).'<br/>
               '.$lang[LOCAL_LANG]['last_update'].' : '.date("d F Y, H:i",filemtime($file)).'<br/>
               '.$lang[LOCAL_LANG]['last_access'].' : '.date("d F Y, H:i",fileatime($file)).'<br/>
             </span>
