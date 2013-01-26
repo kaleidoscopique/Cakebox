@@ -47,22 +47,20 @@ else
 /*          FONCTIONS           */
 /********************************/
 
-/**
-  * Remplace les " " par "%20"
-  * @param $str La chaîne à traiter
-  * @return string
-  */
-function replace_space($str)
+function isVideoFile($path)
 {
-	return str_replace(" ", "%20", $str);
+    $pathInfo = pathinfo($path);
+    $mime = explode("/", mime_content_type($path));
+    if ($mime[0] == "video" || $pathInfo['extension'] == "mkv") // Les films en HD ne passent pas forcement...
+        return TRUE;
+    return FALSE;
 }
 
 /**
- * Retourne l'extention CAKEBOX d'un fichier en fonction de son type
- * ou le chemin vers l'icone associé
+ * Retourne le chemin vers l'icone associé
  * @filename Le nom du fichier à considérer
  */
-function get_file_icon($filename,$short_return=FALSE)
+function get_file_icon($filename)
 {
   $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
@@ -71,16 +69,17 @@ function get_file_icon($filename,$short_return=FALSE)
   else if($extension == "iso" || $extension == "rar" || $extension == "zip") $extension = "iso";
   else $extension = "other";
 
-  if($short_return) return $extension;
-  else return "ressources/ext/".$extension.".png";
+  return "ressources/ext/".$extension.".png";
 }
 
 /**
  * Convertit la taille en Xo
- * @param $fs La taille à convertir
+ * @param $filePath Le fichier a traiter
  */
-function convert_size($fs)
+function getFileSize($filePath)
 {
+     $fs = filesize($filePath);
+
      if ($fs >= 1073741824)
       $fs = round($fs / 1073741824 * 100) / 100 . " Go";
      elseif ($fs >= 1048576)
@@ -191,7 +190,7 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
       if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
 
       // Affichage des images à gauche du titre (Direct Download + Watch)
-      $current = htmlspecialchars(urlencode($file));
+      $current =$file;
       echo '<a href="'.DOWNLOAD_LINK.$file.'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
@@ -308,7 +307,7 @@ function get_nextnprev($file)
   if($current_file != count($current_dir)-1)
   {
       // Si le fichier suivant est bien une vidéo
-      if(get_file_icon(basename($current_dir[$current_file+1]),true) == "avi")
+      if(isVideoFile($current_dir[$current_file+1]))
         $next = htmlspecialchars(urlencode($current_dir[$current_file+1]));
   }
 
@@ -317,7 +316,7 @@ function get_nextnprev($file)
   if($current_file != 0)
   {
       // Si le fichier précédent est bien une vidéo
-      if(get_file_icon(basename($current_dir[$current_file-1]),true) == "avi")
+      if(isVideoFile($current_dir[$current_file-1]))
         $prev = htmlspecialchars(urlencode($current_dir[$current_file-1]));
   }
 
