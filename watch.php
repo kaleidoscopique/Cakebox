@@ -81,7 +81,7 @@ endif;
         <div id="popcorn" class="littleh2">
             <?php
                 // If file is not marked as "already seen"
-                if (!file_exists("data/".$pathInfo['filename'])):
+                if (!file_exists("data/".basename($filePath))):
             ?>
             <?php echo $lang[LOCAL_LANG]['have_you_finished']; ?>
             <span class="mark" onclick="markfile('<?php echo $pathInfo['basename']; ?>');"><?php echo $lang[LOCAL_LANG]['click_remind']; ?></span>
