@@ -102,7 +102,7 @@ cd $WWWDIR
 # Installation de Rutorrent
 FILE_RUTORRENT=$(basename $URL_RUTORRENT)			# Extraction du nom de l'archive
 DIR_RUTORRENT=$(echo $FILE_RUTORRENT | sed "s/.tar.gz//g")	# Extraction du nom du dossier extrait
-wget $URL_RUTORRENT						# Téléchargement des sources
+wget --no-check-certificate $URL_RUTORRENT						# Téléchargement des sources
 tar -zxvf $FILE_RUTORRENT                                       # Extraction
 mv $DIR_RUTORRENT rutorrent					# Renommage en /rutorrent
 chmod 777 -R rutorrent/share/					# Configuration des permissions
@@ -115,7 +115,7 @@ do
 done
 
 # Installation du plugin Rutorrent-Cakebox, conçu par Magicalex et Lechatleon
-wget $URL_RUTORRENT_LINKCAKEBOX
+wget --no-check-certificate $URL_RUTORRENT_LINKCAKEBOX
 unzip rutorrent-linkcakebox-1.0.zip
 rm rutorrent-linkcakebox-1.0.zip && rm -R __MACOSX
 
@@ -169,7 +169,7 @@ a2enmod scgi && /etc/init.d/apache2 restart
 cd                                                              # Retour à la racine
 FILE_XMLRPC=$(basename $URL_XMLRPC)                             # Extraction du nom de l'archive
 DIR_XMLRPC=$(echo $FILE_XMLRPC | sed "s/.tar.gz//g")            # Extraction du nom du dossier extrait
-wget $URL_XMLRPC && tar -zxvf $FILE_XMLRPC                      # Téléchargement de XMLRPC-C
+wget --no-check-certificate $URL_XMLRPC && tar -zxvf $FILE_XMLRPC                      # Téléchargement de XMLRPC-C
 cd $DIR_XMLRPC                                                  # Compilation et installation
 ./configure --disable-cplusplus
 make
@@ -179,7 +179,7 @@ make install
 cd                                                              # Retour à la racine
 FILE_LIBTORRENT=$(basename $URL_LIBTORRENT)                     # Extraction du nom de l'archive
 DIR_LIBTORRENT=$(echo $FILE_LIBTORRENT | sed "s/.tar.gz//g")    # Extraction du nom du dossier extrait
-wget $URL_LIBTORRENT && tar -zxvf $FILE_LIBTORRENT              # Téléchargement de la libtorrent
+wget --no-check-certificate $URL_LIBTORRENT && tar -zxvf $FILE_LIBTORRENT              # Téléchargement de la libtorrent
 cd $DIR_LIBTORRENT                                              # Compilation et installation
 ./autogen.sh
 ./autogen.sh
@@ -191,7 +191,7 @@ make install
 cd                                                              # Retour à la racine
 FILE_RTORRENT=$(basename $URL_RTORRENT)                         # Extraction du nom de l'archive
 DIR_RTORRENT=$(echo $FILE_RTORRENT | sed "s/.tar.gz//g")        # Extraction du nom du dossier extrait
-wget $URL_RTORRENT && tar -zxvf $FILE_RTORRENT                 # Téléchargement de rtorrent
+wget --no-check-certificate $URL_RTORRENT && tar -zxvf $FILE_RTORRENT                 # Téléchargement de rtorrent
 cd $DIR_RTORRENT                                                # Compilation et installation
 ./autogen.sh && ./configure --with-xmlrpc-c 
 make
