@@ -170,7 +170,7 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
 
   foreach($treestructure as $key => $file)
   {
-    // Si on n'est sur un dossier
+    // Si on est sur un dossier
     if(is_array($file))
     {
       $key = addslashes(basename($key));
@@ -191,7 +191,7 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
 
       // Affichage des images à gauche du titre (Direct Download + Watch)
       $current =$file;
-      echo '<a href="'.DOWNLOAD_LINK.$file.'">';
+      echo '<a href="'.DOWNLOAD_LINK.$file.'" download="'.DOWNLOAD_LINK.$file.'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
 

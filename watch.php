@@ -146,7 +146,7 @@ endif;
         <?php endif; //!Is video file ?>
 
         <div class="download_button">
-            <a href="<?php echo DOWNLOAD_LINK.$filePath; ?>">
+            <a href="<?php echo DOWNLOAD_LINK.$filePath; ?>" download="<?php echo DOWNLOAD_LINK.$filePath; ?>">
               <img src="ressources/<?php echo $lang[LOCAL_LANG]['file_img_download']; ?>" />
             </a><br/>
             <?php echo $lang[LOCAL_LANG]['right_click']; ?><br/>
