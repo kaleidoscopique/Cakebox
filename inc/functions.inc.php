@@ -184,22 +184,23 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
     }
     else
     {
+      $pathInfo = pathinfo($file);
+
       echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
 
       // La checkbox de l'editmode
       if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
 
       // Affichage des images à gauche du titre (Direct Download + Watch)
-      $current =$file;
-      echo '<a href="'.DOWNLOAD_LINK.$file.'" download="'.DOWNLOAD_LINK.$file.'">';
+      echo '<a href="'.DOWNLOAD_LINK.$file.'" download="'.$pathInfo['basename'].'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
 
-      echo '<a href="watch.php?file='.$current.'">';
+      echo '<a href="watch.php?file='.$file.'">';
         echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
       echo '</a>';
 
-      if (SEEN_MODE_ENABLE && file_exists("data/".basename($file)))
+      if (SEEN_MODE_ENABLE && file_exists("data/".$pathInfo['basename']))
       {
 	      // Affichage du titre (soulignement si marqué comme vu)
 	      echo '<span style="border-bottom:2px dotted #76D6B7;">';
