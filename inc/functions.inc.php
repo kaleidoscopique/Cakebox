@@ -175,11 +175,16 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
     {
       $key = addslashes(basename($key));
       echo '<div class="onedir">';
-      if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.$father.htmlspecialchars($key).'" onclick="CheckLikes(this);"/>';
-      echo '<img src="ressources/folder.png" onclick="showhidedir(\''.$key.'\');return false;" class="pointerLink imgfolder" />
-      <span class="pointerLink" onclick="showhidedir(\''.$key.'\');return false;">'.$key.'</span></div>';
-      echo '<div id="'.$key.'" class="dirInList" style="display:none;">';
+
+      if ($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.$father.htmlspecialchars($key).'" onclick="CheckLikes(this);" />';
+
+      echo '
+      	  <img src="ressources/folder.png" class="pointerLink imgfolder" onclick="showhidedir(\''.$key.'\'); return false;" />
+          <span class="pointerLink" onclick="showhidedir(\''.$key.'\'); return false;">'.stripslashes($key).'</span></div>
+          <div id="'.stripslashes($key).'" class="dirInList" style="display:none;">
+          ';
       print_tree_structure($file, $editmode, $father.htmlspecialchars($key)."/");
+
       echo '</div>';
     }
     else
