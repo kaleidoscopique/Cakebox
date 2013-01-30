@@ -61,7 +61,7 @@ endif;
     <?php endif; ?>
 </head>
 
-<body <?php if ($detect_OS == "Linux-Windows-others"): ?> onload="play('vlc1', '<?php echo DOWNLOAD_LINK.$filePath; ?>')" <?php endif; ?>>
+<body <?php if ($detect_OS == "Linux-Windows-others"): ?> onload="play('vlc1', '<?php echo DOWNLOAD_LINK.addslashes($filePath); ?>')" <?php endif; ?>>
     <header>
         <div id="logo">
             <a href="index.php">
@@ -112,8 +112,8 @@ endif;
             <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="600" height="400" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                 <param name="custommode" value="none" />
                 <param name="autoPlay" value="false" />
-                <param name="src" value="<?php echo DOWNLOAD_LINK.$filePath; ?>" />
-                <embed type="video/divx" src="<?php echo DOWNLOAD_LINK.$filePath; ?>" custommode="none" width="600" height="400" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
+                <param name="src" value="<?php echo DOWNLOAD_LINK.addslashes($filePath); ?>" />
+                <embed type="video/divx" src="<?php echo DOWNLOAD_LINK.addslashes($filePath); ?>" custommode="none" width="600" height="400" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
             </object>
             <!-- / DivX -->
 
@@ -146,7 +146,7 @@ endif;
         <?php endif; //!Is video file ?>
 
         <div class="download_button">
-            <a href="<?php echo DOWNLOAD_LINK.$filePath; ?>" download="<?php echo DOWNLOAD_LINK.$filePath; ?>">
+            <a href="<?php echo DOWNLOAD_LINK.$filePath; ?>" download="<?php echo $pathInfo['basename']; ?>">
               <img src="ressources/<?php echo $lang[LOCAL_LANG]['file_img_download']; ?>" />
             </a><br/>
             <?php echo $lang[LOCAL_LANG]['right_click']; ?><br/>
