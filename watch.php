@@ -86,7 +86,7 @@ endif;
                 if (!file_exists("data/".$pathInfo['basename'])):
             ?>
             <?php echo $lang[LOCAL_LANG]['have_you_finished']; ?>
-            <span class="mark" onclick="markfile('<?php echo $pathInfo['basename']; ?>');"><?php echo $lang[LOCAL_LANG]['click_remind']; ?></span>
+            <span class="mark" onclick="markfile('<?php echo addslashes($pathInfo['basename']); ?>');"><?php echo $lang[LOCAL_LANG]['click_remind']; ?></span>
                 <a href="#" class="tooltip" style="text-decoration: underline;">
                     <?php echo $lang[LOCAL_LANG]['what_zat']; ?>
                     <span><?php echo $lang[LOCAL_LANG]['popcorn_details']; ?></span>
@@ -95,7 +95,7 @@ endif;
             <?php else: ?>
 
                 Hey, <span class="unmark"><?php echo $lang[LOCAL_LANG]['do_you_remember']; ?></span>
-                <span class="update_info" style="text-decoration: underline;cursor:pointer;" onclick="unmarkfile('<?php echo $pathInfo['basename']; ?>')"><?php echo $lang[LOCAL_LANG]['cancel_please']; ?></span>
+                <span class="update_info" style="text-decoration: underline;cursor:pointer;" onclick="unmarkfile('<?php echo addslashes($pathInfo['basename']); ?>')"><?php echo $lang[LOCAL_LANG]['cancel_please']; ?></span>
 
             <?php endif; ?>
         </div>
