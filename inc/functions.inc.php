@@ -38,6 +38,14 @@ if (!file_exists("config.php"))
   define('LOCAL_DL_PATH', 'downloads');        // Modifie le dossier que surveille Cakebox
   define('DOWNLOAD_LINK', "http://".$identity_inLink."/cakebox/");  // Modifie l'URL de stream des fichiers
   $excludeFiles = array(".", "..", ".htaccess", "");  // Liste des fichiers ignorés dans le listing de Cakebox
+  define('SEEN_SPAN', '<span style="border-bottom:2px dotted #76D6B7;">');// Modifie le style du module vu/non vu
+  /* Options Divx Web Player*/
+  define('USE_DIVX', FALSE);                            // On choisi le lecteur DivX Web Player par défaut
+  define('DIVX_AUTOPLAY', 'FALSE');                    // Option autoplay (démarrage de la lecture automatique)
+  define('DIVX_WIDTH', '600');                        // Option de la largeur
+  define('DIVX_HEIGTH', '400');                       // Option de la hauteur
+  define('LAST_ADD', FALSE);                               // Affiche l'icone NEW
+  define('TIME_LAST_ADD', '24');                           // Durée de la nouveauté (en heure)
 }
 // Surcharge la configuration
 else
@@ -91,6 +99,25 @@ function getFileSize($filePath)
      return $fs;
 }
 
+/**
+ * Affiche l'icone NEW si
+ * le fichier a été ajouté il y moins de
+ * X heures (variable TIME_LAST_ADD)
+ **/
+function showLastAdd($file)
+{
+  if (LAST_ADD)
+    if (((date('U') - filemtime($file)) / 3600) <= TIME_LAST_ADD)
+      echo '<img src="ressources/new.png" title="Nouveau fichier !" /> &nbsp;';
+}
+function showLastAddFolder($key)
+{
+  $stat = stat($key);
+  if (LAST_ADD || ((date('U') - $stat['mtime']) / 3600) <= TIME_LAST_ADD)
+    return 'folder_new.png';
+  else
+    return 'folder.png';
+}
 /**
  * Récupère récursivement le contenu d'un répertoire
  * et le retourne sous forme d'array
@@ -173,13 +200,14 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
     // Si on est sur un dossier
     if(is_array($file))
     {
+      $fullkey = $key;
       $key = addslashes(basename($key));
       echo '<div class="onedir">';
 
       if ($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.$father.htmlspecialchars($key).'" onclick="CheckLikes(this);" />';
 
       echo '
-      	  <img src="ressources/folder.png" class="pointerLink imgfolder" onclick="showhidedir(\''.$key.'\'); return false;" />
+      	  <img src="ressources/'.showLastAddFolder($fullkey).'" class="pointerLink imgfolder" onclick="showhidedir(\''.$key.'\'); return false;" />
           <span class="pointerLink" onclick="showhidedir(\''.$key.'\'); return false;">'.stripslashes($key).'</span></div>
           <div id="'.stripslashes($key).'" class="dirInList" style="display:none;">
           ';
@@ -201,14 +229,15 @@ function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
 
-      echo '<a href="watch.php?file='.$file.'">';
+      echo '<a href="watch.php?file='.urlencode($file).'">';
         echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
       echo '</a>';
+      showLastAdd($file);
 
       if (SEEN_MODE_ENABLE && file_exists("data/".$pathInfo['basename']))
       {
 	      // Affichage du titre (soulignement si marqué comme vu)
-	      echo '<span style="border-bottom:2px dotted #76D6B7;">';
+          echo SEEN_SPAN;
 	      echo basename(htmlspecialchars($file));
 	      echo '</span>';
       }
@@ -442,4 +471,3 @@ function detect_OS()
 }
 
 ?>
-
