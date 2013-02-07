@@ -108,14 +108,14 @@ endif;
         </p>
 
         <center>
-        <?php if ($detect_OS == "OSX"): ?>
+        <?php if ($detect_OS == "OSX" || USE_DIVX): ?>
 
             <!-- Embed DivX Player (for OS X) -->
-            <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="600" height="400" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
+            <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="<?php echo DIVX_WIDTH ?>" height="<?php echo DIVX_HEIGTH ?>" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                 <param name="custommode" value="none" />
-                <param name="autoPlay" value="false" />
+                <param name="autoPlay" value="<?php echo DIVX_AUTOPLAY ?>" />
                 <param name="src" value="<?php echo DOWNLOAD_LINK.$filePath; ?>" />
-                <embed type="video/divx" src="<?php echo DOWNLOAD_LINK.$filePath; ?>" custommode="none" width="600" height="400" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
+                <embed type="video/divx" src="<?php echo DOWNLOAD_LINK.$filePath; ?>" custommode="none" width="<?php echo DIVX_WIDTH ?>" height="<?php echo DIVX_HEIGTH ?>" autoPlay="<?php echo DIVX_AUTOPLAY ?>" pluginspage="http://go.divx.com/plugin/download/"></embed>
             </object>
             <!-- / DivX -->
 
