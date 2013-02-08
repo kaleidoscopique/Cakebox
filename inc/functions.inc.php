@@ -1,31 +1,5 @@
 <?php
 
-// Lancement de la session PHP du client
-session_start();
-
-/********************************/
-/*      AUTHENTIFICATION        */
-/********************************/
-
-// Récupération des informations de connexion via le .htaccess s'il est utilisé
-if(isset($_SERVER['REMOTE_USER']) && isset($_SERVER['PHP_AUTH_PW']))
-{
-  $_SESSION['ht_user']   = $_SERVER['REMOTE_USER'];
-  $_SESSION['ht_pwd']    = $_SERVER['PHP_AUTH_PW'];
-}
-
-// Si l'utilisateur utilise bien un .htaccess pour s'authentifier, on update le link des fichiers
-// Un lien vers un fichier protégé ressemble à http://login:password@domaine/cakebox/downloads/fichier.ext
-// Un lien vers un fichier non-protégé ressemble à http://domaine/cakebox/downloads/fichier.ext
-if(isset($_SESSION['ht_user']) && isset($_SESSION['ht_pwd']))
-  $identity_inLink = $_SESSION['ht_user'].":".$_SESSION['ht_pwd']."@".$_SERVER['HTTP_HOST'];
-else 
-  $identity_inLink = $_SERVER['HTTP_HOST'];
-
-/********************************/
-/*        CONFIGURATION         */
-/********************************/
-
 // Configuration par défaut
 if (file_exists("config.ini"))
   $config = new Configuration();
