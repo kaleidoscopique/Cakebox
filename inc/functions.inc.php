@@ -1,12 +1,29 @@
 <?php
 
+/*
+---------------------------------
+      INSTANCES GLOBALES
+---------------------------------
+*/
+
 // Configuration par défaut
 if (file_exists("config.ini"))
   $config = new Configuration();
 else
-	die("Il faut créer le fichier de configuration !! @@assistant");
+	die("Il faut générer le fichier de conf ou faire un petit assistant de configuration en un clic.");
 
+// Check d'un update
+$update = new Update();
 
+/*
+---------------------------------
+      CLASS CONFIGURATION
+---------------------------------
+*/
+
+/**
+ * Gestion du fichier config.ini de Cakebox
+ */
 class Configuration
 {
   // General
@@ -25,6 +42,7 @@ class Configuration
   private $error_no_data_dir;
   private $error_chmod_data_dir;
 
+  // Parsing du fichier de configuration
   function __construct()
   {
     $config_array               =   parse_ini_file("config.ini", true);
@@ -40,6 +58,10 @@ class Configuration
     $this->check_dir(); // Vérification des dossiers data & downloads
   }
 
+  /**
+    * Accesseur générique
+    * @param $attr L'attribut à retourner
+    */
   public function get($attr)
   {
     return $this->$attr;
@@ -47,7 +69,7 @@ class Configuration
 
   /*
    * Vérifie la permission des dossiers importants (downloads et data)
-   * et affiche une erreur en cas de besoin
+   * et remplit les attributs concernés en conséquence.
    */
   private function check_dir()
   {
@@ -68,18 +90,32 @@ class Configuration
     }
   }
 
+  /**
+    * Accesseur de la variable d'erreur NO_DATA_DIR
+    */
   public function get_error_no_data_dir()
   {
     return $this->error_no_data_dir;
   }
 
+  /**
+    * Accesseur de la variable d'erreur CHMOD_DATA_DIR
+    */
   public function get_error_chmod_data_dir()
   {
     return $this->error_chmod_data_dir;
   }
 }
 
+/*
+---------------------------------
+      CLASS FileTree
+---------------------------------
+*/
 
+/**
+ * Gestion de l'arborescence des dossiers
+ */
 class FileTree
 {
 
@@ -106,7 +142,7 @@ class FileTree
    * Récupère récursivement le contenu d'un répertoire
    * et le retourne sous forme d'array
    * @param $directory Le répertoire à traiter
-   * @param $exclude_dir Permet d'exclure les dossiers (aka n'avoir que les fichiers de $directory)
+   * @param $exclude_dir Permet d'exclure les dossiers (pour n'avoir que les fichiers de $directory)
    **/
   private function generate_tree($directory = null, $exclude_dir = FALSE)
   {
@@ -147,6 +183,10 @@ class FileTree
   }
 
 
+  /**
+    * Affichage de l'arborescence
+    * @param $directory Le répertoire (fullname) à afficher
+    */
   public function print_tree($directory = '')
   {
 
@@ -174,7 +214,10 @@ class FileTree
     }
   }
     
-
+  /**
+  * Affichage d'un dossier avec son arborescence
+  * @param $fullname Le dossier à afficher
+  */
   private function print_folder($fullname)
   {
     // Récupère le nom simple du dossier (sans les parents)
@@ -193,6 +236,10 @@ class FileTree
           echo '</div>';
   }
 
+  /**
+  * Affichage d'un fichier
+  * @param $fullname Son nom
+  */
   private function print_file($fullname)
   {
 
@@ -239,6 +286,15 @@ class FileTree
   }
 }
 
+/*
+---------------------------------
+      CLASS File
+---------------------------------
+*/
+
+/**
+ * Gestion des fichiers sur watch.php
+ */
 
 abstract class File
 {
@@ -258,15 +314,25 @@ abstract class File
     $this->url = $config->get('download_link').$fullname;
   }
 
+  /**
+   * Accesseur du nom
+   */
   public function get_name()
   {
     return $this->name;
   }
-    
+  
+  /**
+   * Accesseur du nom complet
+   */
   public function get_fullname()
   {
     return $this->fullname;
   }
+
+  /**
+   * Accesseur de l'URL
+   */
     public function get_url()
   {
     return $this->url;
@@ -290,6 +356,11 @@ abstract class File
     return $type;
   }
 
+  /**
+   * Fichier video ou non ?
+   * @param $fullname Le fichier à traiter
+   * @return true, false
+   */
   public static function isVideo($fullname)
   {
     return (File::get_type($fullname) == "video");
@@ -297,7 +368,7 @@ abstract class File
 
   /**
    * Convertit la taille en Xo
-   * @param $filePath Le fichier a traiter
+   * @param $fullname Le fichier a traiter
    */
   static function get_file_size($fullname)
   {
@@ -316,7 +387,7 @@ abstract class File
 
   /**
    * Retourne la date de dernière modification d'un fichier
-   * @param $filePath Le fichier a traiter
+   * @param $fullname Le fichier a traiter
    */
   static function get_file_mtime($fullname)
   {
@@ -325,13 +396,24 @@ abstract class File
 
   /**
    * Retourne la date de dernier access d'un fichier
-   * @param $filePath Le fichier a traiter
+   * @param $fullname Le fichier a traiter
    */
   static function get_file_atime($fullname)
   {
      return date("d F Y, H:i",fileatime($fullname));
   }
 }
+
+
+/*
+---------------------------------
+      CLASS Video < File
+---------------------------------
+*/
+
+/**
+ * Gestion des fichiers videos
+ */
 
 class Video extends File
 {
@@ -346,6 +428,15 @@ class Video extends File
     $this->find_next_prev_video();
   }
 
+  //Accesseur des NEXT et PREV
+  public function get_next() { return $this->next_video; }
+  public function get_prev() { return $this->prev_video; }
+  // Accesseur de SEEN (vidéo vue ou non vue)
+  public function get_seen() { return $this->seen; }
+
+  /**
+   * Affiche le code des players
+   */
   public function print_player()
   {
     if($this->player == "vlc")
@@ -358,11 +449,10 @@ class Video extends File
     }
   }
 
-  public function get_seen()
-  {
-    return $this->seen;
-  }
-
+  /**
+   * Récupère les épisodes prec et suivant
+   * Remplit les attributs $next et $prev
+   */
   private function find_next_prev_video()
   {
 
@@ -394,15 +484,137 @@ class Video extends File
           $this->prev = htmlspecialchars(urlencode($current_dir[$current_file-1]));
     }
   }
+}
 
-  public function get_next()
+/*
+---------------------------------
+      CLASS Update
+---------------------------------
+*/
+
+/**
+ * Gestion des mises à jour
+ */
+
+class Update
+{
+  private $config;
+  private $update_available;
+  private $local_version;
+  private $current_version; // Dernière version du repos Cakebox
+  private $changelog; // Si mise à jour
+
+  function __construct()
   {
-    return $this->next_video;
+    global $config;
+    $this->config = $config;
+    $this->check();
   }
 
-  public function get_prev()
+  // Accesseur update dispo ?
+  public function is_update_available() { return $this->update_available; }
+  public function get_local_version() { return $this->local_version; }
+
+  /*
+   * Verifie si une mise à jour est disponible
+   * Remplit les attributs
+   */
+  private function check()
   {
-    return $this->prev_video;
+    // Time
+    $last_check = fileatime('version.txt');
+    $time_since = time()-$last_check;
+
+    // Local version
+    $local_version_file = fopen('version.txt','r');
+    $this->local_version  = fgets($local_version_file);
+    fclose($local_version_file);
+
+    // Check for a new version each 12h
+    if($time_since > $this->config->get('time_check_update') * 3600)
+    {
+      // Version disponible en dépôt
+      $current_version_file = fopen('https://github.com/MardamBeyK/Cakebox/raw/master/version.txt','r');
+      $this->current_version  = fgets($current_version_file);
+
+      // Si mise à jour dispo
+      if(floatval($this->local_version) < floatval($this->current_version))
+      {
+        // Flags
+        $this->update_available = true;
+
+        // Lecture du fichier
+        while(!feof($current_version_file))
+          $this->changelog[] = fgets($current_version_file);
+      }
+
+      // Fermeture du flux
+      fclose($current_version_file);
+    } 
+    else 
+    {
+      $this->update_available = false;
+    }
+  }
+
+  /**
+  * Execute la mise à jour vers la dernière version disponible
+  * @param $force Force la mise à jour si TRUE
+  */
+  public function execute($force)
+  {
+    // We must be sure there is an update available
+    if($this->is_update_available() || $force)
+    {
+      // Extract "/dir/of/web/server" from "/dir/of/web/server/cakebox"
+      $update_dir = escapeshellarg(substr(getcwd(),0,strpos(getcwd(),"/cakebox")));
+      exec("bash scripts/patch_update $update_dir");
+      sleep(1); // let time before redirection
+      header('Location:index.php?update_done');
+    }
+  }
+
+  /*
+   * Affiche le div de mise à jour avec changelog si MàJ dispo
+   */
+  public function show_new_update()
+  {
+    global $lang;;
+    $description_update = $this->changelog;
+
+    echo '<div id="update">';
+    echo "<h3>".$lang[$this->config->get('lang')]['new_version']." : v".$this->current_version." !</h3>";
+    echo '<ul>';
+    foreach($description_update as $change) echo "<li>$change;</li>";
+    echo '</ul>';
+    echo '<a href="index.php?do_update" class="do_update">'.$lang[$this->config->get('lang')]['click_here_update'].' !</a> <br />';
+    echo '<a href="index.php?ignore_update&number='.$this->current_version.'" class="do_update">'.$lang[$this->config->get('lang')]['ignore_update'].' !</a> <br />';
+    echo '</div>';
+  }
+
+  /*
+   * Affiche un message après la fin d'une MàJ
+   */
+  public function show_update_done()
+  {
+      global $lang;
+      echo '<div id="update">';
+      echo "<h3>".$lang[$this->config->get('lang')]['cakebox_uptodate']." (v".$this->local_version.") !</h3><br />";
+      echo '<a href="last_update.log" class="do_update">'.$lang[$this->config->get('lang')]['click_here'].'</a> '.$lang[$this->config->get('lang')]['watch_log_update'].'.<br />';
+      echo $lang[$this->config->get('lang')]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[$this->config->get('lang')]['ask_it'].' !</a>';
+      echo '</div>';
+  }
+
+  /**
+  * Ignore la mise à jour courante en falsifiant le numéro de version de Cakebox
+  * @param $current_version Numéro de la nouvelle version à ignorer
+  */
+  public function ignore()
+  {
+    $file = fopen('version.txt', 'r+');
+    fputs($file, $this->current_version);
+    fclose($file);
+    header('Location:index.php');
   }
 
 }
@@ -416,13 +628,14 @@ class Video extends File
  * le fichier a été ajouté il y moins de
  * X heures (variable TIME_LAST_ADD)
  **/
+// OBSOLÈTE, NON UTILISÉE, A RÉIMPLEMETER PROPREMENT
 function showLastAdd($file)
 {
   if (LAST_ADD)
     if (((date('U') - filemtime($file)) / 3600) <= TIME_LAST_ADD)
       echo '<img src="ressources/new.png" title="Nouveau fichier !" /> &nbsp;';
 }
-
+// OBSOLÈTE, NON UTILISÉE, A RÉIMPLEMETER PROPREMENT
 function showLastAddFolder($key)
 {
   $stat = stat($key);
@@ -436,6 +649,7 @@ function showLastAddFolder($key)
  * Supprime un dossier qui n'est pas vide
  * @param $dir Le dossier à supprimer avec son contenu
  */
+// A REIMPLEMENTER PROPREMENT
  function rrmdir($dir)
  {
    if (is_dir($dir)) {
@@ -449,117 +663,5 @@ function showLastAddFolder($key)
      rmdir($dir);
    }
  }
-
-
-/*
- * Verifie si une mise à jour est disponible
- * Retourne array("local_version"=>X,"current_version"=>Y,"changelog"=>Z) si une MàJ est disponible
- * retourne array() sinon;
- */
-function check_update()
-{
-  $last_check = fileatime('version.txt');
-  $time_since = time()-$last_check;
-
-  // Check for a new version each 12h
-  if($time_since > TIME_CHECK_UPDATE * 3600)
-  {
-    // Files to compare
-    $local_version_file     = fopen('version.txt','r');
-    $current_version_file   = fopen('https://github.com/MardamBeyK/Cakebox/raw/master/version.txt','r');
-
-    // Num of versions
-    $local_version    = fgets($local_version_file);
-    $current_version  = fgets($current_version_file);
-
-    // If not up to date
-    if(floatval($local_version) < floatval($current_version))
-    {
-      $description_update = "";
-      while(!feof($current_version_file))
-      {
-        $description_update[] = fgets($current_version_file);
-      }
-
-      return array("local_version"=>$local_version,"current_version"=>$current_version,"changelog"=>$description_update);
-    }
-
-  } else return array();
-}
-
-/*
- * Affiche le div de mise à jour avec changelog si MàJ dispo
- * N'affiche rien sinon
- */
-function show_update($update_info)
-{
-    global $lang;
-    $current_version = $update_info['current_version'];
-    $description_update = $update_info['changelog'];
-
-    echo '<div id="update">';
-    echo "<h3>".$lang[$config->get('lang')]['new_version']." : v$current_version !</h3>";
-    echo '<ul>';
-    foreach($description_update as $change) echo "<li>$change;</li>";
-    echo '</ul>';
-    echo '<a href="index.php?do_update" class="do_update">'.$lang[$config->get('lang')]['click_here_update'].' !</a> <br />';
-    echo '<a href="index.php?ignore_update&number='.$current_version.'" class="do_update">'.$lang[$config->get('lang')]['ignore_update'].' !</a> <br />';
-    echo '</div>';
-}
-
-/*
- * Affiche un message après la fin d'une MàJ
- */
-function show_update_done()
-{
-    global $lang;
-    echo '<div id="update">';
-    echo "<h3>".$lang[$config->get('lang')]['cakebox_uptodate']." !</h3><br />";
-    echo '<a href="last_update.log" class="do_update">'.$lang[$config->get('lang')]['click_here'].'</a> '.$lang[$config->get('lang')]['watch_log_update'].'.<br />';
-    echo $lang[$config->get('lang')]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[$config->get('lang')]['ask_it'].' !</a>';
-    echo '</div>';
-}
-
-/**
-  * Fais la mise à jour vers la dernière version disponible
-  * @param $force Force la mise à jour si TRUE
-  */
-function do_update($force)
-{
-  // We must be sure there is an update available
-  if(check_update() || $force)
-  {
-
-    // Extract "/dir/of/web/server" from "/dir/of/web/server/cakebox"
-    $update_dir = escapeshellarg(substr(getcwd(),0,strpos(getcwd(),"/cakebox")));
-    exec("bash scripts/patch_update $update_dir");
-    sleep(1); // let time before redirection
-    header('Location:index.php?update_done');
-
-  }
-}
-
-/**
-  * Ignore la mise à jour courante en falsifiant le numéro de version de Cakebox
-  * @param $current_version Numéro de la nouvelle version à ignorer
-  */
-function ignore_update($current_version)
-{
-  $file = fopen('version.txt', 'r+');
-  fputs($file, $current_version);
-  fclose($file);
-  header('Location:index.php');
-}
-
-/**
-  * Retourne l'OS de l'utilisateur
-  * @return "Linux-Windows-others" | "OSX" 
-  */
-function detect_OS()
-{
-  $ua = $_SERVER["HTTP_USER_AGENT"];
-  if(strpos($ua, 'Macintosh')) return "OSX";
-  else return "Linux-Windows-others";
-}
 
 ?>

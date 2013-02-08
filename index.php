@@ -26,26 +26,14 @@ if(isset($_POST['move']))
 
 // Request : CREATE DIR
 if(isset($_POST['mkdir']) && !empty($_POST['mkdir_name']))
-{
 	mkdir($_POST['mkdirSelect']."/".$_POST['mkdir_name'],0777);
-}
 
 // Request : DO UPDATE
 if(isset($_GET['do_update']))
-{
-	// Force the MAJ with ?do_update&force_update
-	if(isset($_GET['force_update'])) $force = true;
-	else $force = false;
-
-	// Execute update
-	do_update($force);
-}
+	$update->execute($force,isset($_GET['force_update']));
 
 // Request : IGNORE UPDATE
-if(isset($_GET['ignore_update']))
-{
-	ignore_update($_GET['number']);
-}
+if(isset($_GET['ignore_update'])) $update->ignore();
 ?>
 
 <!DOCTYPE html>
@@ -73,13 +61,12 @@ if(isset($_GET['ignore_update']))
         <!-- / HEADER -->
 
         <?php
-	        // Verify if Cakebox is up to date
-	        //if(($update_info = check_update())) show_update($update_info);
+	        // Verifie les MàJ (+ affichage)
+	       if($update->is_update_available()) $update->show_new_update();
 
-	        // Show a message after an update
-	        //if(isset($_GET['update_done'])) show_update_done();
+	        // Message de confirmation pour MàJ terminée
+	        if(isset($_GET['update_done'])) $update->show_update_done();
       	?>
-
 
         <!-- CONTENT -->
         <section id="content">
@@ -103,13 +90,6 @@ if(isset($_GET['ignore_update']))
 			
 			<!-- Local files -->
 			<div id="local">
-				<?php
-					// $listof_dir 	=	 array(); // Filled by recursive_directory_tree as a global var (for list of dir in editmode)
-					// $tree_structure =	 recursive_directory_tree(LOCAL_DL_PATH);
-					// print_r($tree_structure);
-					// echo "<br /><br /><br />";
-				?>
-
 				<?php
 					$treeStructure = new FileTree("downloads");
 					$treeStructure->print_tree();
