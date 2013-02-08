@@ -27,66 +27,270 @@ else
 /********************************/
 
 // Configuration par défaut
-if (!file_exists("config.php"))
-{
-  define('LOCAL_LANG', 'fr');                  // Modification de la langue (EN ou FR)
-  define('TIME_CHECK_UPDATE', 12);             // Temps entre chaque vérification de mise à jour (0 = force la MàJ; -1 = désactive)
-  define('EDITMODE_ENABLE', TRUE);             // Active ou désactive la fonction d'EDITMODE
-  define('SEEN_MODE_ENABLE', TRUE);            // Active ou désactive la fonction de marquage des episodes comme vu
-  define('DISPLAY_HIDDEN_FILESDIRS', FALSE);   // Affiche ou ignore les fichiers cachés
-  define('IGNORE_CHMOD', FALSE);               // Active ou ignore la vérification des CHMOD sur /data et /downloads
-  define('LOCAL_DL_PATH', 'downloads');        // Modifie le dossier que surveille Cakebox
-  define('DOWNLOAD_LINK', "http://".$identity_inLink."/cakebox/");  // Modifie l'URL de stream des fichiers
-  $excludeFiles = array(".", "..", ".htaccess", "");  // Liste des fichiers ignorés dans le listing de Cakebox
-  define('SEEN_SPAN', '<span style="border-bottom:2px dotted #76D6B7;">');// Modifie le style du module vu/non vu
-  /* Options Divx Web Player*/
-  define('USE_DIVX', FALSE);                            // On choisi le lecteur DivX Web Player par défaut
-  define('DIVX_AUTOPLAY', 'FALSE');                    // Option autoplay (démarrage de la lecture automatique)
-  define('DIVX_WIDTH', '600');                        // Option de la largeur
-  define('DIVX_HEIGTH', '400');                       // Option de la hauteur
-  define('LAST_ADD', FALSE);                               // Affiche l'icone NEW
-  define('TIME_LAST_ADD', '24');                           // Durée de la nouveauté (en heure)
-}
-// Surcharge la configuration
+if (file_exists("config.ini"))
+  $config = new Configuration();
 else
-	require_once("config.php");
+	die("Il faut créer le fichier de configuration !! @@assistant");
 
-/********************************/
-/*          FONCTIONS           */
-/********************************/
 
-function isVideoFile($path)
+class Configuration
 {
-    $pathInfo = pathinfo($path);
-    $mime = explode("/", mime_content_type($path));
-    if ($mime[0] == "video" || $pathInfo['extension'] == "mkv") // Les films en HD ne passent pas forcement...
-        return TRUE;
-    return FALSE;
+  // General
+  private $lang;
+  private $ignore_chmod;
+  private $download_dir;
+  private $download_link;
+  private $excluded_files;
+  private $show_hidden_content;
+  private $show_last_add;
+  // Update
+  private $time_check_update;
+  // Video
+  private $video_player;
+
+  function __construct()
+  {
+    $config_array               =   parse_ini_file("config.ini", true);
+    $this->lang                 =   $config_array['General']['lang'];
+    $this->ignore_chmod         =   $config_array['General']['ignore_chmod'];
+    $this->download_dir         =   $config_array['General']['download_dir'];
+    $this->download_link        =   $config_array['General']['download_link'];
+    $this->excluded_files       =   $config_array['General']['excluded_files'];
+    $this->show_hidden_content  =   $config_array['General']['show_hidden_content'];
+    $this->show_last_add        =   $config_array['General']['show_last_add'];
+    $this->time_check_update    =   $config_array['Update']['time_check_update'];
+    $this->video_player         =   $config_array['Video']['player'];
+  }
+
+  public function get($attr)
+  {
+    return $this->$attr;
+  }
 }
 
-/**
- * Retourne le chemin vers l'icone associé
- * @filename Le nom du fichier à considérer
- */
-function get_file_icon($filename)
+
+class FileTree
 {
-  $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
-  if($extension == "avi" || $extension == "mpeg" || $extension == "mp4" || $extension == "mkv") $extension = "avi";
-  else if($extension == "mp3" || $extension == "midi" || $extension == "m4a" || $extension == "ogg" || $extension == "flac") $extension = "mp3";
-  else if($extension == "iso" || $extension == "rar" || $extension == "zip") $extension = "iso";
-  else $extension = "other";
+  private $tree;
+  private $config;
 
-  return "ressources/ext/".$extension.".png";
+  function __construct($path, $exclude_dir = FALSE)
+  {
+    global $config;
+    $this->config = $config;
+    $this->tree = $this->generate_tree($path, $exclude_dir);
+  }
+
+  /**
+  * Getter de l'arboresence 
+  * @return Array
+  */
+  public function get_tree()
+  {
+    return $this->tree;
+  }
+
+  /**
+   * Récupère récursivement le contenu d'un répertoire
+   * et le retourne sous forme d'array
+   * @param $directory Le répertoire à traiter
+   * @param $exclude_dir Permet d'exclure les dossiers (aka n'avoir que les fichiers de $directory)
+   **/
+  private function generate_tree($directory = null, $exclude_dir = FALSE)
+  {
+    // Global var 
+    global $excludeFiles;
+
+    // Si on ne spécifie pas de $directory, on prend le courant
+    if ($directory == null) $directory = getcwd();
+
+    // Le array final, à retourner
+    $return = array();
+
+    // Verifie si on pointe un dossier
+    if (is_dir($directory)) 
+    {
+        // Récupère le contenu du dossier
+        foreach(scandir($directory) as $file) {
+
+            // Ignore les fichiers cachés si configuré, ignore les fichiers exclus
+            if (in_array($file, $this->config->get('excluded_files')) || $this->config->get('show_hidden_content')) 
+              continue;
+
+            // Si on pointe sur un fichier, on l'ajoute
+            if (!is_dir($directory."/".$file))
+              $return[] = $directory."/".$file;
+
+            // Si on pointe sur un dossier et qu'on veut bien des dossiers, on l'ajoute (si dossier, on ajoute "array()")
+            else if (!$exclude_dir)
+              $return[$directory."/".$file] = (!empty($subtree)) ? $this->get_tree($directory."/".$file) : array();
+        }
+    }
+    // Si on pointe sur un fichier, on l'ajoute
+    else
+        $return[] = $directory;
+
+    // Fin, retour
+    return $return;
+  }
+
+
+  public function print_tree($directory = '')
+  {
+
+    // Global var
+    global $lang;
+
+    if (empty($this->tree))
+    {
+      echo '<div style="margin-bottom:5px;" class="onefile">';
+      echo $lang[$config->get('lang')]['empty_dir'];
+      echo '</div>';
+      return;
+    }
+
+    // Pour chaque élément de l'arboresence
+    foreach($this->tree as $fullname => $file)
+    {
+      // Si on pointe un dossier ($fullname = "download/my_dir")
+      if(is_array($file))
+        $this->print_folder($fullname);
+      // Si on pointe sur un fichier
+      else
+        $this->print_file($file);
+        
+    }
+  }
+    
+
+  private function print_folder($fullname)
+  {
+    // Récupère le nom simple du dossier (sans les parents)
+    $name = addslashes(basename($fullname));   
+
+    // Affiche le dossier et son arborescence
+    echo '<div class="onedir">
+          <img src="ressources/folder.png" class="pointerLink imgfolder"/>
+          <span class="pointerLink">'.stripslashes($name).'</span>
+          </div>
+          
+          <div id="'.stripslashes($name).'" class="dirInList">';
+          // style="display:none;"
+          if(!empty($tree[$fullname])) $this->print_tree($fullname);
+          else echo "Dossier vide";
+          echo '</div>';
+  }
+
+  private function print_file($fullname)
+  {
+
+      // Global Var
+      global $lang;
+
+      // Traitement du paramètre
+      $path_info = pathinfo($fullname);
+      $name = basename($fullname);
+      $digest_fullname = str_replace("/", "-", htmlspecialchars($fullname));
+      $protected_name = htmlspecialchars($name);
+
+      // Affichage des icones à gauche
+      echo '<div style="margin-bottom:5px;" class="onefile" id="file-'.$digest_fullname.'">';
+
+      echo '<a href="'.$this->config->get('download_link').$fullname.'" download="'.$path_info['basename'].'">';
+        echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
+      echo '</a>';
+
+      echo '<a href="watch.php?file='.urlencode($fullname).'">';
+        echo '<img src="ressources/ext/'.File::get_type($fullname).'.png" title="Stream or download this file" /> &nbsp;';
+      echo '</a>';
+
+      // Affichage du titre du fichier (soulignement si marqué comme vu)
+      if (file_exists("data/".$path_info['basename']))
+      {
+        echo '<span style="border-bottom:2px dotted #76D6B7;">';
+        echo $protected_name;
+        echo '</span>';
+      }
+      else echo $protected_name;
+
+      // Création de l'infobulle
+      echo '<a href="#" class="tooltip">&nbsp;(?)
+            <span>
+              '.$lang[$this->config->get('lang')]['size'].' : '.File::get_file_size($fullname).'<br/>
+              '.$lang[$this->config->get('lang')]['last_update'].' : '.File::get_file_mtime($fullname).'<br/>
+              '.$lang[$this->config->get('lang')]['last_access'].' : '.File::get_file_atime($fullname).'<br/>
+            </span>
+            </a>';
+
+      // Fin
+      echo '</div>';
+  }
 }
 
-/**
- * Convertit la taille en Xo
- * @param $filePath Le fichier a traiter
- */
-function getFileSize($filePath)
+
+abstract class File
 {
-     $fs = filesize($filePath);
+  protected $fullname;
+  protected $name;
+  protected $dirname;
+  protected $type;
+  protected $url;
+
+  function __construct($fullname)
+  {
+    $this->fullname = $fullname;
+    $this->name = basename($fullname);
+    $this->dirname = dirname($fullname);
+    $this->type = pathinfo($fullname, PATHINFO_EXTENSION);
+    $this->url = "http://....".$fullname;
+
+  }
+
+  public function get_name()
+  {
+    return $this->name;
+  }
+    
+  public function get_fullname()
+  {
+    return $this->fullname;
+  }
+    public function get_url()
+  {
+    return "http://........../".$this->fullname;
+  }
+
+   /**
+   * Retourne le format d'un fichier 
+   * @filename Le nom du fichier à considérer
+   * @return "video", "pdf", "music", "iso", "archive"
+   */
+  public static function get_type($fullname)
+  {
+    $extension = pathinfo($fullname, PATHINFO_EXTENSION);
+
+    if($extension == "avi" || $extension == "mpeg" || $extension == "mp4" || $extension == "mkv") $type = "video";
+    else if($extension == "mp3" || $extension == "midi" || $extension == "m4a" || $extension == "ogg" || $extension == "flac") $type = "music";
+    else if($extension == "rar" || $extension == "zip") $type = "archive";
+    else if($extension == "iso") $type = "iso";
+    else $extension = "other";
+
+    return $type;
+  }
+
+  public static function isVideo($fullname)
+  {
+    return (File::get_type($fullname) == "video");
+  }
+
+  /**
+   * Convertit la taille en Xo
+   * @param $filePath Le fichier a traiter
+   */
+  static function get_file_size($fullname)
+  {
+     $fs = filesize($fullname);
 
      if ($fs >= 1073741824)
       $fs = round($fs / 1073741824 * 100) / 100 . " Go";
@@ -97,7 +301,104 @@ function getFileSize($filePath)
      else
       $fs = $fs . " o";
      return $fs;
+  }
+
+  /**
+   * Retourne la date de dernière modification d'un fichier
+   * @param $filePath Le fichier a traiter
+   */
+  static function get_file_mtime($fullname)
+  {
+     return date("d F Y, H:i",filemtime($fullname));
+  }
+
+  /**
+   * Retourne la date de dernier access d'un fichier
+   * @param $filePath Le fichier a traiter
+   */
+  static function get_file_atime($fullname)
+  {
+     return date("d F Y, H:i",fileatime($fullname));
+  }
 }
+
+class Video extends File
+{
+  private $seen;
+  private $next_video;
+  private $prev_video;
+
+  function __construct($fullname)
+  {
+    parent::__construct($fullname);
+    $this->seen = false; // TODO
+    $this->find_next_prev_video();
+  }
+
+  public function print_player()
+  {
+    if($this->player == "vlc")
+    {
+
+    }
+    elseif($this->player == "divxplayer")
+    {
+
+    }
+  }
+
+  public function get_seen()
+  {
+    return $this->seen;
+  }
+
+  private function find_next_prev_video()
+  {
+
+    // Initialisation
+    $this->prev = NULL;
+    $this->next = NULL;
+
+    // On récupère le contenu du repertoire courant
+    $local_tree = new FileTree($this->dirname, TRUE);
+    $current_dir = $local_tree->get_tree();
+
+    // On récupère la position du fichier courant (pour voir avant et après)
+    $current_file = array_keys($current_dir,$this->fullname);
+    $current_file = $current_file[0];
+
+    // Si le fichier courant n'est pas le dernier, on a notre $next
+    if($current_file != count($current_dir)-1)
+    {
+        // Si le fichier suivant est bien une vidéo
+        if(File::get_type($current_dir[$current_file+1]) == "video")
+          $this->next = htmlspecialchars(urlencode($current_dir[$current_file+1]));
+    }
+
+    // Si le fichier courant n'est pas le premier, on a notre prev
+    if($current_file != 0)
+    {
+        // Si le fichier précédent est bien une vidéo
+        if(File::get_type($current_dir[$current_file-1]) == "video")
+          $this->prev = htmlspecialchars(urlencode($current_dir[$current_file-1]));
+    }
+  }
+
+  public function get_next()
+  {
+    return $this->next_video;
+  }
+
+  public function get_prev()
+  {
+    return $this->prev_video;
+  }
+
+}
+
+/********************************/
+/*          FONCTIONS           */
+/********************************/
 
 /**
  * Affiche l'icone NEW si
@@ -110,6 +411,7 @@ function showLastAdd($file)
     if (((date('U') - filemtime($file)) / 3600) <= TIME_LAST_ADD)
       echo '<img src="ressources/new.png" title="Nouveau fichier !" /> &nbsp;';
 }
+
 function showLastAddFolder($key)
 {
   $stat = stat($key);
@@ -118,146 +420,6 @@ function showLastAddFolder($key)
   else
     return 'folder.png';
 }
-/**
- * Récupère récursivement le contenu d'un répertoire
- * et le retourne sous forme d'array
- * @param $directory Le répertoire à traiter
- **/
-function recursive_directory_tree($directory = null)
-{
-    global $listof_dir;
-    global $excludeFiles;
-
-    //If $directory is null, set $directory to the current working directory.
-    if ($directory == null) {
-        $directory = getcwd();
-    }
-
-    //declare the array to return
-    $return = array();
-
-    //Check if the argument specified is an array
-    if (is_dir($directory)) {
-
-        array_push($listof_dir,$directory);
-        //Scan the directory and loop through the results
-        foreach(scandir($directory) as $file) {
-
-            //. = current directory, .. = up one level. We want to ignore both.
-            if ($file[0] == "." && !DISPLAY_HIDDEN_FILESDIRS) {
-                continue;
-            }
-
-            //Exclude some specified files
-            if (in_array($file, $excludeFiles)) {
-                continue;
-            }
-
-            //Check if the current $file is a directory itself.
-            //The appending of $directory is necessary here.
-            if (is_dir($directory."/".$file))
-            {
-                //Create a new array with an index of the folder name.
-                $return[$directory."/".$file] = recursive_directory_tree($directory."/".$file);
-            }
-            else
-            {
-                //If $file is not a directory, just add it to th return array.
-                $return[] = $directory."/".$file;
-            }
-        }
-    }
-    else
-    {
-        $return[] = $directory;
-    }
-
-    unset($listof_dir[0]);
-    return $return;
-}
-
-/**
- * Affiche la liste des fichiers sur index.php
- * @param $treestructure L'array contenant la hiérarchie de fichiers
- * @param $filter Le filtre à utiliser (all ou video)
- * @param $editmode Prendre en compte l'editmode dans l'affichage
- * @param $father Un paramètre récursif qui permet de connaître le(s) parent(s) d'un dossier
- */
-function print_tree_structure($treestructure, $editmode = FALSE, $father = "")
-{
-  global $lang;
-
-  if (empty($treestructure))
-  {
-	  echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
-	  echo $lang[LOCAL_LANG]['empty_dir'];
-	  echo '</div>';
-	  return;
-  }
-
-  foreach($treestructure as $key => $file)
-  {
-    // Si on est sur un dossier
-    if(is_array($file))
-    {
-      $fullkey = $key;
-      $key = addslashes(basename($key));
-      echo '<div class="onedir">';
-
-      if ($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.$father.htmlspecialchars($key).'" onclick="CheckLikes(this);" />';
-
-      echo '
-      	  <img src="ressources/'.showLastAddFolder($fullkey).'" class="pointerLink imgfolder" onclick="showhidedir(\''.$key.'\'); return false;" />
-          <span class="pointerLink" onclick="showhidedir(\''.$key.'\'); return false;">'.stripslashes($key).'</span></div>
-          <div id="'.stripslashes($key).'" class="dirInList" style="display:none;">
-          ';
-      print_tree_structure($file, $editmode, $father.htmlspecialchars($key)."/");
-
-      echo '</div>';
-    }
-    else
-    {
-      $pathInfo = pathinfo($file);
-
-      echo '<div style="margin-bottom:5px;" class="onefile" id="div-'.htmlspecialchars($file).'">';
-
-      // La checkbox de l'editmode
-      if($editmode) echo '<input name="Files[]" id="Files" type="checkbox" value="'.htmlspecialchars($file).'"/>';
-
-      // Affichage des images à gauche du titre (Direct Download + Watch)
-      echo '<a href="'.DOWNLOAD_LINK.$file.'" download="'.$pathInfo['basename'].'">';
-        echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
-      echo '</a>';
-
-      echo '<a href="watch.php?file='.urlencode($file).'">';
-        echo '<img src="'.get_file_icon($file).'" title="Stream or download this file" /> &nbsp;';
-      echo '</a>';
-      showLastAdd($file);
-
-      if (SEEN_MODE_ENABLE && file_exists("data/".$pathInfo['basename']))
-      {
-	      // Affichage du titre (soulignement si marqué comme vu)
-          echo SEEN_SPAN;
-	      echo basename(htmlspecialchars($file));
-	      echo '</span>';
-      }
-      else
-          echo basename(htmlspecialchars($file));
-
-      // Création de l'infobulle
-      echo '<a href="#" class="tooltip">&nbsp;(?)
-      		<span>
-              '.$lang[LOCAL_LANG]['size'].' : '.getFilesize($file).'<br/>
-              '.$lang[LOCAL_LANG]['last_update'].' : '.date("d F Y, H:i",filemtime($file)).'<br/>
-              '.$lang[LOCAL_LANG]['last_access'].' : '.date("d F Y, H:i",fileatime($file)).'<br/>
-            </span>
-            </a>';
-
-      echo '</div>';
-    }
-  }
-}
-
 
 /**
  * Supprime un dossier qui n'est pas vide
@@ -306,8 +468,8 @@ function check_dir()
   {
     echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
     echo '<span style="font-weight:bold;">IMPORTANT /!\</span><br/>';
-    if(!$isdir_data) echo $lang[LOCAL_LANG]['create_data_dir']."<br/>";
-    if(!$isdir_downloads) echo $lang[LOCAL_LANG]['create_downloads_dir']."<br/>";
+    if(!$isdir_data) echo $lang[$config->get('lang')]['create_data_dir']."<br/>";
+    if(!$isdir_downloads) echo $lang[$config->get('lang')]['create_downloads_dir']."<br/>";
     echo '</p>';
   }
   // On ignore la vérification des chmod en fonction de IGNORE_CHMOD
@@ -319,45 +481,12 @@ function check_dir()
     {
       echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
       echo '<span style="font-weight:bold;">IMPORTANT /!\</span><br/>';
-      if($chmod_data != 777) echo $lang[LOCAL_LANG]['chmod_data_dir']."<br/>";
-      if($chmod_downloads != 777) echo $lang[LOCAL_LANG]['chmod_downloads_dir']."<br/>";
+      if($chmod_data != 777) echo $lang[$config->get('lang')]['chmod_data_dir']."<br/>";
+      if($chmod_downloads != 777) echo $lang[$config->get('lang')]['chmod_downloads_dir']."<br/>";
       echo '</p>';
     }
   }
 }
-
-/*
- * Récupère l'épisode suivant et l'épisode précédent d'un dossier
- * en fonction de $file (épisode courant).
- * Retourne un array (prev=>X,next=>Y)
- */
-function get_nextnprev($file)
-{
-  $current_dir = recursive_directory_tree(dirname($file));
-  $current_file = array_keys($current_dir,$file);
-  $current_file = $current_file[0];
-
-  // Si le fichier courant n'est pas le dernier, on a notre $next
-  $next = NULL;
-  if($current_file != count($current_dir)-1)
-  {
-      // Si le fichier suivant est bien une vidéo
-      if(isVideoFile($current_dir[$current_file+1]))
-        $next = htmlspecialchars(urlencode($current_dir[$current_file+1]));
-  }
-
-  // Si le fichier courant n'est pas le premier, on a notre prev
-  $prev = NULL;
-  if($current_file != 0)
-  {
-      // Si le fichier précédent est bien une vidéo
-      if(isVideoFile($current_dir[$current_file-1]))
-        $prev = htmlspecialchars(urlencode($current_dir[$current_file-1]));
-  }
-
-  return array("prev"=>$prev,"next"=>$next);
-}
-
 
 /*
  * Verifie si une mise à jour est disponible
@@ -406,12 +535,12 @@ function show_update($update_info)
     $description_update = $update_info['changelog'];
 
     echo '<div id="update">';
-    echo "<h3>".$lang[LOCAL_LANG]['new_version']." : v$current_version !</h3>";
+    echo "<h3>".$lang[$config->get('lang')]['new_version']." : v$current_version !</h3>";
     echo '<ul>';
     foreach($description_update as $change) echo "<li>$change;</li>";
     echo '</ul>';
-    echo '<a href="index.php?do_update" class="do_update">'.$lang[LOCAL_LANG]['click_here_update'].' !</a> <br />';
-    echo '<a href="index.php?ignore_update&number='.$current_version.'" class="do_update">'.$lang[LOCAL_LANG]['ignore_update'].' !</a> <br />';
+    echo '<a href="index.php?do_update" class="do_update">'.$lang[$config->get('lang')]['click_here_update'].' !</a> <br />';
+    echo '<a href="index.php?ignore_update&number='.$current_version.'" class="do_update">'.$lang[$config->get('lang')]['ignore_update'].' !</a> <br />';
     echo '</div>';
 }
 
@@ -422,9 +551,9 @@ function show_update_done()
 {
     global $lang;
     echo '<div id="update">';
-    echo "<h3>".$lang[LOCAL_LANG]['cakebox_uptodate']." !</h3><br />";
-    echo '<a href="last_update.log" class="do_update">'.$lang[LOCAL_LANG]['click_here'].'</a> '.$lang[LOCAL_LANG]['watch_log_update'].'.<br />';
-    echo $lang[LOCAL_LANG]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[LOCAL_LANG]['ask_it'].' !</a>';
+    echo "<h3>".$lang[$config->get('lang')]['cakebox_uptodate']." !</h3><br />";
+    echo '<a href="last_update.log" class="do_update">'.$lang[$config->get('lang')]['click_here'].'</a> '.$lang[$config->get('lang')]['watch_log_update'].'.<br />';
+    echo $lang[$config->get('lang')]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[$config->get('lang')]['ask_it'].' !</a>';
     echo '</div>';
 }
 
