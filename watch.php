@@ -25,8 +25,8 @@ if($file_type == "video") $file = new Video($fullpath);
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
     <script lang="javascript">
-        var lang_ok_unmark = '<?php echo $lang[$config->get('lang')]['ok_unmark']; ?>';
-        var lang_ok_mark = '<?php echo $lang[$config->get('lang')]['ok_mark']; ?>';
+        var lang_ok_unmark = "<?php echo $lang[$config->get('lang')]['ok_unmark']; ?>";
+        var lang_ok_mark = "<?php echo $lang[$config->get('lang')]['ok_mark']; ?>";
     </script>
     <script src="ressources/oXHR.js"></script>
     <!-- / Style & ergo -->
@@ -92,11 +92,11 @@ if($file_type == "video") $file = new Video($fullpath);
             <center>
             <?php if ($config->get('video_player') == "divxwebplayer"): ?>
                 <!-- Embed DivX Player -->
-                <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="<?php echo DIVX_WIDTH ?>" height="<?php echo DIVX_HEIGTH ?>" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
+                <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="640" height="480" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                     <param name="custommode" value="none" />
-                    <param name="autoPlay" value="<?php echo DIVX_AUTOPLAY ?>" />
-                    <param name="src" value="<?php echo $config->get('download_link').$filePath; ?>" />
-                    <embed type="video/divx" src="<?php echo $config->get('download_link').$filePath; ?>" custommode="none" width="<?php echo DIVX_WIDTH ?>" height="<?php echo DIVX_HEIGTH ?>" autoPlay="<?php echo DIVX_AUTOPLAY ?>" pluginspage="http://go.divx.com/plugin/download/"></embed>
+                    <param name="autoPlay" value="false" />
+                    <param name="src" value="<?php echo $file->get_url(); ?>" />
+                    <embed type="video/divx" src="<?php echo $file->get_url(); ?>" custommode="none" width="640" height="480" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
                 </object>
                 <!-- / DivX -->
             <?php elseif ($config->get('video_player') == "vlc"): ?>
@@ -126,7 +126,7 @@ if($file_type == "video") $file = new Video($fullpath);
         <?php endif; ?>
 
         <div class="download_button">
-            <a href="<?php echo $config->get('download_link').$filePath; ?>" download="<?php echo $pathInfo['basename']; ?>">
+            <a href="<?php echo $file->get_url(); ?>" download="<?php echo $file->get_url(); ?>">
               <img src="ressources/<?php echo $lang[$config->get('lang')]['file_img_download']; ?>" />
             </a><br/>
             <?php echo $lang[$config->get('lang')]['right_click']; ?><br/>

@@ -85,8 +85,17 @@ if(isset($_GET['ignore_update']))
         <section id="content">
 
 			<?php
-				// Test chmod of main directories
-				//check_dir();
+				if($config->get_error_no_data_dir())
+				{
+					echo "Cakebox a besoin d'un dossier DATA et d'un dossier DOWNLOADS pour fonctionner.";
+				}
+				else
+				{
+					if($config->get_error_no_data_dir())
+					{
+						echo "Le chmod de DATA et DOWNLOADS doit être 777.";
+					}
+				}
 			?>
 
 			<h2><?php echo $lang[$config->get('lang')]['index_main_title']; ?></h2>	

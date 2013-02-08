@@ -47,6 +47,9 @@ class Configuration
   private $time_check_update;
   // Video
   private $video_player;
+  // Check Errors
+  private $error_no_data_dir;
+  private $error_chmod_data_dir;
 
   function __construct()
   {
@@ -60,11 +63,45 @@ class Configuration
     $this->show_last_add        =   $config_array['General']['show_last_add'];
     $this->time_check_update    =   $config_array['Update']['time_check_update'];
     $this->video_player         =   $config_array['Video']['player'];
+    $this->check_dir(); // Vérification des dossiers data & downloads
   }
 
   public function get($attr)
   {
     return $this->$attr;
+  }
+
+  /*
+   * Vérifie la permission des dossiers importants (downloads et data)
+   * et affiche une erreur en cas de besoin
+   */
+  private function check_dir()
+  {
+    // Vérification des dossiers
+    if(!is_dir("data") || !is_dir("downloads"))
+    {
+      $this->error_no_data_dir = true;
+    }
+    // Vérification des CHMOD
+    else if(!$this->ignore_chmod)
+    {
+      $chmod_data = substr(sprintf('%o', fileperms('data')),-3);
+      $chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
+      if($chmod_data != 777 || $chmod_downloads != 777)
+      {
+        $this->error_chmod_data_dir = true;
+      }
+    }
+  }
+
+  public function get_error_no_data_dir()
+  {
+    return $this->error_no_data_dir;
+  }
+
+  public function get_error_chmod_data_dir()
+  {
+    return $this->error_chmod_data_dir;
   }
 }
 
@@ -197,7 +234,7 @@ class FileTree
       // Affichage des icones à gauche
       echo '<div style="margin-bottom:5px;" class="onefile" id="file-'.$digest_fullname.'">';
 
-      echo '<a href="'.$this->config->get('download_link').$fullname.'" download="'.$path_info['basename'].'">';
+      echo '<a href="'.$this->config->get('download_link').$fullname.'" download="'.$this->config->get('download_link').$fullname.'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
 
@@ -239,12 +276,12 @@ abstract class File
 
   function __construct($fullname)
   {
+    global $config; // Load conf
     $this->fullname = $fullname;
     $this->name = basename($fullname);
     $this->dirname = dirname($fullname);
     $this->type = pathinfo($fullname, PATHINFO_EXTENSION);
-    $this->url = "http://....".$fullname;
-
+    $this->url = $config->get('download_link').$fullname;
   }
 
   public function get_name()
@@ -258,7 +295,7 @@ abstract class File
   }
     public function get_url()
   {
-    return "http://........../".$this->fullname;
+    return $this->url;
   }
 
    /**
@@ -439,54 +476,6 @@ function showLastAddFolder($key)
    }
  }
 
-/*
-*  Fonction str_replace() qui ne remplace qu'une occurence
-*  @param voir str_replace
-*/
-function ustr_replace($needle , $replace , $haystack)
-{
-    // Looks for the first occurence of $needle in $haystack
-    // and replaces it with $replace.
-    $pos = strpos($haystack, $needle);
-    if ($pos === false) {
-        // Nothing found
-    return $haystack;
-    }
-    return substr_replace($haystack, $replace, $pos, strlen($needle));
-}
-
-/*
- * Vérifie la permission des dossiers importants (downloads et data)
- * et affiche une erreur en cas de besoin
- */
-function check_dir()
-{
-  global $lang;
-  $isdir_data = is_dir("data");
-  $isdir_downloads = is_dir("downloads");
-  if(!$isdir_data || !$isdir_downloads)
-  {
-    echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-    echo '<span style="font-weight:bold;">IMPORTANT /!\</span><br/>';
-    if(!$isdir_data) echo $lang[$config->get('lang')]['create_data_dir']."<br/>";
-    if(!$isdir_downloads) echo $lang[$config->get('lang')]['create_downloads_dir']."<br/>";
-    echo '</p>';
-  }
-  // On ignore la vérification des chmod en fonction de IGNORE_CHMOD
-  else if(!IGNORE_CHMOD)
-  {
-    $chmod_data = substr(sprintf('%o', fileperms('data')),-3);
-    $chmod_downloads = substr(sprintf('%o',fileperms('downloads')),-3);
-    if($chmod_data != 777 || $chmod_downloads != 777)
-    {
-      echo '<p style="background:#FF6B7A;padding:10px;color:#FFFFFF;margin-bottom:20px;">';
-      echo '<span style="font-weight:bold;">IMPORTANT /!\</span><br/>';
-      if($chmod_data != 777) echo $lang[$config->get('lang')]['chmod_data_dir']."<br/>";
-      if($chmod_downloads != 777) echo $lang[$config->get('lang')]['chmod_downloads_dir']."<br/>";
-      echo '</p>';
-    }
-  }
-}
 
 /*
  * Verifie si une mise à jour est disponible
