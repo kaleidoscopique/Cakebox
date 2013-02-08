@@ -62,11 +62,36 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 
         <?php
 	        // Verifie les MàJ (+ affichage)
-	       if($update->is_update_available()) $update->show_new_update();
+	       if($update->is_update_available()):
+	    ?>
 
-	        // Message de confirmation pour MàJ terminée
-	        if(isset($_GET['update_done'])) $update->show_update_done();
-      	?>
+			<div id="update">
+				<h3><?php echo $lang[$config->get('lang')]['new_version']." : v".$update->get_current_version()." !" ?></h3>
+				<ul>
+				    <?php foreach($update->get_changelog() as $change) echo "<li>$change;</li>"; ?>
+				</ul>
+
+
+				<div id="button_zone">
+		            <div class="button">
+		                <a href="index.php?do_update">
+		                    <img src="ressources/clouddownload.png" /> <br />
+		                    <?php echo $lang[$config->get('lang')]['click_here_update']; ?>
+		                </a>
+		            </div>
+		            <span class="under_button">
+		            	<a href="index.php?ignore_update&number=<?php echo $update->get_current_version(); ?>">
+		                	<?php echo $lang[$config->get('lang')]['ignore_update']; ?>
+		                </a>
+            		</span>
+		        </div>
+		        <hr class="justclear" />
+			</div>
+
+		<?php endif; ?>
+		<?php if(isset($_GET['update_done'])): ?>
+
+      	<?php endif; ?>
 
         <!-- CONTENT -->
         <section id="content">

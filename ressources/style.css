@@ -1,3 +1,7 @@
+/* ---- */
+/* HTML */
+/* ---- */
+
 body
 {
 	background: url('background.jpg') no-repeat center center fixed;
@@ -7,21 +11,21 @@ body
         background-size: cover;
 }
 
-a 
-{
-    text-decoration: none;
-}
+a  { text-decoration: none; }
+img { border: 0px; }
+hr { color:#dddddd; }
+hr.justclear { clear:both; visibility: hidden;}
+h2 { font-family: 'Droid Sans', sans-serif; font-size:24px!important; }
 
-img
-{
-    border: 0px;
-}
 
-header{
-    	
+/* ------ */
+/* HEADER */
+/* ------ */
+
+header {
 	position:relative; 
 	z-index:2;
-	background:url(footer-tail.png);
+	background:rgba(0,0,0,0.7);
 	height: 80px;
 }
 
@@ -33,14 +37,13 @@ header #logo
     font-size:72px;
 }
 
-.first
-{
-    color:#76d6b7 !important;
-}
-.second
-{
-    color:#fff !important;
-}
+/* Cake - Box*/
+.first { color:#76d6b7 !important; }
+.second { color:#fff !important; }
+
+/* ------- */
+/* CONTENT */
+/* ------- */
 
 #content
 {
@@ -53,22 +56,7 @@ header #logo
     font-family: 'Droid Sans', sans-serif;
 }
 
-#local
-{
-    margin-top:20px;
-}
-
-hr
-{
-    color:#dddddd;
-}
-
-h2
-{
-    font-family: 'Droid Sans', sans-serif;
-    font-size:24px!important;
-    
-}
+#local { margin-top:20px; }
 
 .littleh2
 {
@@ -76,12 +64,51 @@ h2
         color:#8A8A8A;
 }
 
-.download_button
+/* ------ */
+/* BUTTON */
+/* ------ */
+
+#button_zone
+{
+  text-align: center;
+  margin-top:30px;
+}
+
+#button_zone .button
+{
+  margin:auto;
+  width:240px;
+  height:50px;
+  background:#40e1ad;
+  border:6px white solid;
+  border-radius:40px;
+  text-align:center;
+  font-size:16px;
+  padding-top:12px;
+}
+
+#button_zone .button:hover
+{
+  background:#07f7a9;
+}
+
+#button_zone .button a, #button_zone .button a:visited
+{
+  display:block;
+  color:black !important;
+}
+
+#button_zone .under_button, #button_zone .under_button a, #button_zone .under_button a:visited
 {
     text-align:center;
     font-size: 12px;
     color:#8A8A8A;
     margin-top: 20px;
+}
+
+#button_zone .under_button a:hover
+{
+  text-decoration: underline;
 }
 
 .update_info
@@ -96,11 +123,6 @@ h2
     margin: 20px 0 20px 0;
 }
 
-.delete:hover
-{
-    cursor: pointer;
-}
-
 .onefile
 {
     padding: 1px;
@@ -111,25 +133,6 @@ h2
     transition: 1s;
     -moz-transition:1s;
     -webkit-transition:1s;
-}
-
-.delete
-{
-    float:right;
-    font-size: 12px;
-    color:#FA6475 !important;
-    text-decoration: none;
-}
-
-
-.editbox{
-    margin-top: 20px;
-}
-.help, .goeditmode
-{
-    font-size: 14px;
-    color:#8A8A8A;
-    text-decoration: underline;
 }
 
 .popcornlink
@@ -186,6 +189,10 @@ a.next_episode:hover
     text-decoration: underline;
 }
 
+/* ------ */
+/* UPDATE */
+/* ------ */
+
 #update
 {
     width: 60%;
@@ -218,6 +225,10 @@ a.next_episode:hover
 {
     text-decoration: underline;
 }
+
+/* ------- */
+/* TOOLTIP */
+/* ------- */
 
 .tooltip
 {
@@ -282,7 +293,6 @@ a.next_episode:hover
   border-bottom: 8px solid transparent; 
   border-right: 8px solid #ddd; 
   border-left: 0;
-	
   border-right-color: #ffeaa6;
 }
 

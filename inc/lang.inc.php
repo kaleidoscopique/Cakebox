@@ -44,10 +44,10 @@ $lang['fr']['watch_next']               =   "Voir l'épisode suivant";
 $lang['fr']['watch_previous']           =   "Voir l'épisode précédent";
 $lang['fr']['right_click']              =   "Clic droit et \"Enregistrer sous\" pour télécharger";
 $lang['fr']['size']                     =   "Taille";
-$lang['fr']['file_img_download']        =   "telechargerfichier.png";
+$lang['fr']['download']        			=   "Télécharger le fichier";
 // update
 $lang['fr']['new_version']              =   "Une nouvelle version de Cakebox est disponible";
-$lang['fr']['click_here_update']        =   "Cliquez ici pour lancer la mise à jour";
+$lang['fr']['click_here_update']        =   "Installer la mise à jour";
 $lang['fr']['cakebox_uptodate']         =   "Cakebox est à jour, félicitation";
 $lang['fr']['click_here']               =   "Cliquez ici";
 $lang['fr']['watch_log_update']         =   "pour accéder aux logs de la mise à jour";
@@ -95,10 +95,10 @@ $lang['en']['watch_next']               =   "Watch the next episode";
 $lang['en']['watch_previous']           =   "Watch the previous episode";
 $lang['en']['right_click']              =   "Right click and \"Save link as\" to download it";
 $lang['en']['size']                     =   "Size :";
-$lang['en']['file_img_download']        =   "downloadfile.png";
+$lang['en']['download']        			=   "Download file";
 // update
 $lang['en']['new_version']              =   "A new version is available";
-$lang['en']['click_here_update']        =   "Click here to update";
+$lang['en']['click_here_update']        =   "Install update";
 $lang['en']['cakebox_uptodate']         =   "Cakebox is up to date, congrats !";
 $lang['en']['click_here']               =   "Click here";
 $lang['en']['watch_log_update']         =   "to see the update logs";

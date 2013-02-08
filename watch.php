@@ -125,12 +125,17 @@ if($file_type == "video") $file = new Video($fullpath);
             </center>
         <?php endif; ?>
 
-        <div class="download_button">
-            <a href="<?php echo $file->get_url(); ?>" download="<?php echo $file->get_url(); ?>">
-              <img src="ressources/<?php echo $lang[$config->get('lang')]['file_img_download']; ?>" />
-            </a><br/>
-            <?php echo $lang[$config->get('lang')]['right_click']; ?><br/>
-            <strong><?php echo $lang[$config->get('lang')]['size']; ?></strong> <?php echo File::get_file_size($file->get_fullname()); ?>
+        <div id="button_zone">
+            <div class="button">
+                <a href="<?php echo $file->get_url(); ?>" download="<?php echo $file->get_url(); ?>">
+                    <img src="ressources/clouddownload.png" /> <br />
+                    <?php echo $lang[$config->get('lang')]['download']; ?>
+                </a>
+            </div>
+            <span class="under_button">
+                <?php echo $lang[$config->get('lang')]['right_click']; ?><br/>
+                <strong><?php echo $lang[$config->get('lang')]['size']; ?></strong> <?php echo File::get_file_size($file->get_fullname()); ?>
+            </span>
         </div>
         <br />
         <br />

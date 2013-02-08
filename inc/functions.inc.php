@@ -514,6 +514,8 @@ class Update
   // Accesseur update dispo ?
   public function is_update_available() { return $this->update_available; }
   public function get_local_version() { return $this->local_version; }
+  public function get_current_version() { return $this->current_version; }
+  public function get_changelog() { return $this->changelog; }
 
   /*
    * Verifie si une mise à jour est disponible
@@ -526,12 +528,13 @@ class Update
     $time_since = time()-$last_check;
 
     // Local version
-    $local_version_file = fopen('version.txt','r');
+    $local_version_file = fopen('version.txt','r+');
     $this->local_version  = fgets($local_version_file);
-    fclose($local_version_file);
+    $force_check_update = strpos($this->local_version,"+"); // Si on trouve un "+" à la fin, on force le checkupdate
+    $this->local_version = trim(str_replace('+','',$this->local_version)); // On enlève le '+' (et le linefeed) pour ne garder que le nombre
 
     // Check for a new version each 12h
-    if($time_since > $this->config->get('time_check_update') * 3600)
+    if($time_since > $this->config->get('time_check_update') * 3600 || $force_check_update)
     {
       // Version disponible en dépôt
       $current_version_file = fopen('https://github.com/MardamBeyK/Cakebox/raw/master/version.txt','r');
@@ -546,50 +549,24 @@ class Update
         // Lecture du fichier
         while(!feof($current_version_file))
           $this->changelog[] = fgets($current_version_file);
+
+        // On rajoute un "+" à côté du num de version en local
+        // pour forcer la proposition de mise à jour par la suite
+        if(!$force_check_update)
+        {
+            rewind($local_version_file);
+            fwrite($local_version_file,$this->local_version."+\n");
+        }
       }
 
-      // Fermeture du flux
+      // Fermeture des flux
       fclose($current_version_file);
+      fclose($local_version_file);
     } 
     else 
     {
       $this->update_available = false;
     }
-  }
-
-  /**
-  * Execute la mise à jour vers la dernière version disponible
-  * @param $force Force la mise à jour si TRUE
-  */
-  public function execute($force)
-  {
-    // We must be sure there is an update available
-    if($this->is_update_available() || $force)
-    {
-      // Extract "/dir/of/web/server" from "/dir/of/web/server/cakebox"
-      $update_dir = escapeshellarg(substr(getcwd(),0,strpos(getcwd(),"/cakebox")));
-      exec("bash scripts/patch_update $update_dir");
-      sleep(1); // let time before redirection
-      header('Location:index.php?update_done');
-    }
-  }
-
-  /*
-   * Affiche le div de mise à jour avec changelog si MàJ dispo
-   */
-  public function show_new_update()
-  {
-    global $lang;;
-    $description_update = $this->changelog;
-
-    echo '<div id="update">';
-    echo "<h3>".$lang[$this->config->get('lang')]['new_version']." : v".$this->current_version." !</h3>";
-    echo '<ul>';
-    foreach($description_update as $change) echo "<li>$change;</li>";
-    echo '</ul>';
-    echo '<a href="index.php?do_update" class="do_update">'.$lang[$this->config->get('lang')]['click_here_update'].' !</a> <br />';
-    echo '<a href="index.php?ignore_update&number='.$this->current_version.'" class="do_update">'.$lang[$this->config->get('lang')]['ignore_update'].' !</a> <br />';
-    echo '</div>';
   }
 
   /*
