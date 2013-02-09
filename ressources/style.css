@@ -46,11 +46,16 @@ header #menu
 
 header #menu a
 {
-  padding:6px;
+  padding:10px;
   background:black;
   border-radius:6px;
   color:white;
   font-family: 'Droid Sans';
+}
+
+header #menu a:hover
+{
+  text-decoration: underline;
 }
 
 /* Cake - Box*/
@@ -330,9 +335,26 @@ a.next_episode:hover
   left: -8px;
 }
 
+/* Terminal in CSS */
+.terminal
+{
+  background:black;
+  padding:3px;
+  color:white;
+  font-family: 'Verdana';
+  margin-right:30px;
+  margin-left:30px;
+  font-size:16px;
+  border-radius:2px;
+}
+
+.terminal .prompt
+{
+  font-weight: bold;
+}
+
 
 /* MODAL */
-
 #lean_overlay { 
     position: fixed;
     z-index:100;
@@ -346,10 +368,44 @@ a.next_episode:hover
 
 #config_panel, #howto_update
 {
-  width: 600px;
-  padding: 30px; 
+  width: 800px;
+  padding-top:0px;
+  padding-bottom:30px;
   display:none;
   background: #FFF;
   border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
   font-family: 'Droid Sans';
+  border-radius:5px;
+}
+
+#config_panel p, #howto_update p
+{
+    padding: 20px;
+    padding-bottom:10px;
+    line-height: 22px;
+}
+
+#config_panel h1, #howto_update h1
+{
+  padding:10px;
+  border-radius:5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  background:#f97089;
+  color:white;
+  font-size:24px;
+}
+
+.modal_close
+{
+ display:block;
+ text-align: center;
+ margin:auto;
+ width:80px;
+ background:#ececec;
+ color:black;
+ padding:7px;
+ padding-left:0px;
+ padding-right:0px;
+ border-radius:4px;
 }

@@ -54,8 +54,8 @@ if(isset($_GET['ignore_update'])) $update->ignore();
     $(function() {
     	// Chargement du background configuré
     	$('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->get('background'); ?>)');
-    	$("#link_config_panel").leanModal();
-    	$("#link_howto_update").leanModal();
+    	$("#link_config_panel").leanModal({closeButton: ".modal_close"});
+    	$("#link_howto_update").leanModal({closeButton: ".modal_close"});
     });
     </script>
 </head>
@@ -149,10 +149,25 @@ if(isset($_GET['ignore_update'])) $update->ignore();
     <div id="config_panel">
     	<h1>Panneau de configuration</h1>
     	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget, luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada sodales.</p>
+    	<a class="modal_close" href="#">
+    		Fermer
+    	</a>
     </div>
     <div id="howto_update">
-    	<h1>How to update ?</h1>
-    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget, luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada sodales.</p>
+    	<h1>Comment mettre à jour Cakebox ?</h1>
+    	<p>Connectez-vous en SSH sur votre serveur et placez-vous à la racine de votre serveur web, là où se trouve le dossier de Cakebox : </p>
+    	<div class="terminal">
+    		<span class="prompt">$</span> cd /var/www
+    	</div>
+    	<p>Il ne vous reste qu'à taper cette commande pour lancer la mise à jour :</p>
+    	<div class="terminal">
+    		<span class="prompt">$</span> wget http://www.github.com/MardambeyK/cakebox/raw/scrips/update.sh && chmod +x update.sh && ./update.sh
+    	</div>
+    	<p>C'est fini ! Cakebox est à jour. Bon stream.</p>
+
+    	<a class="modal_close" href="#">
+    		Fermer
+    	</a>
     </div>
 </body>
 </html>
