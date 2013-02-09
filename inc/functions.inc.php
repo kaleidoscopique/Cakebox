@@ -437,20 +437,6 @@ class Video extends File
   // Accesseur de SEEN (vidéo vue ou non vue)
   public function get_seen() { return $this->seen; }
 
-  /**
-   * Affiche le code des players
-   */
-  public function print_player()
-  {
-    if($this->player == "vlc")
-    {
-
-    }
-    elseif($this->player == "divxplayer")
-    {
-
-    }
-  }
 
   /**
    * Récupère les épisodes prec et suivant

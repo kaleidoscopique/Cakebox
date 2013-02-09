@@ -34,6 +34,23 @@ header #logo
     font-family: 'Changa One', cursive;
     color:#ffffff;
     font-size:72px;
+    float:left;
+}
+
+header #menu
+{
+  float:right;
+  margin-top:30px;
+  margin-right:40px;
+}
+
+header #menu a
+{
+  padding:6px;
+  background:black;
+  border-radius:6px;
+  color:white;
+  font-family: 'Droid Sans';
 }
 
 /* Cake - Box*/
@@ -78,7 +95,7 @@ header #logo
   margin:auto;
   width:240px;
   height:50px;
-  background:#40e1ad;
+  background:#07f7a9;
   border:6px white solid;
   border-radius:40px;
   text-align:center;
@@ -86,9 +103,18 @@ header #logo
   padding-top:12px;
 }
 
+#button_zone .button:hover .download_update_img
+{
+   -webkit-transform: rotate(360deg);
+   moz-transform: rotate(360deg);
+    transition: 1s;
+    -moz-transition:1s;
+    -webkit-transition:1s;
+}
+
 #button_zone .button:hover
 {
-  background:#07f7a9;
+  text-decoration: underline;
 }
 
 #button_zone .button a, #button_zone .button a:visited
@@ -197,8 +223,10 @@ a.next_episode:hover
     width: 60%;
     margin:auto;
     margin-top:40px;
-    background:#ffdee8;
+    background:rgba(200,253,236,0.8);
+    border:4px solid #c8fdec;
     padding:30px;
+    padding-bottom:10px;
     font-family: 'Droid Sans', sans-serif;
 }
 
@@ -208,10 +236,11 @@ a.next_episode:hover
     font-size:24px!important;
 }
 
-#update > ul
+#update > ol
 {
-    list-style-type: disc;
+    list-style-type:decimal;
     margin:15px 15px 15px 30px;
+    line-height: 24px;
 }
 
 #update a.do_update
@@ -299,4 +328,28 @@ a.next_episode:hover
 {
   border-right-color: #e1ca82;
   left: -8px;
+}
+
+
+/* MODAL */
+
+#lean_overlay { 
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+
+#config_panel, #howto_update
+{
+  width: 600px;
+  padding: 30px; 
+  display:none;
+  background: #FFF;
+  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+  font-family: 'Droid Sans';
 }

@@ -48,14 +48,16 @@ if(isset($_GET['ignore_update'])) $update->ignore();
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/ico" href="favicon.ico" />
+    <script type="text/javascript" src="ressources/jquery.leanModal.min.js"></script>
 
     <script>
     $(function() {
     	// Chargement du background configuré
     	$('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->get('background'); ?>)');
+    	$("#link_config_panel").leanModal();
+    	$("#link_howto_update").leanModal();
     });
     </script>
-
 </head>
 <body>
         <!-- HEADER -->
@@ -65,6 +67,9 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 					<span class="first">Cake</span>
 					<span class="second">Box</span>
 				</a>
+		    </div>
+		    <div id="menu">
+		    	<a id="link_config_panel" rel="leanModal" href="#config_panel">Options</a>
 		    </div>
         </header>
         <!-- / HEADER -->
@@ -76,15 +81,15 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 
 			<div id="update">
 				<h3><?php echo $lang[$config->get('lang')]['new_version']." : v".$update->get_current_version()." !" ?></h3>
-				<ul>
+				<ol>
 				    <?php foreach($update->get_changelog() as $change) echo "<li>$change;</li>"; ?>
-				</ul>
+				</ol>
 
 
 				<div id="button_zone">
 		            <div class="button">
-		                <a href="index.php?do_update">
-		                    <img src="ressources/clouddownload.png" /> <br />
+		                <a id="link_howto_update" rel="leanModal" href="#howto_update">
+		                    <img src="ressources/clouddownload.png" class="download_update_img"/><br />
 		                    <?php echo $lang[$config->get('lang')]['click_here_update']; ?>
 		                </a>
 		            </div>
@@ -104,9 +109,8 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 
         <!-- CONTENT -->
         <section id="content">
-
 			<?php
-			// TODO : faire un vrai affichage des erreurs, pourquoi pas une méthode de $config ?
+				// TODO : faire un vrai affichage des erreurs, pourquoi pas une méthode de $config ?
 				if($config->get_error_no_data_dir())
 				{
 					echo "Cakebox a besoin d'un dossier DATA et d'un dossier DOWNLOADS pour fonctionner.";
@@ -141,5 +145,14 @@ if(isset($_GET['ignore_update'])) $update->ignore();
         </div>
     </footer>
     <!-- / FOOTER -->
+
+    <div id="config_panel">
+    	<h1>Panneau de configuration</h1>
+    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget, luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada sodales.</p>
+    </div>
+    <div id="howto_update">
+    	<h1>How to update ?</h1>
+    	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget, luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada sodales.</p>
+    </div>
 </body>
 </html>

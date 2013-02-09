@@ -18,38 +18,22 @@ if($file_type == "video") $file = new Video($fullpath);
     <meta name="robots" content="noindex" />
     <title>CakeBox - <?php echo $lang[$config->get('lang')]['watch_title']; ?></title>
     <meta charset="utf-8">
-    <link rel="icon" type="image/ico" href="favicon.ico" />
 
-    <!-- Style & ergo -->
-    <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="ressources/jquery.min.js"></script>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
-    <script lang="javascript">
-        var lang_ok_unmark = "<?php echo $lang[$config->get('lang')]['ok_unmark']; ?>";
-        var lang_ok_mark = "<?php echo $lang[$config->get('lang')]['ok_mark']; ?>";
-    </script>
-    <script src="ressources/oXHR.js"></script>
-    <!-- / Style & ergo -->
+    <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/ico" href="favicon.ico" />
 
-    <?php if ($config->get('video_player') == "vlc" && File::isVideo($file->get_name())): ?>
-    <!-- VLC Controls -->
-    <link rel="stylesheet" type="text/css" href="ressources/vlc-styles.css" />
-    <script language="javascript" src="ressources/jquery.min.js"></script>
-    <script language="javascript" src="ressources/jquery-vlc.js"></script>
-    <script language="javascript">
-        function play(instance, uri) {
-            VLCobject.getInstance(instance).play(uri);
-        }
-        var player = null;
-        $(document).ready(function() {
-            player = VLCobject.embedPlayer('vlc1', 600, 400, true);
-        });
+    <script>
+    $(function() {
+        // Chargement du background configuré
+        $('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->get('background'); ?>)');
+    });
     </script>
-    <!-- / VLC Controls -->
-    <?php endif; ?>
 </head>
 
-<body <?php if ($config->get('video_player') == "vlc" && File::isVideo($file->get_name())): ?> onload="play('vlc1', '<?php echo $config->get('download_link').addslashes($filePath); ?>')" <?php endif; ?>>
+<body>
     <header>
         <div id="logo">
             <a href="index.php">
@@ -91,18 +75,14 @@ if($file_type == "video") $file = new Video($fullpath);
         ?>
             <center>
             <?php if ($config->get('video_player') == "divxwebplayer"): ?>
-                <!-- Embed DivX Player -->
                 <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="640" height="480" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                     <param name="custommode" value="none" />
                     <param name="autoPlay" value="false" />
                     <param name="src" value="<?php echo $file->get_url(); ?>" />
                     <embed type="video/divx" src="<?php echo $file->get_url(); ?>" custommode="none" width="640" height="480" autoPlay="false" pluginspage="http://go.divx.com/plugin/download/"></embed>
                 </object>
-                <!-- / DivX -->
             <?php elseif ($config->get('video_player') == "vlc"): ?>
-                <!-- Embed VLC -->
-                <div id="vlc1" style="margin-bottom:50px;">player 1</div>
-                <!-- / VLC -->
+                <embed type="application/x-vlc-plugin" name="VLC" autoplay="yes" loop="no" volume="100" width="640" height="480" target="<?php echo $file->get_url(); ?>">
             <?php endif; ?>
 
             <?php
@@ -128,7 +108,7 @@ if($file_type == "video") $file = new Video($fullpath);
         <div id="button_zone">
             <div class="button">
                 <a href="<?php echo $file->get_url(); ?>" download="<?php echo $file->get_url(); ?>">
-                    <img src="ressources/clouddownload.png" /> <br />
+                    <img src="ressources/clouddownload.png" /><br />
                     <?php echo $lang[$config->get('lang')]['download']; ?>
                 </a>
             </div>
