@@ -146,9 +146,6 @@ class FileTree
    **/
   private function generate_tree($directory = null, $exclude_dir = FALSE)
   {
-    // Global var 
-    global $excludeFiles;
-
     // Si on ne spécifie pas de $directory, on prend le courant
     if ($directory == null) $directory = getcwd();
 
@@ -171,7 +168,7 @@ class FileTree
 
             // Si on pointe sur un dossier et qu'on veut bien des dossiers, on l'ajoute (si dossier, on ajoute "array()")
             else if (!$exclude_dir)
-              $return[$directory."/".$file] = (!empty($subtree)) ? $this->get_tree($directory."/".$file) : array();
+              $return[$directory."/".$file] = (!empty($directory."/".$file)) ? $this->get_tree($directory."/".$file) : array();
         }
     }
     // Si on pointe sur un fichier, on l'ajoute

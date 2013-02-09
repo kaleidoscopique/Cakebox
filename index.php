@@ -97,6 +97,7 @@ if(isset($_GET['ignore_update'])) $update->ignore();
         <section id="content">
 
 			<?php
+			// TODO : faire un vrai affichage des erreurs, pourquoi pas une méthode de $config ?
 				if($config->get_error_no_data_dir())
 				{
 					echo "Cakebox a besoin d'un dossier DATA et d'un dossier DOWNLOADS pour fonctionner.";
@@ -116,7 +117,7 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 			<!-- Local files -->
 			<div id="local">
 				<?php
-					$treeStructure = new FileTree("downloads");
+					$treeStructure = new FileTree($config->get('download_dir'));
 					$treeStructure->print_tree();
 				?>
 			</div>
