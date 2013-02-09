@@ -526,7 +526,7 @@ class Update
     if($time_since > $this->config->get('time_check_update') * 3600 || $force_check_update)
     {
       // Version disponible en dépôt
-      $current_version_file = fopen('https://github.com/MardamBeyK/Cakebox/raw/master/version.txt','r');
+      $current_version_file = fopen('https://raw.github.com/MardamBeyK/Cakebox/v4-dev/version.txt','r');
       $this->current_version  = fgets($current_version_file);
 
       // Si mise à jour dispo

@@ -24,7 +24,7 @@ h2 { font-family: 'Droid Sans', sans-serif; font-size:24px!important; }
 header {
 	position:relative; 
 	z-index:2;
-	background:rgba(0,0,0,0.7);
+	background:rgba(0,0,0,0.65);
 	height: 80px;
 }
 
@@ -40,12 +40,14 @@ header #logo
 header #menu
 {
   float:right;
-  margin-top:30px;
-  margin-right:40px;
+  margin-top:23px;
+  margin-right:10px;
 }
 
-header #menu a
+header #menu li
 {
+  display:block;
+  float:left; 
   padding:10px;
   padding-left:20px;
   padding-right:20px;
@@ -53,11 +55,22 @@ header #menu a
   border-radius:6px;
   color:white;
   font-family: 'Droid Sans';
+  margin-right:10px;
 }
 
-header #menu a:hover
+header #menu li a
 {
+  color:white;
+}
 
+header #menu li a:hover
+{
+  border-bottom:1px dashed white;
+}
+
+header #menu img.menu_icon
+{
+  margin-right:5px;
 }
 
 /* Cake - Box*/
@@ -260,6 +273,7 @@ a.next_episode:hover
 {
   color:#2a8869;
 }
+
 #update a:hover
 {
   text-decoration: underline;
@@ -372,7 +386,7 @@ a.next_episode:hover
     display: none;
 }
 
-#config_panel, #howto_update
+.modal_window
 {
   width: 800px;
   padding-top:0px;
@@ -384,14 +398,14 @@ a.next_episode:hover
   border-radius:5px;
 }
 
-#config_panel p, #howto_update p
+.modal_window p
 {
     padding: 20px;
     padding-bottom:10px;
     line-height: 22px;
 }
 
-#config_panel h1, #howto_update h1
+.modal_window h1
 {
   padding:10px;
   border-radius:5px;
@@ -402,14 +416,29 @@ a.next_episode:hover
   font-size:24px;
 }
 
-.modal_close
+.modal_window strong
+{
+  font-weight: bold;
+}
+
+.modal_window a
+{
+  color:#2a8869;
+}
+
+.modal_window a:hover
+{
+  text-decoration: underline;
+}
+
+a.modal_close
 {
  display:block;
  text-align: center;
  margin:auto;
  width:80px;
  background:#ececec;
- color:black;
+ color:black !important;
  padding:7px;
  padding-left:0px;
  padding-right:0px;
