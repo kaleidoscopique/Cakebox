@@ -46,7 +46,7 @@ if(isset($_GET['ignore_update'])) $update->ignore();
     <script type="text/javascript" src="ressources/jquery.min.js"></script>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <script type="text/javascript" src="ressources/jquery.leanModal.min.js"></script>
 
@@ -69,7 +69,7 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 				</a>
 		    </div>
 		    <div id="menu">
-		    	<a id="link_config_panel" rel="leanModal" href="#config_panel">Options</a>
+		    	<a id="link_config_panel" rel="leanModal" href="#config_panel"><img src="ressources/settings.png"> Options</a>
 		    </div>
         </header>
         <!-- / HEADER -->

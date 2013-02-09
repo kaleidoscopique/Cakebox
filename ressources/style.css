@@ -47,6 +47,8 @@ header #menu
 header #menu a
 {
   padding:10px;
+  padding-left:20px;
+  padding-right:20px;
   background:black;
   border-radius:6px;
   color:white;
@@ -55,7 +57,7 @@ header #menu a
 
 header #menu a:hover
 {
-  text-decoration: underline;
+
 }
 
 /* Cake - Box*/
@@ -100,27 +102,28 @@ header #menu a:hover
   margin:auto;
   width:240px;
   height:50px;
-  background:#07f7a9;
+  background: -webkit-linear-gradient(#76d6b7, #6cc7aa);
   border:6px white solid;
-  border-radius:40px;
+  border-radius:25px;
   text-align:center;
   font-size:16px;
   padding-top:12px;
+  box-shadow: 0 0 13px #acacac;  
+}
+#button_zone .button:hover
+{
+   
 }
 
 #button_zone .button:hover .download_update_img
 {
-   -webkit-transform: rotate(360deg);
-   moz-transform: rotate(360deg);
-    transition: 1s;
-    -moz-transition:1s;
-    -webkit-transition:1s;
+   -webkit-transform: rotate(1080deg);
+   transition: 1s;
+   -moz-transition:1s;
+   -webkit-transition:1s;
 }
 
-#button_zone .button:hover
-{
-  text-decoration: underline;
-}
+
 
 #button_zone .button a, #button_zone .button a:visited
 {
@@ -235,6 +238,11 @@ a.next_episode:hover
     font-family: 'Droid Sans', sans-serif;
 }
 
+#update strong
+{
+  font-weight:bold;
+}
+
 #update > h3
 {
     font-family: 'Droid Sans', sans-serif;
@@ -248,15 +256,13 @@ a.next_episode:hover
     line-height: 24px;
 }
 
-#update a.do_update
+#update a
 {
-    color:#ff3174;
-    font-weight: bold;
+  color:#2a8869;
 }
-
-#update a.do_update:hover
+#update a:hover
 {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* ------- */
