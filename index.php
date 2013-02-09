@@ -42,11 +42,20 @@ if(isset($_GET['ignore_update'])) $update->ignore();
     <meta name="robots" content="noindex"/>
     <title>CakeBox - <?php echo $lang[$config->get('lang')]['index_title']; ?></title>
     <meta charset="utf-8">
-    <script type="text/javascript" src="ressources/oXHR.js"></script>
+
+    <script type="text/javascript" src="ressources/jquery.min.js"></script>
     <link rel="stylesheet" href="ressources/style.css" type="text/css" media="screen">
     <link rel="stylesheet" href="ressources/reset.css" type="text/css" media="screen">
     <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/ico" href="favicon.ico" />
+
+    <script>
+    $(function() {
+    	// Chargement du background configuré
+    	$('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->get('background'); ?>)');
+    });
+    </script>
+
 </head>
 <body>
         <!-- HEADER -->

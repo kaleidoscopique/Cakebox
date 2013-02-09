@@ -34,6 +34,7 @@ class Configuration
   private $excluded_files;
   private $show_hidden_content;
   private $show_last_add;
+  private $background;
   // Update
   private $time_check_update;
   // Video
@@ -53,6 +54,7 @@ class Configuration
     $this->excluded_files       =   $config_array['General']['excluded_files'];
     $this->show_hidden_content  =   $config_array['General']['show_hidden_content'];
     $this->show_last_add        =   $config_array['General']['show_last_add'];
+    $this->background           =   $config_array['General']['background'];
     $this->time_check_update    =   $config_array['Update']['time_check_update'];
     $this->video_player         =   $config_array['Video']['player'];
     $this->check_dir(); // Vérification des dossiers data & downloads
@@ -168,7 +170,7 @@ class FileTree
 
             // Si on pointe sur un dossier et qu'on veut bien des dossiers, on l'ajoute (si dossier, on ajoute "array()")
             else if (!$exclude_dir)
-              $return[$directory."/".$file] = (!empty($directory."/".$file)) ? $this->get_tree($directory."/".$file) : array();
+              $return[$directory."/".$file] = $this->generate_tree($directory."/".$file); 
         }
     }
     // Si on pointe sur un fichier, on l'ajoute
@@ -184,13 +186,17 @@ class FileTree
     * Affichage de l'arborescence
     * @param $directory Le répertoire (fullname) à afficher
     */
-  public function print_tree($directory = '')
+  public function print_tree($subtree = NULL)
   {
 
     // Global var
     global $lang;
 
-    if (empty($this->tree))
+    // On utilise le tree total au premier appel récursif
+    if($subtree == NULL) $subtree = $this->tree;
+
+    // S'il est vide, c'est un dossier vide
+    if (empty($subtree))
     {
       echo '<div style="margin-bottom:5px;" class="onefile">';
       echo $lang[$config->get('lang')]['empty_dir'];
@@ -199,11 +205,11 @@ class FileTree
     }
 
     // Pour chaque élément de l'arboresence
-    foreach($this->tree as $fullname => $file)
+    foreach($subtree as $fullname => $file)
     {
       // Si on pointe un dossier ($fullname = "download/my_dir")
       if(is_array($file))
-        $this->print_folder($fullname);
+        $this->print_folder($fullname,$file);
       // Si on pointe sur un fichier
       else
         $this->print_file($file);
@@ -214,11 +220,12 @@ class FileTree
   /**
   * Affichage d'un dossier avec son arborescence
   * @param $fullname Le dossier à afficher
+  * @param $subtree L'array associé au dossier $fullname (donc son contenu)
   */
-  private function print_folder($fullname)
+  private function print_folder($fullname,$subtree)
   {
     // Récupère le nom simple du dossier (sans les parents)
-    $name = addslashes(basename($fullname));   
+    $name = basename($fullname);   
 
     // Affiche le dossier et son arborescence
     echo '<div class="onedir">
@@ -228,8 +235,7 @@ class FileTree
           
           <div id="'.stripslashes($name).'" class="dirInList">';
           // style="display:none;"
-          if(!empty($tree[$fullname])) $this->print_tree($fullname);
-          else echo "Dossier vide";
+          $this->print_tree($subtree);
           echo '</div>';
   }
 
@@ -257,7 +263,7 @@ class FileTree
       echo '</a>';
 
       echo '<a href="watch.php?file='.urlencode($fullname).'">';
-        echo '<img src="ressources/ext/'.File::get_type($fullname).'.png" title="Stream or download this file" /> &nbsp;';
+        echo '<img src="ressources/extensions/'.File::get_type($fullname).'.png" title="Stream or download this file" /> &nbsp;';
       echo '</a>';
 
       // Affichage du titre du fichier (soulignement si marqué comme vu)
@@ -348,7 +354,7 @@ abstract class File
     else if($extension == "mp3" || $extension == "midi" || $extension == "m4a" || $extension == "ogg" || $extension == "flac") $type = "music";
     else if($extension == "rar" || $extension == "zip") $type = "archive";
     else if($extension == "iso") $type = "iso";
-    else $extension = "other";
+    else $type = "other";
 
     return $type;
   }
