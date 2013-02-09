@@ -106,14 +106,13 @@ function getFileSize($filePath)
  **/
 function showLastAdd($file)
 {
-  if (LAST_ADD)
-    if (((date('U') - filemtime($file)) / 3600) <= TIME_LAST_ADD)
-      echo '<img src="ressources/new.png" title="Nouveau fichier !" /> &nbsp;';
+     if ( LAST_ADD && ((date('U') - filemtime($file)) / 3600) <= TIME_LAST_ADD)
+       echo '<img src="ressources/new.png" title="Nouveau fichier !" /> &nbsp;';
 }
 function showLastAddFolder($key)
 {
   $stat = stat($key);
-  if (LAST_ADD || ((date('U') - $stat['mtime']) / 3600) <= TIME_LAST_ADD)
+  if (LAST_ADD && ((date('U') - $stat['mtime']) / 3600) <= TIME_LAST_ADD)
     return 'folder_new.png';
   else
     return 'folder.png';
