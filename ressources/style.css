@@ -14,7 +14,9 @@ a  { text-decoration: none; }
 img { border: 0px; }
 hr { color:#dddddd; }
 hr.justclear { clear:both; visibility: hidden;}
+hr.underh2 { border:0px; border-top:1px solid #696969; margin:0px; margin-top:10px;}
 h2 { font-family: 'Droid Sans', sans-serif; font-size:24px!important; }
+strong { font-weight: bold !important;}
 
 
 /* ------ */
@@ -279,6 +281,16 @@ a.next_episode:hover
   text-decoration: underline;
 }
 
+/* --------- */
+/* WEBPLAYER */
+/* --------- */
+
+#web-player
+{
+  margin-top:30px;
+  text-align: center;
+}
+
 /* ------- */
 /* TOOLTIP */
 /* ------- */
@@ -359,7 +371,7 @@ a.next_episode:hover
 .terminal
 {
   background:black;
-  padding:3px;
+  padding:6px;
   color:white;
   font-family: 'Verdana';
   margin-right:30px;
@@ -374,7 +386,12 @@ a.next_episode:hover
 }
 
 
+
+/* ----- */
 /* MODAL */
+/* ----- */
+
+
 #lean_overlay { 
     position: fixed;
     z-index:100;
@@ -431,16 +448,45 @@ a.next_episode:hover
   text-decoration: underline;
 }
 
-a.modal_close
+#config_panel h1
 {
- display:block;
+  margin-bottom: 30px;
+}
+
+/* ------------- */
+/* MODAL BUTTONS */
+/* ------------- */
+
+
+div.modal_button_div
+{
+  text-align:center;
+}
+
+a.modal_button
+{
  text-align: center;
- margin:auto;
  width:80px;
- background:#ececec;
  color:black !important;
- padding:7px;
+ padding:10px;
  padding-left:0px;
  padding-right:0px;
  border-radius:4px;
+}
+
+a.modal_close
+{
+ background:#ececec;
+}
+
+a.modal_apply
+{
+ background:#b9f1c1;
+ margin-right:10px;
+}
+
+/* BOOTSTRAP SURCHARGE */
+span.help-block
+{
+  font-size:12px;
 }

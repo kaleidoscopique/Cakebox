@@ -45,13 +45,13 @@ if($file_type == "video") $file = new Video($fullpath);
 
             <?php endif; ?>
         </div>
-        <hr class="clear" />
+        <hr class="underh2" />
 
         <?php 
         // Gestion des vidéos
         if(File::isVideo($file->get_name())): 
         ?>
-            <center>
+            <div id="web-player">
             <?php if ($config->get('video_player') == "divxwebplayer"): ?>
                 <object classid="clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616" width="640" height="480" codebase="http://go.divx.com/plugin/DivXBrowserPlugin.cab">
                     <param name="custommode" value="none" />
@@ -80,7 +80,7 @@ if($file_type == "video") $file = new Video($fullpath);
                 echo '</a></div>';
             }
             ?>
-            </center>
+            </div>
         <?php endif; ?>
 
         <div id="button_zone">

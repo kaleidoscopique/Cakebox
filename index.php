@@ -53,22 +53,34 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 	<!-- CONTENT -->
 	<section id="content">
 		<?php
-			// TODO : faire un vrai affichage des erreurs, pourquoi pas une méthode de $config ?
+			// Gestion des erreurs possibles avec les dossiers /data et /downloads
 			if($config->get_error_no_data_dir())
 			{
-				echo "Cakebox a besoin d'un dossier DATA et d'un dossier DOWNLOADS pour fonctionner.";
+				echo'<div class="alert alert-error">
+						<strong>Attention !</strong> Cakebox a besoin d\'un dossier "data" et d\'un dossier "downloads" à la racine. Merci de les créer.<br />
+						Voici la commande à utiliser depuis votre accès SSH :<br /><br />
+						<div class="terminal">
+							<span class="prompt">$</span> mkdir '.$config->get('cakebox_absolute_path').'downloads ; mkdir '.$config->get('cakebox_absolute_path').'data
+						</div>
+					</div>';
 			}
 			else
 			{
-				if($config->get_error_no_data_dir())
+				if($config->get_error_chmod_data_dir())
 				{
-					echo "Le chmod de DATA et DOWNLOADS doit être 777.";
+					echo'<div class="alert alert-error"> 
+					<strong>Attention !</strong> Le chmod du dossier "data" et celui du dossier "downloads" doivent être 777. Merci de les modifier.<br />
+						Voici la commande à utiliser depuis votre accès SSH :<br /><br />
+						<div class="terminal">
+							<span class="prompt">$</span> chmod -R 777 '.$config->get('cakebox_absolute_path').'downloads ; chmod -R 777 '.$config->get('cakebox_absolute_path').'data
+						</div>
+					</div>';
 				}
 			}
 		?>
 
 		<h2><?php echo $lang[$config->get('lang')]['index_main_title']; ?></h2>	
-		<hr class="clear" />			
+		<hr class="underh2" />			
 			
 		<!-- Local files -->
 		<div id="local">

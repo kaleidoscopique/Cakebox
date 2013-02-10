@@ -42,6 +42,8 @@ class Configuration
   // Check Errors
   private $error_no_data_dir;
   private $error_chmod_data_dir;
+  // Path
+  private $cakebox_absolute_path;
 
   // Parsing du fichier de configuration
   function __construct()
@@ -57,6 +59,7 @@ class Configuration
     $this->background           =   $config_array['General']['background'];
     $this->time_check_update    =   $config_array['Update']['time_check_update'];
     $this->video_player         =   $config_array['Video']['player'];
+    $this->cakebox_absolute_path =  str_replace('inc','',dirname(__FILE__)); // Get /var/www/cakebox
     $this->check_dir(); // Vérification des dossiers data & downloads
   }
 
