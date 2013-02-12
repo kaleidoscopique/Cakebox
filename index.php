@@ -1,14 +1,17 @@
 <?php
-
+// Includes
 require_once('inc/lang.php');
-require_once('inc/functions.php');
+require_once('inc/Configuration.class.php');
+require_once('inc/FileTree.class.php');
+require_once('inc/File.class.php');
+require_once('inc/Update.class.php');
 
 // Request : IGNORE UPDATE
 if(isset($_GET['ignore_update'])) $update->ignore();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <title>CakeBox - <?php echo $lang[$config->get('lang')]['index_title']; ?></title>
     <?php require_once('inc/header.php'); ?>
@@ -32,7 +35,7 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 
 		<div id="button_zone">
 	        <div class="button">
-	            <a id="link_howto_update" rel="leanModal" href="#howto_update">
+	            <a href="#howto_update" data-toggle="modal">
 	                <img src="ressources/clouddownload.png" class="download_update_img"/><br />
 	                <?php echo $lang[$config->get('lang')]['click_here_update']; ?>
 	            </a>
@@ -44,18 +47,13 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 			</span>
 	    </div>
 	</div>
-
-	<?php endif; ?>
-	<?php if(isset($_GET['update_done'])): ?>
-
-		<?php endif; ?>
+	<?php endif; // Update Available ?>
 
 	<!-- CONTENT -->
 	<section id="content">
 		<?php
-			// Gestion des erreurs possibles avec les dossiers /data et /downloads
-			if($config->get_error_no_data_dir())
-			{
+			// Les dossiers data et downloads n'existent pas
+			if($config->get_error_no_data_dir()):
 				echo'<div class="alert alert-error">
 						<strong>Attention !</strong> Cakebox a besoin d\'un dossier "data" et d\'un dossier "downloads" à la racine. Merci de les créer.<br />
 						Voici la commande à utiliser depuis votre accès SSH :<br /><br />
@@ -63,11 +61,9 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 							<span class="prompt">$</span> mkdir '.$config->get('cakebox_absolute_path').'downloads ; mkdir '.$config->get('cakebox_absolute_path').'data
 						</div>
 					</div>';
-			}
-			else
-			{
-				if($config->get_error_chmod_data_dir())
-				{
+			else:
+				// Le chmod des dossiers downloads et data n'est pas bon
+				if($config->get_error_chmod_data_dir()):
 					echo'<div class="alert alert-error"> 
 					<strong>Attention !</strong> Le chmod du dossier "data" et celui du dossier "downloads" doivent être 777. Merci de les modifier.<br />
 						Voici la commande à utiliser depuis votre accès SSH :<br /><br />
@@ -75,8 +71,8 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 							<span class="prompt">$</span> chmod -R 777 '.$config->get('cakebox_absolute_path').'downloads ; chmod -R 777 '.$config->get('cakebox_absolute_path').'data
 						</div>
 					</div>';
-				}
-			}
+				endif;
+			endif;
 		?>
 
 		<h2><?php echo $lang[$config->get('lang')]['index_main_title']; ?></h2>	
@@ -95,22 +91,6 @@ if(isset($_GET['ignore_update'])) $update->ignore();
 
 	<!-- MODAL PAGES -->
 	<?php require_once('inc/modal_pages.php'); ?>
-	<div id="howto_update" class="modal_window">
-		<h1>Comment mettre à jour Cakebox ?</h1>
-		<p>Connectez-vous en SSH sur votre serveur et placez-vous à la racine de votre serveur web, là où se trouve le dossier de Cakebox : </p>
-		<div class="terminal">
-			<span class="prompt">$</span> cd /var/www
-		</div>
-		<p>Il ne vous reste qu'à taper cette commande pour lancer la mise à jour :</p>
-		<div class="terminal">
-			<span class="prompt">$</span> wget http://www.github.com/MardambeyK/cakebox/raw/scrips/update.sh && chmod +x update.sh && ./update.sh
-		</div>
-		<p>C'est fini ! Cakebox est à jour. Bon stream.</p>
-
-		<a class="modal_close" href="#">
-			Fermer
-		</a>
-	</div>
 	<!-- / MODAL -->
 </body>
 </html>

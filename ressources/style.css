@@ -138,8 +138,6 @@ header #menu img.menu_icon
    -webkit-transition:1s;
 }
 
-
-
 #button_zone .button a, #button_zone .button a:visited
 {
   display:block;
@@ -183,6 +181,10 @@ header #menu img.menu_icon
     -webkit-transition:1s;
 }
 
+/* ----- */
+/* WATCH */
+/* ----- */
+
 .popcornlink
 {
     margin-right:10px;
@@ -224,7 +226,15 @@ header #menu img.menu_icon
     padding:2px;
 }
 
-a.next_episode
+.next_file{
+  margin:40px 0px 10px 0px;
+  }
+.previous_file{
+  margin:10px 0px 40px 0px;
+  padding-left:30px;
+}
+
+.next_file a, .previous_file a
 {
     color:#E81554;
     text-decoration: none;
@@ -232,7 +242,7 @@ a.next_episode
     font-weight: bold;
 }
 
-a.next_episode:hover
+.next_file a:hover, .previous_file a:hover
 {
     text-decoration: underline;
 }
@@ -385,44 +395,31 @@ a.next_episode:hover
   font-weight: bold;
 }
 
+/* Les paragraphes qui suivent un terminal */
+.terminal + p
+{
+  margin-top:10px;
+}
+
 
 
 /* ----- */
 /* MODAL */
 /* ----- */
 
-
-#lean_overlay { 
-    position: fixed;
-    z-index:100;
-    top: 0px;
-    left: 0px;
-    height:100%;
-    width:100%;
-    background: #000;
-    display: none;
-}
-
-.modal_window
+.modal
 {
-  width: 800px;
-  padding-top:0px;
-  padding-bottom:30px;
-  display:none;
-  background: #FFF;
-  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+  width:700px;
   font-family: 'Droid Sans';
-  border-radius:5px;
 }
 
-.modal_window p
+.modal p
 {
-    padding: 20px;
     padding-bottom:10px;
     line-height: 22px;
 }
 
-.modal_window h1
+.modal-header
 {
   padding:10px;
   border-radius:5px;
@@ -430,15 +427,15 @@ a.next_episode:hover
   border-bottom-left-radius: 0px;
   background:#f97089;
   color:white;
-  font-size:24px;
+  font-size:20px;
 }
 
-.modal_window strong
+.modal strong
 {
   font-weight: bold;
 }
 
-.modal_window a
+.modal a
 {
   color:#2a8869;
 }
@@ -453,37 +450,6 @@ a.next_episode:hover
   margin-bottom: 30px;
 }
 
-/* ------------- */
-/* MODAL BUTTONS */
-/* ------------- */
-
-
-div.modal_button_div
-{
-  text-align:center;
-}
-
-a.modal_button
-{
- text-align: center;
- width:80px;
- color:black !important;
- padding:10px;
- padding-left:0px;
- padding-right:0px;
- border-radius:4px;
-}
-
-a.modal_close
-{
- background:#ececec;
-}
-
-a.modal_apply
-{
- background:#b9f1c1;
- margin-right:10px;
-}
 
 /* BOOTSTRAP SURCHARGE */
 span.help-block

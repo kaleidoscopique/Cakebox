@@ -1,7 +1,10 @@
 <?php
-
+// Includes
 require_once('inc/lang.php');
-require_once('inc/functions.php');
+require_once('inc/Configuration.class.php');
+require_once('inc/FileTree.class.php');
+require_once('inc/File.class.php');
+require_once('inc/Update.class.php');
 
 // File infos
 $fullpath = $_GET['file'];
@@ -9,6 +12,8 @@ $fullpath = $_GET['file'];
 // Initilisation de l'objet
 $file_type = File::get_type($fullpath);
 if($file_type == "video") $file = new Video($fullpath);
+
+// TODO : gestion des autres types de fichier (+ fichiers génériques)
 
 ?>
 
@@ -65,20 +70,19 @@ if($file_type == "video") $file = new Video($fullpath);
 
             <?php
             // Affiche Précédent et Suivant si possible
-            if ($file->get_next())
-            {
-                echo '<div style="margin:40px 0px 10px 0px;">';
-                echo '<a href="watch.php?file='.$prev.'" class="next_episode">';
+            if ($file->get_next()):
+                echo '<div class="next_file">';
+                echo '<a href="watch.php?file='.$prev.'">';
                 echo "← ".$lang[$config->get('lang')]['watch_previous'];
                 echo '</a></div>';
-            }
-            if ($file->get_prev())
-            {
-                echo '<div style="margin:10px 0px 40px 0px;padding-left:30px;">';
-                echo '<a href="watch.php?file='.$next.'" class="next_episode">';
+            endif;
+
+            if ($file->get_prev()):
+                echo '<div class="previous_file">';
+                echo '<a href="watch.php?file='.$next.'">';
                 echo $lang[$config->get('lang')]['watch_next']." →";
                 echo '</a></div>';
-            }
+            endif;
             ?>
             </div>
         <?php endif; ?>

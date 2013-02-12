@@ -21,18 +21,16 @@ $(document).ready( function(){
 	$('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->get('background'); ?>)');
 
 	// Fenêtres modales
-	$("#link_config_panel").leanModal({closeButton: ".modal_close"});
-	$("#link_howto_update").leanModal({closeButton: ".modal_close"});
-	$("#link_about_us").leanModal({closeButton: ".modal_close"});
+	$('#about_us').modal({show:false});
+	$('#config_panel').modal({show:false});
+	$('#howto_update').modal({show:false});
 
-	// Panel de configuration
-	$('#myTab a[href="#multimedia"]').tab('show');
+	// Panel de configuration, tabs
+	$('#myTab a[href=#general]').tab('show');
+	$('#myTab a').click(function (e) {
+  		e.preventDefault();
+  		$(this).tab('show');
+  	})
+
 });
-
-// Documentation : http://twitter.github.com/bootstrap/javascript.html#tabs
-$('#myTab a').click(function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-})
-
 </script>
