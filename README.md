@@ -1,6 +1,5 @@
 ## TODO
 
-* Régler le problème des onglets sur le panneau de configuration
-* Implémenter le panneau de configuration
-* Splitter "functions.php" en plusieurs fichiers pour chaque class
+* Implémenter le panneau de configuration (Ajax)
 * Gérer différents types de fichiers (pdf, sons, images, texte)
+* Implémenter un editmode sexy
