@@ -1,4 +1,3 @@
-
 <!-- MODAL PANEL -->
 <div id="config_panel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -6,6 +5,7 @@
     <h3 id="myModalLabel">Panneau de configuration</h3>
   </div>
 
+<form name="config" class="form-horizontal" action="index.php" method="post">
   <div class="modal-body">
 
     <ul class="nav nav-tabs" id="myTab">
@@ -13,8 +13,7 @@
       <li><a href="#multimedia">Multimédia</a></li>
       <li><a href="#background">Image de fond</a></li>
     </ul>
-   
-    <form class="form-horizontal">
+  
       <div class="tab-content">
         <div class="tab-pane active" id="general">
           <fieldset>
@@ -22,9 +21,9 @@
             <!-- Select Basic -->
             <label class="control-label">Langue</label>
             <div class="controls">
-              <select class="input-xlarge">
-                <option>Français</option>
-                <option>Anglais</option>
+              <select class="input-xlarge" name="lang">
+                <option value="fr">Français</option>
+                <option value="en">Anglais</option>
               </select>
             </div>
           </div>
@@ -34,15 +33,15 @@
               <div class="controls">
                 <!-- Multiple Checkboxes -->
                 <label class="checkbox">
-                  <input type="checkbox" value="Afficher les fichiers et dossiers cachés">
+                  <input type="checkbox" value="true" name="show_hidden_content">
                   Afficher les fichiers et dossiers cachés
                 </label>
                 <label class="checkbox">
-                  <input type="checkbox" value="Mettre en évidence le contenu fraîchement téléchargé">
+                  <input type="checkbox" value="true" name="show_last_add">
                   Mettre en évidence le contenu fraîchement téléchargé
                 </label>
                 <label class="checkbox">
-                  <input type="checkbox" value="Ignorer les erreurs de chmod sur l'accueil">
+                  <input type="checkbox" value="true" name="ignore_chmod">
                   Ignorer les erreurs de chmod sur l'accueil
                 </label>
               </div>
@@ -52,7 +51,7 @@
             <!-- Text input-->
             <label class="control-label" for="input01">Téléchargements</label>
             <div class="controls">
-              <input type="text" placeholder="downloads" class="input-xlarge">
+              <input type="text" class="input-xlarge" name="download_dir">
               <span class="help-block">Indiquez le dossier où se trouve vos fichiers téléchargés. Par défaut "download".</span>
             </div>
           </div>
@@ -61,7 +60,7 @@
             <!-- Text input-->
             <label class="control-label" for="input01">Fichiers à exclure</label>
             <div class="controls">
-              <input type="text" placeholder="" class="input-xlarge">
+              <input type="text" placeholder="" class="input-xlarge" name="excluded_files">
               <span class="help-block">Listez les fichiers que vous souhaitez exclure du listing, en les séparant par une virgule.</span>
             </div>
           </div>
@@ -72,15 +71,15 @@
             <div class="controls">
                 <!-- Multiple Radios -->
                 <label class="radio">
-                  <input type="radio" value="Vérifier automatiquement de temps en temps" name="update" checked="checked">
+                  <input name="update_status" type="radio" value="12" name="update" checked="checked">
                   Vérifier automatiquement de temps en temps
                 </label>
                 <label class="radio">
-                  <input type="radio" value="Ne jamais vérifier" name="update">
+                  <input name="update_status" type="radio" value="-1" name="update">
                   Ne jamais vérifier
                 </label>
                 <label class="radio">
-                  <input type="radio" value="Vérifier à chaque visite" name="update">
+                  <input name="update_status" type="radio" value="0" name="update">
                   Vérifier à chaque visite
                 </label>
             </div>
@@ -93,9 +92,9 @@
             <!-- Select Basic -->
             <label class="control-label">Player par défaut</label>
             <div class="controls">
-              <select class="input-xlarge">
-                <option>VLC</option>
-                <option>DivX Web Player</option>
+              <select class="input-xlarge" name="player">
+                <option value="vlc">VLC</option>
+                <option value="divxwebplayer">DivX Web Player</option>
               </select>
             </div>
           </div>
@@ -105,13 +104,15 @@
         <!--<div class="tab-pane" id="background">...</div>-->
 
         </div>
-      </form>
+        <input type="hidden" name="submit" value="1" />
+      
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
-    <button class="btn btn-primary">Enregistrer</button>
+    <input type="submit" name="submit" value="Enregistrer" class="btn btn-primary"/>
   </div>
 </div>
+</form>
 
 <!-- MODAL ABOUT US -->
 

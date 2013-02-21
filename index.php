@@ -8,6 +8,9 @@ require_once('inc/Update.class.php');
 
 // Request : IGNORE UPDATE
 if(isset($_GET['ignore_update'])) $update->ignore();
+
+// Request : UPDATE CONFIG
+if(isset($_POST['submit'])) $config->update($_POST);
 ?>
 
 <!DOCTYPE html>

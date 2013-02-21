@@ -60,7 +60,7 @@ class FileTree
         foreach(scandir($directory) as $file) {
 
             // Ignore les fichiers cachés si configuré, ignore les fichiers exclus
-            if (in_array($file, $this->config->get('excluded_files')) || $this->config->get('show_hidden_content')) 
+            if (in_array($file, explode(',',$this->config->get('excluded_files'))) || ($file[0] == '.' && $this->config->get('show_hidden_content')))
               continue;
 
             // Si on pointe sur un fichier, on l'ajoute
@@ -90,6 +90,7 @@ class FileTree
 
     // Global var
     global $lang;
+    global $config;
 
     // On utilise le tree total au premier appel récursif
     if($subtree == NULL) $subtree = $this->tree;

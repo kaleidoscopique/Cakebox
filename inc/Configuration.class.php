@@ -93,6 +93,92 @@ class Configuration
   }
 
   /**
+  * Update le fichier de configuration
+  * @param $post Le tableau de champs
+  */
+  public function update($post)
+  {
+    $config_content = array(
+        // Options générales
+        'General' => array(
+          'lang'            => $post['lang'],
+          'ignore_chmod'    => (isset($post['ignore_chmod'])) ? "true":"false",
+          'download_dir'    => $post['download_dir'],
+          'download_link'   => 'http://admin:admin@localhost/cakebox/',
+          'excluded_files'  => $post['excluded_files'],
+          'show_hidden_content' => (isset($post['show_hidden_content'])) ? "true":"false",
+          'show_last_add'   => (isset($post['show_last_add'])) ? "true":"false",
+          'background'      => 'original.jpg'
+          ),
+
+        // Options d'update
+        'Update' => array(
+          'time_check_update' => $post['update_status']
+          ),
+
+        // Options liées à la vidéo
+        'Video' => array(
+          'player'          => $post['player']
+          )
+      );
+
+    // Écrit la configuration et redirige l'utilisateur (sert aussi à rafraichir la page)
+    if($this->write_ini_file($config_content, "config.ini", TRUE))
+      header('Location:index.php?update=ok');
+    else
+      header('Location:index.php?update=fail');
+    
+  }
+
+  /**
+  * Écrire dans un fichier ini
+  * @param $assoc_arr L'array de contenu (array('first' => array('value1'=>...,...), 'second'=>array('value1',...)))
+  * @param $path Le fichier ini à écrire
+  * @param $has_sections S'il y a des sections dans l'ini
+  */
+  function write_ini_file($assoc_arr, $path, $has_sections=FALSE) { 
+    $content = ""; 
+    if ($has_sections) { 
+        foreach ($assoc_arr as $key=>$elem) { 
+            $content .= "[".$key."]\n"; 
+            foreach ($elem as $key2=>$elem2) { 
+                if(is_array($elem2)) 
+                { 
+                    for($i=0;$i<count($elem2);$i++) 
+                    { 
+                        $content .= $key2."[] = \"".$elem2[$i]."\"\n"; 
+                    } 
+                } 
+                else if($elem2=="") $content .= $key2." = \n"; 
+                else $content .= $key2." = \"".$elem2."\"\n"; 
+            } 
+        } 
+    } 
+    else { 
+        foreach ($assoc_arr as $key=>$elem) { 
+            if(is_array($elem)) 
+            { 
+                for($i=0;$i<count($elem);$i++) 
+                { 
+                    $content .= $key2."[] = \"".$elem[$i]."\"\n"; 
+                } 
+            } 
+            else if($elem=="") $content .= $key2." = \n"; 
+            else $content .= $key2." = \"".$elem."\"\n"; 
+        } 
+    } 
+
+    if (!$handle = fopen($path, 'w')) { 
+        return false; 
+    } 
+    if (!fwrite($handle, $content)) { 
+        return false; 
+    } 
+    fclose($handle); 
+    return true; 
+}
+
+  /**
     * Accesseur de la variable d'erreur NO_DATA_DIR
     */
   public function get_error_no_data_dir()
