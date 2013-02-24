@@ -94,7 +94,7 @@ deb-src http://ftp2.fr.debian.org/debian/ squeeze main non-free" >> /etc/apt/sou
 
 # Installation des paquets vitaux
 $packetg update
-$packetg install -y subversion git php5 libapache2-mod-scgi php5-curl build-essential automake libtool libcppunit-dev libcurl3-dev libsigc++-2.0-dev unzip unrar curl libncurses-dev git screen
+$packetg install -y subversion php5 libapache2-mod-scgi php5-curl build-essential automake libtool libcppunit-dev libcurl3-dev libsigc++-2.0-dev unzip unrar curl libncurses-dev git screen
 
 # On se place sur le serveur web
 cd $WWWDIR
