@@ -22,8 +22,8 @@
             <label class="control-label">Langue</label>
             <div class="controls">
               <select class="input-xlarge" name="lang">
-                <option value="fr">Français</option>
-                <option value="en">Anglais</option>
+                <option value="fr" <?php if($config->is_lang_french()) echo 'selected'; ?>>Français</option>
+                <option value="en" <?php if($config->is_lang_english()) echo 'selected'; ?>>Anglais</option>
               </select>
             </div>
           </div>
@@ -33,15 +33,15 @@
               <div class="controls">
                 <!-- Multiple Checkboxes -->
                 <label class="checkbox">
-                  <input type="checkbox" value="true" name="show_hidden_content">
+                  <input type="checkbox" value="true" name="show_hidden_content" <?php if($config->is_show_hidden()) echo 'checked'; ?>>
                   Afficher les fichiers et dossiers cachés
                 </label>
                 <label class="checkbox">
-                  <input type="checkbox" value="true" name="show_last_add">
+                  <input type="checkbox" value="true" name="show_last_add" <?php if($config->is_show_last_add()) echo 'checked'; ?>>
                   Mettre en évidence le contenu fraîchement téléchargé
                 </label>
                 <label class="checkbox">
-                  <input type="checkbox" value="true" name="ignore_chmod">
+                  <input type="checkbox" value="true" name="ignore_chmod" <?php if($config->is_ignore_chmod()) echo 'checked'; ?>>
                   Ignorer les erreurs de chmod sur l'accueil
                 </label>
               </div>
@@ -51,7 +51,7 @@
             <!-- Text input-->
             <label class="control-label" for="input01">Téléchargements</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="download_dir">
+              <input type="text" class="input-xlarge" name="download_dir" value="<?php echo $config->get('download_dir'); ?>">
               <span class="help-block">Indiquez le dossier où se trouve vos fichiers téléchargés. Par défaut "download".</span>
             </div>
           </div>
@@ -60,7 +60,7 @@
             <!-- Text input-->
             <label class="control-label" for="input01">Fichiers à exclure</label>
             <div class="controls">
-              <input type="text" placeholder="" class="input-xlarge" name="excluded_files">
+              <input type="text" placeholder="" class="input-xlarge" name="excluded_files" value="<?php echo $config->get('excluded_files'); ?>">
               <span class="help-block">Listez les fichiers que vous souhaitez exclure du listing, en les séparant par une virgule.</span>
             </div>
           </div>
@@ -71,15 +71,15 @@
             <div class="controls">
                 <!-- Multiple Radios -->
                 <label class="radio">
-                  <input name="update_status" type="radio" value="12" name="update" checked="checked">
+                  <input name="update_status" type="radio" value="12" name="update" <?php if($config->is_update_enabled()) echo 'checked'; ?>>
                   Vérifier automatiquement de temps en temps
                 </label>
                 <label class="radio">
-                  <input name="update_status" type="radio" value="-1" name="update">
+                  <input name="update_status" type="radio" value="-1" name="update" <?php if($config->is_update_disabled()) echo 'checked'; ?>>
                   Ne jamais vérifier
                 </label>
                 <label class="radio">
-                  <input name="update_status" type="radio" value="0" name="update">
+                  <input name="update_status" type="radio" value="0" name="update" <?php if($config->is_update_eachtime()) echo 'checked'; ?>>
                   Vérifier à chaque visite
                 </label>
             </div>
@@ -93,14 +93,29 @@
             <label class="control-label">Player par défaut</label>
             <div class="controls">
               <select class="input-xlarge" name="player">
-                <option value="vlc">VLC</option>
-                <option value="divxwebplayer">DivX Web Player</option>
+                <option value="vlc" <?php if($config->is_player_vlc()) echo 'selected'; ?>>VLC</option>
+                <option value="divxwebplayer" <?php if($config->is_player_divxwebplayer()) echo 'selected'; ?>>DivX Web Player</option>
               </select>
             </div>
           </div>
         </div>
 
-        <div class="tab-pane" id="background">...</div>
+        <div class="tab-pane" id="background">
+          
+          <?php foreach($config->get('backgrounds_list') as $num => $background_file)
+          {
+            ?>
+              <!-- Radiobox invisible, séléction sur l'image uniquement, voir header.php <script> -->
+              <input type="radio" value="<?php echo $num; ?>" name="background" id="background_<?php echo $num; ?>" class="hidden_radio" <?php if($config->is_thisbackground_selected($background_file)) echo 'checked'; ?>/>
+              <a id="linkbackground_<?php echo $num; ?>" href="javascript:set_radio('<?php echo $num; ?>');" class="radio-picture" 
+                style="background:url(ressources/backgrounds/<?php echo $background_file; ?>) no-repeat scroll 0 0 white; background-size:150px 150px;">
+                  &nbsp;
+              </a>
+            <?
+          }
+          ?>
+
+        </div>
         <!--<div class="tab-pane" id="background">...</div>-->
 
         </div>

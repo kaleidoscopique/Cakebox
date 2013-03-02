@@ -32,6 +32,7 @@ class Configuration
   private $show_hidden_content;
   private $show_last_add;
   private $background;
+  private $backgrounds_list;
   // Update
   private $time_check_update;
   // Video
@@ -56,6 +57,7 @@ class Configuration
     $this->background           =   $config_array['General']['background'];
     $this->time_check_update    =   $config_array['Update']['time_check_update'];
     $this->video_player         =   $config_array['Video']['player'];
+    $this->backgrounds_list     =   $this->generate_backgrounds_list();
     $this->cakebox_absolute_path =  str_replace('inc','',dirname(__FILE__)); // Get /var/www/cakebox
     $this->check_dir(); // Vérification des dossiers data & downloads
   }
@@ -67,6 +69,35 @@ class Configuration
   public function get($attr)
   {
     return $this->$attr;
+  }
+
+  public function is_lang_french() { return ($this->lang == 'fr'); }
+  public function is_lang_english() { return ($this->lang == 'en'); }
+  public function is_show_hidden() { return ($this->show_hidden_content == 'true'); }
+  public function is_show_last_add() { return ($this->show_last_add == 'true'); }
+  public function is_ignore_chmod() { return ($this->ignore_chmod == 'true'); }
+  public function is_update_disabled() { return ($this->time_check_update == -1); }
+  public function is_update_enabled() { return ($this->time_check_update == 12); }
+  public function is_update_eachtime() { return ($this->time_check_update == 0); }
+  public function is_player_vlc() { return ($this->video_player == 'vlc'); }
+  public function is_player_divxwebplayer() { return ($this->video_player == 'divxwebplayer'); }
+  public function is_thisbackground_selected($background) { return ($this->background == $background); }
+
+
+  /**
+  * Génère la liste des backgrounds dispo dans le dossier "ressources/backgrounds/"
+  * @return Array de résultats des noms des fichiers
+  */
+  private function generate_backgrounds_list()
+  {
+    $list = scandir('ressources/backgrounds');
+    $res = array();
+    foreach($list as $background)
+    {
+        if(is_array($background) || $background[0] == '.') continue;
+        else $res[] = $background;
+    }
+    return $res;
   }
 
   /*
@@ -108,7 +139,7 @@ class Configuration
           'excluded_files'  => $post['excluded_files'],
           'show_hidden_content' => (isset($post['show_hidden_content'])) ? "true":"false",
           'show_last_add'   => (isset($post['show_last_add'])) ? "true":"false",
-          'background'      => 'original.jpg'
+          'background'      => $this->backgrounds_list[$post['background']]
           ),
 
         // Options d'update

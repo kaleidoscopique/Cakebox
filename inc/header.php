@@ -31,6 +31,12 @@ $(document).ready( function(){
   		e.preventDefault();
   		$(this).tab('show');
   	})
-
 });
+
+// Gère le choix des images de fond (modal config)
+function set_radio($inputid) {
+    $("#background_"+$inputid).prop("checked", true);
+    $("a.radio-picture").removeClass('green-border');
+	$("a#linkbackground_" + $inputid).addClass('green-border');
+}
 </script>

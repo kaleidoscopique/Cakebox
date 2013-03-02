@@ -450,6 +450,31 @@ header #menu img.menu_icon
   margin-bottom: 30px;
 }
 
+/* Panneau de configuration : Les backgorunds */
+a.radio-picture {
+    border: 1px solid black;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom:10px;
+    text-decoration: none;
+    width: 150px;
+    height : 150px;
+}
+
+.hidden_radio {
+    left: -10000px;
+    position: absolute;
+    top: -1000px;
+}
+
+.green-border
+{
+  opacity:0.2;
+  border:10px solid red;
+}
+
+
+
 
 /* BOOTSTRAP SURCHARGE */
 span.help-block
