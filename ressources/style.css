@@ -450,15 +450,15 @@ header #menu img.menu_icon
   margin-bottom: 30px;
 }
 
-/* Panneau de configuration : Les backgorunds */
+/* Panneau de configuration : backgrounds */
 a.radio-picture {
     border: 1px solid black;
     display: inline-block;
     margin-right: 10px;
     margin-bottom:10px;
     text-decoration: none;
-    width: 150px;
-    height : 150px;
+    width: 140px;
+    height: 140px;
 }
 
 .hidden_radio {
@@ -467,14 +467,10 @@ a.radio-picture {
     top: -1000px;
 }
 
-.green-border
+.selected_radio
 {
-  opacity:0.2;
-  border:10px solid red;
+  opacity:0.4;
 }
-
-
-
 
 /* BOOTSTRAP SURCHARGE */
 span.help-block

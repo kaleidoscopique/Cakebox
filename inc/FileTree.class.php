@@ -124,6 +124,9 @@ class FileTree
   */
   private function print_folder($fullname,$subtree)
   {
+    global $lang;
+    global $config;
+
     // Récupère le nom simple du dossier (sans les parents)
     $name = basename($fullname);   
 
@@ -134,7 +137,16 @@ class FileTree
           </div>
           
           <div id="'.stripslashes($name).'" class="dirInList">';
-          // style="display:none;"
+
+          // S'il est vide, c'est un dossier vide
+          if (empty($subtree))
+          {
+            echo '<div style="margin-bottom:5px;" class="onefile">';
+            echo $lang[$config->get('lang')]['empty_dir'];
+            echo '</div>';
+            return;
+          }
+
           $this->print_tree($subtree);
           echo '</div>';
   }

@@ -28,7 +28,7 @@ $lang['fr']['create_data_dir']          =   "Vous devez créer un répertoire \"
 $lang['fr']['create_downloads_dir']     =   "Vous devez créer un répertoire \"/downloads\" dans le dossier de Cakebox (chmod 777)";
 $lang['fr']['chmod_data_dir']           =   "Vous devez appliquer le chmod 777 au dossier \"/data\"";
 $lang['fr']['chmod_downloads_dir']      =   "Vous devez appliquer le chmod 777 au dossier \"/downloads\"";
-$lang['fr']['empty_dir']                =   "Pas de fichier(s)";
+$lang['fr']['empty_dir']                =   "Dossier vide";
 // watch.php
 $lang['fr']['watch_title']              =   "Téléchargez ou regardez votre fichier";
 $lang['fr']['have_you_finished']        =   "Avez-vous terminé de regarder votre vidéo ?";
@@ -79,7 +79,7 @@ $lang['en']['create_data_dir']          =   "You must create a folder named \"/d
 $lang['en']['create_downloads_dir']     =   "You must create a folder named \"/downloads\" in the folder of Cakebox (chmod 777)";
 $lang['en']['chmod_data_dir']           =   "You must set the chmod 777 to \"/data\"";
 $lang['en']['chmod_downloads_dir']      =   "You must set the chmod 777 to \"/downloads\"";
-$lang['en']['empty_dir']                =   "No file(s)";
+$lang['en']['empty_dir']                =   "Empty dir";
 // watch.php
 $lang['en']['watch_title']              =   "Download or watch your file";
 $lang['en']['have_you_finished']        =   "Have you finished watching this video ?";

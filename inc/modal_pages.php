@@ -102,13 +102,13 @@
 
         <div class="tab-pane" id="background">
           
+          <!-- Radiobox invisible, séléction sur l'image uniquement, voir header.php <script> -->
           <?php foreach($config->get('backgrounds_list') as $num => $background_file)
           {
             ?>
-              <!-- Radiobox invisible, séléction sur l'image uniquement, voir header.php <script> -->
               <input type="radio" value="<?php echo $num; ?>" name="background" id="background_<?php echo $num; ?>" class="hidden_radio" <?php if($config->is_thisbackground_selected($background_file)) echo 'checked'; ?>/>
               <a id="linkbackground_<?php echo $num; ?>" href="javascript:set_radio('<?php echo $num; ?>');" class="radio-picture" 
-                style="background:url(ressources/backgrounds/<?php echo $background_file; ?>) no-repeat scroll 0 0 white; background-size:150px 150px;">
+                style="background:url(ressources/resize_picture.php?src=ressources/backgrounds/<?php echo $background_file; ?>&w=140&h=140) no-repeat scroll 0 0 white;">
                   &nbsp;
               </a>
             <?

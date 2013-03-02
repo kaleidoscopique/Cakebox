@@ -94,8 +94,12 @@ class Configuration
     $res = array();
     foreach($list as $background)
     {
-        if(is_array($background) || $background[0] == '.') continue;
-        else $res[] = $background;
+        // Récupère des informations sur le fichier
+        // pour savoir s'il s'agit d'une image
+        $a = @getimagesize('ressources/backgrounds/'.$background);
+        $image_type = $a[2];
+        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP))) 
+          $res[] = $background;
     }
     return $res;
   }
