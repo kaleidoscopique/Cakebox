@@ -36,7 +36,7 @@ $file = new File($fullpath);
         <h2><?php echo $file->name; ?></h2>
         
         <div id="popcorn" class="littleh2">
-            <?php if ($file->sticky): ?>
+            <?php if (!$file->sticky): ?>
             <?php echo $lang[$config->get('lang')]['have_you_finished']; ?>
             <span class="mark" onclick="markfile('<?php echo addslashes($pathInfo['basename']); ?>');"><?php echo $lang[$config->get('lang')]['click_remind']; ?></span>
                 <a href="#" class="tooltip" style="text-decoration: underline;">
