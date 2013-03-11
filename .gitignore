@@ -5,6 +5,6 @@
 *.swp
 
 ## project files to ignore
-config.ini
 downloads/
 data/
+ressources/cache/*
