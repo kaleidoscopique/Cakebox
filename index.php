@@ -1,6 +1,6 @@
 <?php
 // Includes
-require_once('inc/lang.php');
+require_once('inc/inc.lang.php');
 require_once('inc/Configuration.class.php');
 require_once('inc/FileTree.class.php');
 require_once('inc/File.class.php');
@@ -17,11 +17,11 @@ if(isset($_POST['submit'])) $config->update($_POST);
 <html lang="fr">
 <head>
     <title>CakeBox - <?php echo $lang[$config->get('lang')]['index_title']; ?></title>
-    <?php require_once('inc/header.php'); ?>
+    <?php require_once('inc/inc.header.php'); ?>
 </head>
 <body>
 	<!-- TOPBAR -->
-	<?php require_once('inc/topbar.php'); ?>
+	<?php require_once('inc/inc.topbar.php'); ?>
 	<!-- / TOPBAR -->
 
 	<?php
@@ -93,7 +93,7 @@ if(isset($_POST['submit'])) $config->update($_POST);
 	<!-- / CONTENT -->
 
 	<!-- MODAL PAGES -->
-	<?php require_once('inc/modal_pages.php'); ?>
+	<?php require_once('inc/inc.modal_pages.php'); ?>
 	<!-- / MODAL -->
 </body>
 </html>

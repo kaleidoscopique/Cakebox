@@ -131,23 +131,13 @@ class FileTree
     $name = basename($fullname);   
 
     // Affiche le dossier et son arborescence
-    echo '<div class="onedir">
+    echo '<div class="onedir toRoll" data-path="'.$fullname.'">
           <img src="ressources/folder.png" class="pointerLink imgfolder"/>
           <span class="pointerLink">'.stripslashes($name).'</span>
           </div>
           
           <div id="'.stripslashes($name).'" class="dirInList">';
-
-          // S'il est vide, c'est un dossier vide
-          if (empty($subtree))
-          {
-            echo '<div style="margin-bottom:5px;" class="onefile">';
-            echo $lang[$config->get('lang')]['empty_dir'];
-            echo '</div>';
-            return;
-          }
-
-          $this->print_tree($subtree);
+          // Le contenu sera généré par Ajax (ajax.php)
           echo '</div>';
   }
 
@@ -175,7 +165,7 @@ class FileTree
       echo '</a>';
 
       echo '<a href="watch.php?file='.urlencode($fullname).'">';
-        echo '<img src="ressources/extensions/'.File::get_type($fullname).'.png" title="Stream or download this file" /> &nbsp;';
+        echo '<img src="ressources/extensions/'.File::get_file_type($fullname).'.png" title="Stream or download this file" /> &nbsp;';
       echo '</a>';
 
       // Affichage du titre du fichier (soulignement si marqué comme vu)

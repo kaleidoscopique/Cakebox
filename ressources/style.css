@@ -102,6 +102,11 @@ header #menu img.menu_icon
         color:#8A8A8A;
 }
 
+.toRoll:hover
+{
+  cursor: pointer;
+}
+
 /* ------ */
 /* BUTTON */
 /* ------ */
@@ -116,14 +121,14 @@ header #menu img.menu_icon
 {
   margin:auto;
   width:240px;
-  height:50px;
   background: -webkit-linear-gradient(#76d6b7, #6cc7aa);
   border:6px white solid;
   border-radius:25px;
   text-align:center;
   font-size:16px;
   padding-top:12px;
-  box-shadow: 0 0 13px #acacac;  
+  box-shadow: 0 0 13px #acacac;
+  padding-bottom: 10px;
 }
 #button_zone .button:hover
 {
@@ -147,8 +152,8 @@ header #menu img.menu_icon
 #button_zone .under_button, #button_zone .under_button a, #button_zone .under_button a:visited
 {
     text-align:center;
-    font-size: 12px;
-    color:#8A8A8A;
+    font-size: 10px;
+    color:#000;
     margin-top: 20px;
 }
 
@@ -226,25 +231,46 @@ header #menu img.menu_icon
     padding:2px;
 }
 
-.next_file{
-  margin:40px 0px 10px 0px;
-  }
-.previous_file{
-  margin:10px 0px 40px 0px;
-  padding-left:30px;
+.download_link
+{
+  color:#569C85;
 }
 
-.next_file a, .previous_file a
+.download_link:hover
 {
-    color:#E81554;
-    text-decoration: none;
-    font-size:24px;
-    font-weight: bold;
+  text-decoration: underline;
 }
 
-.next_file a:hover, .previous_file a:hover
+#tree_zone { clear: both; margin: 20px 0 10px; background:rgba(255,255,255,.9); padding:10px; padding-bottom:0px;}
+#tree_zone .viewport { width: 500px; height: 150px; overflow: hidden; position: relative; }
+#tree_zone .overview { list-style: none; position: absolute; left: 0; top: 0; }
+#tree_zone .thumb .end,
+#tree_zone .thumb { background-color: #76d6b7; }
+#tree_zone .scrollbar { position: relative; float: right; width: 15px; }
+#tree_zone .track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
+#tree_zone .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+#tree_zone .thumb .end { overflow: hidden; height: 5px; width: 13px; }
+#tree_zone .disable{ display: none; }
+.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
+
+
+.watch_content_bloc
 {
-    text-decoration: underline;
+  margin-top:40px;
+}
+
+.watch_content_bloc .title
+{
+  background:#76d6b7;
+  padding:5px;
+  width:310px;
+  color:black;
+  margin-bottom:-20px;
+}
+
+#download_zone
+{
+  margin: 20px 0 10px; background:rgba(255,255,255,.9); padding:10px;
 }
 
 /* ------ */

@@ -30,7 +30,36 @@ $(document).ready( function(){
 	$('#myTab a').click(function (e) {
   		e.preventDefault();
   		$(this).tab('show');
-  	})
+  	});
+
+	// Gère l'unroll d'un dossier jamais ouvert auparavant (requête GETs)
+  	$('body').on('click', '.toRoll', function(e)
+  	{
+		var dir = $(this).data('path');
+		var my_div = this;
+		$.get('ajax.php?dir_content='+dir, function(data) 
+		{
+	  		$(my_div).next('.dirInList').hide().html(data).fadeIn(400);
+	  		$(my_div).removeClass('toRoll');
+	  		$(my_div).addClass('isRolledShown');
+		});
+  	});
+
+  	// Cache un dossier cliqué déroulé
+  	$('body').on('click', '.isRolledShown', function(e)
+  	{
+  		$(this).next('.dirInList').fadeOut(200);
+  		$(this).removeClass('isRolledShown');
+	  	$(this).addClass('isRolledHidden');
+  	});
+
+  	// Affiche un dossier cliqué caché
+  	$('body').on('click', '.isRolledHidden', function(e)
+  	{
+  		$(this).next('.dirInList').fadeIn(400);
+  		$(this).addClass('isRolledShown');
+	  	$(this).removeClass('isRolledHidden');
+  	});
 });
 
 // Gère le choix des images de fond (modal config)
