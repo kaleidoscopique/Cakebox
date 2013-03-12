@@ -11,6 +11,7 @@
 
 <!-- JS -->
 <script type="text/javascript" src="ressources/jquery.min.js"></script>
+<script type="text/javascript" src="ressources/jquery-ui-1.10.1.custom.min.js"></script>
 <script type="text/javascript" src="ressources/jquery.leanModal.js"></script>
 <script src="ressources/bootstrap/js/bootstrap.min.js"></script>
 
@@ -18,7 +19,7 @@
 <script>
 $(document).ready( function(){ 
 	// Chargement du background configuré
-	$('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->get('background'); ?>)');
+	$('body').css('background-image', 'url(ressources/backgrounds/<?php echo $config->background; ?>)');
 
 	// Fenêtres modales
 	$('#about_us').modal({show:false});
@@ -39,7 +40,7 @@ $(document).ready( function(){
 		var my_div = this;
 		$.get('ajax.php?dir_content='+dir, function(data) 
 		{
-	  		$(my_div).next('.dirInList').hide().html(data).fadeIn(400);
+	  		$(my_div).next('.dirInList').hide().html(data).show('slide',{ direction: "up" },400);
 	  		$(my_div).removeClass('toRoll');
 	  		$(my_div).addClass('isRolledShown');
 		});
@@ -48,7 +49,7 @@ $(document).ready( function(){
   	// Cache un dossier cliqué déroulé
   	$('body').on('click', '.isRolledShown', function(e)
   	{
-  		$(this).next('.dirInList').fadeOut(200);
+  		$(this).next('.dirInList').show('slide',{ direction: "up" },400);
   		$(this).removeClass('isRolledShown');
 	  	$(this).addClass('isRolledHidden');
   	});
@@ -56,7 +57,7 @@ $(document).ready( function(){
   	// Affiche un dossier cliqué caché
   	$('body').on('click', '.isRolledHidden', function(e)
   	{
-  		$(this).next('.dirInList').fadeIn(400);
+  		$(this).next('.dirInList').hide('slide',{ direction: "up" },400);
   		$(this).addClass('isRolledShown');
 	  	$(this).removeClass('isRolledHidden');
   	});

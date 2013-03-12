@@ -12,6 +12,9 @@ if (file_exists("config.ini"))
 else
 	die("Il faut générer le fichier de conf ou faire un petit assistant de configuration en un clic.");
 
+// Request : UPDATE CONFIG
+if(isset($_POST['submit'])) $config->update($_POST);
+
 /*
 ---------------------------------
       CLASS CONFIGURATION
@@ -63,10 +66,10 @@ class Configuration
   }
 
   /**
-    * Accesseur générique
+    * Accesseur générique magique
     * @param $attr L'attribut à retourner
     */
-  public function get($attr)
+  public function __get($attr)
   {
     return $this->$attr;
   }
@@ -158,10 +161,12 @@ class Configuration
       );
 
     // Écrit la configuration et redirige l'utilisateur (sert aussi à rafraichir la page)
+    $page = $post['php_self'];
+    $get_param = ($post['get_file'] != '') ? "&file=".$post['get_file']:'';
     if($this->write_ini_file($config_content, "config.ini", TRUE))
-      header('Location:index.php?update=ok');
+      header('Location:'.$page.'?update=ok'.$get_param);
     else
-      header('Location:index.php?update=fail');
+      header('Location:'.$page.'?update=fail'.$get_param);
     
   }
 

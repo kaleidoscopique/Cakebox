@@ -60,7 +60,7 @@ class FileTree
         foreach(scandir($directory) as $file) {
 
             // Ignore les fichiers cachés si configuré, ignore les fichiers exclus
-            if (in_array($file, explode(',',$this->config->get('excluded_files'))) || ($file[0] == '.' && $this->config->get('show_hidden_content')))
+            if (in_array($file, explode(',',$this->config->excluded_files)) || ($file[0] == '.' && $this->config->show_hidden_content))
               continue;
 
             // Si on pointe sur un fichier, on l'ajoute
@@ -94,15 +94,6 @@ class FileTree
 
     // On utilise le tree total au premier appel récursif
     if($subtree == NULL) $subtree = $this->tree;
-
-    // S'il est vide, c'est un dossier vide
-    if (empty($subtree))
-    {
-      echo '<div style="margin-bottom:5px;" class="onefile">';
-      echo $lang[$config->get('lang')]['empty_dir'];
-      echo '</div>';
-      return;
-    }
 
     // Pour chaque élément de l'arboresence
     foreach($subtree as $fullname => $file)
@@ -160,7 +151,7 @@ class FileTree
       // Affichage des icones à gauche
       echo '<div style="margin-bottom:5px;" class="onefile" id="file-'.$digest_fullname.'">';
 
-      echo '<a href="'.$this->config->get('download_link').$fullname.'" download="'.$this->config->get('download_link').$fullname.'">';
+      echo '<a href="'.$this->config->download_link.$fullname.'" download="'.$this->config->download_link.$fullname.'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
       echo '</a>';
 
@@ -180,9 +171,9 @@ class FileTree
       // Création de l'infobulle
       echo '<a href="#" class="tooltip">&nbsp;(?)
             <span>
-              '.$lang[$this->config->get('lang')]['size'].' : '.File::get_file_size($fullname).'<br/>
-              '.$lang[$this->config->get('lang')]['last_update'].' : '.File::get_file_mtime($fullname).'<br/>
-              '.$lang[$this->config->get('lang')]['last_access'].' : '.File::get_file_atime($fullname).'<br/>
+              '.$lang[$this->config->lang]['size'].' : '.File::get_file_size($fullname).'<br/>
+              '.$lang[$this->config->lang]['last_update'].' : '.File::get_file_mtime($fullname).'<br/>
+              '.$lang[$this->config->lang]['last_access'].' : '.File::get_file_atime($fullname).'<br/>
             </span>
             </a>';
 

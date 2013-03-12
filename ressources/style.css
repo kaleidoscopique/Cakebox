@@ -1,4 +1,4 @@
-/* ---- */
+@/* ---- */
 /* HTML */
 /* ---- */
 
@@ -321,10 +321,16 @@ header #menu img.menu_icon
 /* WEBPLAYER */
 /* --------- */
 
-#web-player
+#reader-n-player
 {
   margin-top:30px;
   text-align: center;
+}
+
+#text-reader
+{
+  background:white;
+  padding:10px;
 }
 
 /* ------- */
@@ -502,4 +508,9 @@ a.radio-picture {
 span.help-block
 {
   font-size:12px;
+}
+
+.alert-success
+{
+  width: 60%; margin:auto; margin-top:40px; font-family: 'Droid Sans', sans-serif; 
 }

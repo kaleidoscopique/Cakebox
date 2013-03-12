@@ -12,3 +12,9 @@
     	</ul>
     </div>
 </header>
+
+<?php if(isset($_GET['update']) && $_GET['update'] == "ok"): ?>
+    <div class="alert alert-success">
+        Vos préférences ont été mises à jour.
+    </div>
+<?php endif; ?>

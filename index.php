@@ -8,15 +8,12 @@ require_once('inc/Update.class.php');
 
 // Request : IGNORE UPDATE
 if(isset($_GET['ignore_update'])) $update->ignore();
-
-// Request : UPDATE CONFIG
-if(isset($_POST['submit'])) $config->update($_POST);
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>CakeBox - <?php echo $lang[$config->get('lang')]['index_title']; ?></title>
+    <title>CakeBox - <?php echo $lang[$config->lang]['index_title']; ?></title>
     <?php require_once('inc/inc.header.php'); ?>
 </head>
 <body>
@@ -30,7 +27,7 @@ if(isset($_POST['submit'])) $config->update($_POST);
 	?>
 
 	<div id="update">
-		<h3><?php echo $lang[$config->get('lang')]['new_version']." : v".$update->get_current_version()." !" ?></h3>
+		<h3><?php echo $lang[$config->lang]['new_version']." : v".$update->get_current_version()." !" ?></h3>
 		<ol>
 		    <?php foreach($update->get_changelog() as $change) echo "<li>$change;</li>"; ?>
 		</ol>
@@ -40,12 +37,12 @@ if(isset($_POST['submit'])) $config->update($_POST);
 	        <div class="button">
 	            <a href="#howto_update" data-toggle="modal">
 	                <img src="ressources/clouddownload.png" class="download_update_img"/><br />
-	                <?php echo $lang[$config->get('lang')]['click_here_update']; ?>
+	                <?php echo $lang[$config->lang]['click_here_update']; ?>
 	            </a>
 	        </div>
 	        <span class="under_button">
 	        	<a href="index.php?ignore_update&number=<?php echo $update->get_current_version(); ?>">
-	            	<?php echo $lang[$config->get('lang')]['ignore_update']; ?>
+	            	<?php echo $lang[$config->lang]['ignore_update']; ?>
 	            </a>
 			</span>
 	    </div>
@@ -78,13 +75,13 @@ if(isset($_POST['submit'])) $config->update($_POST);
 			endif;
 		?>
 
-		<h2><?php echo $lang[$config->get('lang')]['index_main_title']; ?></h2>	
+		<h2><?php echo $lang[$config->lang]['index_main_title']; ?></h2>	
 		<hr class="underh2" />			
 			
 		<!-- Local files -->
 		<div id="local">
 			<?php
-				$treeStructure = new FileTree($config->get('download_dir'));
+				$treeStructure = new FileTree($config->download_dir);
 				$treeStructure->print_tree();
 			?>
 		</div>

@@ -5,7 +5,7 @@
     <h3 id="myModalLabel">Panneau de configuration</h3>
   </div>
 
-<form name="config" class="form-horizontal" action="index.php" method="post">
+<form name="config" class="form-horizontal" action="" method="post">
   <div class="modal-body">
 
     <ul class="nav nav-tabs" id="myTab">
@@ -51,7 +51,7 @@
             <!-- Text input-->
             <label class="control-label" for="input01">Téléchargements</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="download_dir" value="<?php echo $config->get('download_dir'); ?>">
+              <input type="text" class="input-xlarge" name="download_dir" value="<?php echo $config->download_dir; ?>">
               <span class="help-block">Indiquez le dossier où se trouve vos fichiers téléchargés. Par défaut "download".</span>
             </div>
           </div>
@@ -60,7 +60,7 @@
             <!-- Text input-->
             <label class="control-label" for="input01">Fichiers à exclure</label>
             <div class="controls">
-              <input type="text" placeholder="" class="input-xlarge" name="excluded_files" value="<?php echo $config->get('excluded_files'); ?>">
+              <input type="text" placeholder="" class="input-xlarge" name="excluded_files" value="<?php echo $config->excluded_files; ?>">
               <span class="help-block">Listez les fichiers que vous souhaitez exclure du listing, en les séparant par une virgule.</span>
             </div>
           </div>
@@ -103,7 +103,7 @@
         <div class="tab-pane" id="background">
           
           <!-- Radiobox invisible, séléction sur l'image uniquement, voir header.php <script> -->
-          <?php foreach($config->get('backgrounds_list') as $num => $background_file)
+          <?php foreach($config->backgrounds_list as $num => $background_file)
           {
             ?>
               <input type="radio" value="<?php echo $num; ?>" name="background" id="background_<?php echo $num; ?>" class="hidden_radio" <?php if($config->is_thisbackground_selected($background_file)) echo 'checked'; ?>/>
@@ -123,6 +123,8 @@
       
   </div>
   <div class="modal-footer">
+    <input type="hidden" value="<?php echo $_SERVER['PHP_SELF']; ?>" name="php_self" />
+    <input type="hidden" value="<?php echo (isset($_GET['file'])) ? $_GET['file']:''; ?>" name="get_file" />
     <button class="btn" data-dismiss="modal" aria-hidden="true">Annuler</button>
     <input type="submit" name="submit" value="Enregistrer" class="btn btn-primary"/>
   </div>

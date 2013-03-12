@@ -17,7 +17,7 @@ $file = new File($fullpath);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>CakeBox - <?php echo $lang[$config->get('lang')]['watch_title']; ?></title>
+    <title>CakeBox - <?php echo $lang[$config->lang]['watch_title']; ?></title>
     <?php require_once('inc/inc.header.php'); ?>
     <script type="text/javascript" src="ressources/jquery.tinyscrollbar.min.js"></script>
     <script>
@@ -37,16 +37,16 @@ $file = new File($fullpath);
         
         <div id="popcorn" class="littleh2">
             <?php if (!$file->sticky): ?>
-            <?php echo $lang[$config->get('lang')]['have_you_finished']; ?>
-            <span class="mark" onclick="markfile('<?php echo addslashes($pathInfo['basename']); ?>');"><?php echo $lang[$config->get('lang')]['click_remind']; ?></span>
+            <?php echo $lang[$config->lang]['have_you_finished']; ?>
+            <span class="mark" onclick="markfile('<?php echo addslashes($pathInfo['basename']); ?>');"><?php echo $lang[$config->lang]['click_remind']; ?></span>
                 <a href="#" class="tooltip" style="text-decoration: underline;">
-                    <?php echo $lang[$config->get('lang')]['what_zat']; ?>
-                    <span><?php echo $lang[$config->get('lang')]['popcorn_details']; ?></span>
+                    <?php echo $lang[$config->lang]['what_zat']; ?>
+                    <span><?php echo $lang[$config->lang]['popcorn_details']; ?></span>
                 </a>
 
             <?php else: ?>
-                Hey, <span class="unmark"><?php echo $lang[$config->get('lang')]['do_you_remember']; ?></span>
-                <span class="update_info" style="text-decoration: underline;cursor:pointer;" onclick="unmarkfile('<?php echo addslashes($file->name); ?>')"><?php echo $lang[$config->get('lang')]['cancel_please']; ?></span>
+                Hey, <span class="unmark"><?php echo $lang[$config->lang]['do_you_remember']; ?></span>
+                <span class="update_info" style="text-decoration: underline;cursor:pointer;" onclick="unmarkfile('<?php echo addslashes($file->name); ?>')"><?php echo $lang[$config->lang]['cancel_please']; ?></span>
 
             <?php endif; ?>
         </div>
@@ -59,7 +59,7 @@ $file = new File($fullpath);
                 Informations sur le fichier
             </div>
             <div id="download_zone">
-                <strong><?php echo $lang[$config->get('lang')]['size']; ?></strong> : <?php echo $file->get_size(); ?><br />
+                <strong><?php echo $lang[$config->lang]['size']; ?></strong> : <?php echo $file->get_size(); ?><br />
                 <a href="<?php echo $file->url; ?>" download="<?php echo $file->url; ?>" class="download_link">Cliquez ici pour le télécharger</a>
             </div>
 

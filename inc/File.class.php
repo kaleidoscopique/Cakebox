@@ -35,12 +35,14 @@ class File
     $this->name       =   basename($fullname);
     $this->dirname    =   dirname($fullname);
     $this->type       =   $this->get_type();
-    $this->url        =   $config->get('download_link').$fullname;
+    $this->url        =   $config->download_link.$fullname;
     $this->sticky     =   false;
     $this->watch_include  =   "watch_default";
 
-    if($this->type == "pdf") $this->watch_include = "watch_pdf";
-    if($this->type == "video") $this->watch_include = "watch_video";
+    // Si on ne veut pas utiliser le watch standard :
+    if($this->type == "pdf")    $this->watch_include = "watch_pdf";
+    if($this->type == "video")  $this->watch_include = "watch_video";
+    if($this->type == "text")   $this->watch_include = "watch_text";
 
   }
 
@@ -66,6 +68,7 @@ class File
     else if($extension == "mp3" || $extension == "midi" || $extension == "m4a" || $extension == "ogg" || $extension == "flac") $type = "music";
     else if($extension == "rar" || $extension == "zip") $type = "archive";
     else if($extension == "iso") $type = "iso";
+    else if($extension == "txt" || $extension == "nfo") $type = "text";
     else if($extension == "pdf") $type = "pdf";
     else $type = "other";
 

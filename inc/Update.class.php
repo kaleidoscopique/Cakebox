@@ -57,7 +57,7 @@ class Update
     $this->local_version = trim(str_replace('+','',$this->local_version)); // On enlève le '+' (et le linefeed) pour ne garder que le nombre
 
     // Check for a new version each 12h
-    if($time_since > $this->config->get('time_check_update') * 3600 || $force_check_update)
+    if($time_since > $this->config->time_check_update * 3600 || $force_check_update)
     {
       // Version disponible en dépôt
       $current_version_file = fopen('https://raw.github.com/MardamBeyK/Cakebox/v4-dev/version.txt','r');
@@ -99,9 +99,10 @@ class Update
   {
       global $lang;
       echo '<div id="update">';
-      echo "<h3>".$lang[$this->config->get('lang')]['cakebox_uptodate']." (v".$this->local_version.") !</h3><br />";
-      echo '<a href="last_update.log" class="do_update">'.$lang[$this->config->get('lang')]['click_here'].'</a> '.$lang[$this->config->get('lang')]['watch_log_update'].'.<br />';
-      echo $lang[$this->config->get('lang')]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[$this->config->get('lang')]['ask_it'].' !</a>';
+      echo "<h3>".$lang[$this->config->lang
+      ]['cakebox_uptodate']." (v".$this->local_version.") !</h3><br />";
+      echo '<a href="last_update.log" class="do_update">'.$lang[$this->config->lang]['click_here'].'</a> '.$lang[$this->config->lang]['watch_log_update'].'.<br />';
+      echo $lang[$this->config->lang]['if_question'].', <a href="https://github.com/MardamBeyK/Cakebox/wiki/Impossible-de-mettre-%C3%A0-jour-!" class="do_update">'.$lang[$this->config->lang]['ask_it'].' !</a>';
       echo '</div>';
   }
 
