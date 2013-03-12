@@ -1,5 +1,1 @@
-2.8+
-<strong>Énorme amélioration au niveau du streaming</strong>. Les plugins VLC et DivX Player (pour OS/X) fonctionnent beaucoup mieux qu'avant
-Possibilité d'ignorer une mise à jour (à partir de la prochaine mise à jour)
-Une plus jolie infobulle qui ne bug pas sur l'accueil de Cakebox
-Ajout d'un fichier "config.php" pour modifier Cakebox sans toucher au code (<a href="https://github.com/MardamBeyK/Cakebox/wiki/Utiliser-le-fichier-config.php">cliquez ici pour lire la doc</a>)
+3
