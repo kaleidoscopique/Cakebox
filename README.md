@@ -6,6 +6,7 @@ Obligatoire :
 	* Implémenter le système de sticky
 	* Gérer les fichiers sons
 	* Télécharger un dossier
+	* Une vraie gestion des langues
 
 Optionnel :
 
