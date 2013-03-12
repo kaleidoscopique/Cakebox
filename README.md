@@ -1,5 +1,14 @@
 ## TODO
 
-* Panneau de conf : terminé. Reste à optimiser (charger la liste des backgrounds avec ajax par ex...)
-* Gérer différents types de fichiers (pdf, sons, images, texte)
-* Implémenter un editmode sexy
+Obligatoire :
+
+	* Implémenter un editmode sexy
+	* Implémenter le système de sticky
+	* Gérer les fichiers sons
+	* Télécharger un dossier
+
+Optionnel :
+
+	* Panneau de conf : gérer la taille des players par défaut, l'autoplay ?
+	* Gérer les playlists de son
+
