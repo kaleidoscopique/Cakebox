@@ -178,10 +178,13 @@ header #menu img.menu_icon
 {
     padding: 1px;
 }
-.onefile:hover
+.onefile a { color:black; display: inline; padding:2px 4px 2px 4px; margin-left:-4px;}
+.onefile a:hover
 {
-    background:#FFDEE2;
-    transition: 1s;
+    background:rgba(118,214,183,.3);
+    padding:2px 4px 2px 4px;
+    margin-left:-4px;
+    transition: .6s;
     -moz-transition:1s;
     -webkit-transition:1s;
 }
@@ -241,18 +244,7 @@ header #menu img.menu_icon
   text-decoration: underline;
 }
 
-#tree_zone { clear: both; margin: 20px 0 10px; background:rgba(255,255,255,.9); padding:10px; padding-bottom:0px;}
-#tree_zone .viewport { width: 500px; height: 150px; overflow: hidden; position: relative; }
-#tree_zone .overview { list-style: none; position: absolute; left: 0; top: 0; }
-#tree_zone .thumb .end,
-#tree_zone .thumb { background-color: #76d6b7; }
-#tree_zone .scrollbar { position: relative; float: right; width: 15px; }
-#tree_zone .track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
-#tree_zone .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
-#tree_zone .thumb .end { overflow: hidden; height: 5px; width: 13px; }
-#tree_zone .disable{ display: none; }
-.noSelect { user-select: none; -o-user-select: none; -moz-user-select: none; -khtml-user-select: none; -webkit-user-select: none; }
-
+#tree_zone { overflow: scroll; margin: 20px 0 10px; height:150px; background:rgba(255,255,255,.9); padding:10px; padding-bottom:0px;}
 
 .watch_content_bloc
 {

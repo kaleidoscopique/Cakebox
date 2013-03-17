@@ -19,11 +19,14 @@ $file = new File($fullpath);
 <head>
     <title>CakeBox - <?php echo $lang[$config->lang]['watch_title']; ?></title>
     <?php require_once('inc/inc.header.php'); ?>
-    <script type="text/javascript" src="ressources/jquery.tinyscrollbar.min.js"></script>
-    <script>
-    $(document).ready( function(){
-        $('#tree_zone').tinyscrollbar();
-    });
+
+    <script language="javascript">
+        // Empêche de scroller la page quand on scroll le div treebar
+        function stopScroll(scrollHide) 
+        {
+          var scroller = (scrollHide == true) ? 'hidden' : '';
+          document.documentElement.style.overflow = scroller;
+        }
     </script>
 </head>
 
@@ -69,16 +72,11 @@ $file = new File($fullpath);
             <div class="title">
                 Dans le même répertoire que ce fichier
             </div>
-            <div id="tree_zone">
-                <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
-                    <div class="viewport">
-                        <div class="overview">
+            <div id="tree_zone" onmouseout="stopScroll(false);" onmouseover="stopScroll(true);">
                 <?php
                     $treeStructure = new FileTree($file->dirname);
                     $treeStructure->print_tree();
                 ?>
-                        </div>
-                    </div>
             </div>
         </div>
 

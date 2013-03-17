@@ -157,16 +157,16 @@ class FileTree
 
       echo '<a href="watch.php?file='.urlencode($fullname).'">';
         echo '<img src="ressources/extensions/'.File::get_file_type($fullname).'.png" title="Stream or download this file" /> &nbsp;';
-      echo '</a>';
 
-      // Affichage du titre du fichier (soulignement si marqué comme vu)
-      if (file_exists("data/".$path_info['basename']))
-      {
-        echo '<span style="border-bottom:2px dotted #76D6B7;">';
-        echo $protected_name;
-        echo '</span>';
-      }
-      else echo $protected_name;
+        // Affichage du titre du fichier (soulignement si marqué comme vu)
+        if (file_exists("data/".$path_info['basename']))
+        {
+          echo '<span style="border-bottom:2px dotted #76D6B7;">';
+          echo $protected_name;
+          echo '</span>';
+        }
+        else echo $protected_name;
+      echo '</a>';
 
       // Création de l'infobulle
       echo '<a href="#" class="tooltip">&nbsp;(?)

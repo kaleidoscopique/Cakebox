@@ -40,24 +40,32 @@ $(document).ready( function(){
 		var my_div = this;
 		$.get('ajax.php?dir_content='+dir, function(data) 
 		{
-	  		$(my_div).next('.dirInList').hide().html(data).show('slide',{ direction: "up" },400);
-	  		$(my_div).removeClass('toRoll');
-	  		$(my_div).addClass('isRolledShown');
+			// Injecte les données
+	  		$(my_div).next('.dirInList').html(data);
+			$(my_div).next('.dirInList').hide();
+
+	  		// Simule un dossier fermé
+			$(my_div).removeClass('toRoll');
+		  	$(my_div).addClass('isRolledHidden');
+
+		  	// Actionne l'ouverture (trigger ci-dessous)
+		  	$(my_div).click();
 		});
   	});
 
   	// Cache un dossier cliqué déroulé
   	$('body').on('click', '.isRolledShown', function(e)
   	{
-  		$(this).next('.dirInList').show('slide',{ direction: "up" },400);
-  		$(this).removeClass('isRolledShown');
+  		$(this).next('.dirInList').hide("slide", { direction: "up"});
+  		$(this).parents().css('height','auto');
+		$(this).removeClass('isRolledShown');
 	  	$(this).addClass('isRolledHidden');
   	});
 
   	// Affiche un dossier cliqué caché
   	$('body').on('click', '.isRolledHidden', function(e)
   	{
-  		$(this).next('.dirInList').hide('slide',{ direction: "up" },400);
+  		$(this).next('.dirInList').show("slide", { direction: "up"});
   		$(this).addClass('isRolledShown');
 	  	$(this).removeClass('isRolledHidden');
   	});
