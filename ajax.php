@@ -37,4 +37,10 @@ else if(isset($_GET['unmark_file']) && isset($_GET['file_name']))
         exit(0);
     }
 }
+
+// Request : DELETE FILES
+if(isset($_POST['delete']))
+{
+    // TODO.
+}
 ?>

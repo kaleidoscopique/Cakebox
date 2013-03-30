@@ -31,7 +31,7 @@ class Update
   {
     global $config;
     $this->config = $config;
-    $this->check();
+    if($this->config->time_check_update >= 0) $this->check();
   }
 
   // Accesseur update dispo ?

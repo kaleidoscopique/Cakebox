@@ -125,6 +125,7 @@ class FileTree
     echo '<div class="onedir toRoll" data-path="'.$fullname.'">
           <img src="ressources/folder.png" class="pointerLink imgfolder"/>
           <span class="pointerLink">'.stripslashes($name).'</span>
+          <span class="actions_list"></span>
           </div>
           
           <div id="'.stripslashes($name).'" class="dirInList">';
@@ -145,11 +146,10 @@ class FileTree
       // Traitement du paramètre
       $path_info = pathinfo($fullname);
       $name = basename($fullname);
-      $digest_fullname = str_replace("/", "-", htmlspecialchars($fullname));
       $protected_name = htmlspecialchars($name);
 
       // Affichage des icones à gauche
-      echo '<div style="margin-bottom:5px;" class="onefile" id="file-'.$digest_fullname.'">';
+      echo '<div style="margin-bottom:5px;" class="onefile" data-path="'.$fullname.'">';
 
       echo '<a href="'.$this->config->download_link.$fullname.'" download="'.$this->config->download_link.$fullname.'">';
         echo '<img src="ressources/download.png" title="Download this file" /> &nbsp;';
@@ -167,15 +167,16 @@ class FileTree
         }
         else echo $protected_name;
       echo '</a>';
+      echo '<span class="actions_list"></span>';
 
       // Création de l'infobulle
-      echo '<a href="#" class="tooltip">&nbsp;(?)
+      /*echo '<a href="#" class="tooltip">&nbsp;(?)
             <span>
               '.$lang[$this->config->lang]['size'].' : '.File::get_file_size($fullname).'<br/>
               '.$lang[$this->config->lang]['last_update'].' : '.File::get_file_mtime($fullname).'<br/>
               '.$lang[$this->config->lang]['last_access'].' : '.File::get_file_atime($fullname).'<br/>
             </span>
-            </a>';
+            </a>';*/
 
       // Fin
       echo '</div>';

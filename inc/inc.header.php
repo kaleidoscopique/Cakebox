@@ -10,9 +10,9 @@
 <link href='http://fonts.googleapis.com/css?family=Changa+One|Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 
 <!-- JS -->
-<script type="text/javascript" src="ressources/jquery.min.js"></script>
-<script type="text/javascript" src="ressources/jquery-ui-1.10.1.custom.min.js"></script>
-<script type="text/javascript" src="ressources/jquery.leanModal.js"></script>
+<script type="text/javascript" src="ressources/js/jquery.min.js"></script>
+<script type="text/javascript" src="ressources/js/jquery-ui-1.10.1.custom.min.js"></script>
+<script type="text/javascript" src="ressources/js/jquery.bootstrap.modal.js"></script>
 <script src="ressources/bootstrap/js/bootstrap.min.js"></script>
 
 
@@ -69,6 +69,36 @@ $(document).ready( function(){
   		$(this).addClass('isRolledShown');
 	  	$(this).removeClass('isRolledHidden');
   	});
+
+  	// Afficher les actions sur les dir et les files
+  	$('.onefile, .onedir').hover(function () 
+  	{
+  	// Afficher les actions on hover
+    $(this).children('.actions_list').html('<img src="ressources/mini_delete.png" alt="Supprimer" class="delete_file_button"/> \
+    	<img src="ressources/mini_edit.png" alt="Editer" /> \
+    	<img src="ressources/mini_info.png" />');
+  },
+
+  	// Cacher les options out hover
+  	function () 
+  	{
+    	$(this).children('.actions_list').html('');
+  	});
+
+  	// On click sur le bouton de supression
+  	$('body').on('click', 'img.delete_file_button', function(e)
+  	{
+  		var content = $(this).parent().parent().data('path');
+  		$("#confirmDiv").confirmModal({heading: 'Confirmer la suppression',
+  										body: 'Êtes-vous sûr de vouloir supprimer <strong>'+content+'</strong> ?',
+		callback: function () {
+			// Si "oui"
+		}
+	});
+  	});
+
+
+
 });
 
 // Gère le choix des images de fond (modal config)

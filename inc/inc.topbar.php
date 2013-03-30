@@ -12,6 +12,7 @@
     	</ul>
     </div>
 </header>
+<div id="confirmDiv"></div>
 
 <?php if(isset($_GET['update']) && $_GET['update'] == "ok"): ?>
     <div class="alert alert-success">

@@ -1,4 +1,4 @@
-@/* ---- */
+/* ---- */
 /* HTML */
 /* ---- */
 
@@ -245,6 +245,7 @@ header #menu img.menu_icon
 }
 
 #tree_zone { overflow: scroll; margin: 20px 0 10px; height:150px; background:rgba(255,255,255,.9); padding:10px; padding-bottom:0px;}
+.actions_list{ margin-left:10px; }
 
 .watch_content_bloc
 {
