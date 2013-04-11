@@ -31,4 +31,4 @@ Il installe un serveur web et diverses bibliothèques. Il modifie la configurati
 * Merci à tous ceux qui ont donné un coup de pouce et qui continuent à le faire;
 * Merci à HADOPI pour l'idée;
 
-**Auteur :** MardamBey (iam.mardambey@gmail.com)
+**Auteur :** MardamBey (iam.mardambey@gmail.com - [@stephane1point0](http://www.twitter.com/stephane1point0))
