@@ -41,6 +41,11 @@ endif;
     </script>
     <script src="ressources/oXHR.js"></script>
     <!-- / Style & ergo -->
+	
+    <!-- WMV Player -->
+    <script type="text/javascript" src="ressources/silverlight.js"></script>
+    <script type="text/javascript"  src="ressources/wmvplayer.js"></script>
+    <!-- / WMV Player -->
 
     <?php if ($detect_OS == "Linux-Windows-others" && isVideoFile($filePath)): ?>
 
@@ -108,6 +113,14 @@ endif;
         </p>
 
         <center>
+        <?php if (pathinfo(DOWNLOAD_LINK.$filePath, PATHINFO_EXTENSION) == 'wmv'): ?>
+              <div id="mediaspace" style="margin-bottom:50px;">player 1</div>
+        <script type='text/javascript'>
+          var cnt = document.getElementById('mediaspace');
+          var src = 'ressources/wmvplayer.xaml';
+          var cfg = {height:'440', width:'720', file:"<?php echo DOWNLOAD_LINK.$filePath; ?>", autostart:"true"};
+          var ply = new jeroenwijering.Player(cnt,src,cfg);
+        </script>
         <?php if ($detect_OS == "OSX" || USE_DIVX): ?>
 
             <!-- Embed DivX Player (for OS X) -->

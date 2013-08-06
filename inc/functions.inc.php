@@ -38,6 +38,7 @@ if (!file_exists("config.php"))
   define('LOCAL_DL_PATH', 'downloads');        // Modifie le dossier que surveille Cakebox
   define('DOWNLOAD_LINK', "http://".$identity_inLink."/cakebox/");  // Modifie l'URL de stream des fichiers
   $excludeFiles = array(".", "..", ".htaccess", "");  // Liste des fichiers ignorés dans le listing de Cakebox
+  $excludeExt = array("");                     // Liste des extensions à ignorer dans le listing de Cakebox
   define('SEEN_SPAN', '<span style="border-bottom:2px dotted #76D6B7;">');// Modifie le style du module vu/non vu
   /* Options Divx Web Player*/
   define('USE_DIVX', FALSE);                            // On choisi le lecteur DivX Web Player par défaut
@@ -59,7 +60,7 @@ function isVideoFile($path)
 {
     $pathInfo = pathinfo($path);
     $mime = explode("/", mime_content_type($path));
-    if ($mime[0] == "video" || $pathInfo['extension'] == "mkv") // Les films en HD ne passent pas forcement...
+    if ($mime[0] == "video" || $pathInfo['extension'] == "mkv" || $pathInfo['extension'] == "wmv") // Les films en HD ne passent pas forcement...
         return TRUE;
     return FALSE;
 }
@@ -75,6 +76,7 @@ function get_file_icon($filename)
   if($extension == "avi" || $extension == "mpeg" || $extension == "mp4" || $extension == "mkv") $extension = "avi";
   else if($extension == "mp3" || $extension == "midi" || $extension == "m4a" || $extension == "ogg" || $extension == "flac") $extension = "mp3";
   else if($extension == "iso" || $extension == "rar" || $extension == "zip") $extension = "iso";
+  else if($extension == "wmv") $extension = "wmv";
   else $extension = "other";
 
   return "ressources/ext/".$extension.".png";
@@ -126,6 +128,7 @@ function recursive_directory_tree($directory = null)
 {
     global $listof_dir;
     global $excludeFiles;
+    global $excludeExt;
 
     //If $directory is null, set $directory to the current working directory.
     if ($directory == null) {
@@ -149,6 +152,11 @@ function recursive_directory_tree($directory = null)
 
             //Exclude some specified files
             if (in_array($file, $excludeFiles)) {
+                continue;
+            }
+            
+            //Exclude some specified extensions
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), $excludeExt)) {
                 continue;
             }
 
