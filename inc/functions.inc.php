@@ -38,7 +38,7 @@ if (!file_exists("config.php"))
   define('LOCAL_DL_PATH', 'downloads');        // Modifie le dossier que surveille Cakebox
   define('DOWNLOAD_LINK', "http://".$identity_inLink."/cakebox/");  // Modifie l'URL de stream des fichiers
   $excludeFiles = array(".", "..", ".htaccess", "");  // Liste des fichiers ignorés dans le listing de Cakebox
-  $excludeExt = array("");                     // Liste des extensions à ignorer dans le listing de Cakebox
+  $excludeExt = array();                       // Liste des extensions à ignorer dans le listing de Cakebox
   define('SEEN_SPAN', '<span style="border-bottom:2px dotted #76D6B7;">');// Modifie le style du module vu/non vu
   /* Options Divx Web Player*/
   define('USE_DIVX', FALSE);                            // On choisi le lecteur DivX Web Player par défaut
