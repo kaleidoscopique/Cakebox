@@ -1,9 +1,0 @@
-## generic files to ignore
-*~
-*.lock
-*.DS_Store
-*.swp
-
-## project files to ignore
-config.php
-downloads/
